@@ -1,5 +1,3 @@
-import { withSentryConfig } from '@sentry/nextjs';
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -43,15 +41,22 @@ const nextConfig = {
   },
 };
 
-const sentryWebpackPluginOptions = {
-  silent: true,
-  org: process.env.SENTRY_ORG,
-  project: process.env.SENTRY_PROJECT,
-  widenClientFileUpload: true,
-  hideSourceMaps: true,
-  disableLogger: true,
-};
+// Lazy-load Sentry only if auth token is set, so missing Sentry env doesn't break builds.
+async function withOptionalSentry(config) {
+  if (!process.env.SENTRY_AUTH_TOKEN) return config;
+  try {
+    const { withSentryConfig } = await import('@sentry/nextjs');
+    return withSentryConfig(config, {
+      silent: true,
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+      widenClientFileUpload: true,
+      hideSourceMaps: true,
+      disableLogger: true,
+    });
+  } catch {
+    return config;
+  }
+}
 
-export default process.env.SENTRY_AUTH_TOKEN
-  ? withSentryConfig(nextConfig, sentryWebpackPluginOptions)
-  : nextConfig;
+export default await withOptionalSentry(nextConfig);
