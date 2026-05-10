@@ -1,0 +1,136 @@
+import type { Metadata, Viewport } from 'next';
+import { Inter, Fraunces, JetBrains_Mono } from 'next/font/google';
+import Script from 'next/script';
+import { Header } from '@/components/site/Header';
+import { Footer } from '@/components/site/Footer';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { organizationJsonLd, websiteJsonLd } from '@/lib/seo/structured-data';
+import { SITE } from '@/lib/constants';
+import './globals.css';
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+});
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-fraunces',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
+});
+
+const jetbrains = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono',
+  display: 'swap',
+});
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#FAF7F2' },
+    { media: '(prefers-color-scheme: dark)', color: '#1A1714' },
+  ],
+  width: 'device-width',
+  initialScale: 1,
+};
+
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE.url),
+  title: {
+    default: `${SITE.name} — ${SITE.tagline}`,
+    template: `%s | ${SITE.name}`,
+  },
+  description: SITE.description,
+  keywords: [
+    'recipes',
+    'meal planner',
+    'AI cooking',
+    'free recipes',
+    'cooking app',
+    'pantry recipes',
+    'nutrition calculator',
+    'budget meals',
+    'easy dinner ideas',
+    'recipe finder',
+  ],
+  authors: [{ name: SITE.publisher, url: SITE.url }],
+  creator: SITE.publisher,
+  publisher: SITE.publisher,
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: SITE.url,
+    siteName: SITE.name,
+    title: `${SITE.name} — ${SITE.tagline}`,
+    description: SITE.description,
+    images: [{ url: SITE.ogImage, width: 1200, height: 630, alt: SITE.name }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: SITE.twitter,
+    title: `${SITE.name} — ${SITE.tagline}`,
+    description: SITE.description,
+    images: [SITE.ogImage],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
+  category: 'food',
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const umamiId = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
+  const umamiSrc = process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL;
+  const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
+
+  return (
+    <html lang="en" className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable}`} suppressHydrationWarning>
+      <head>
+        <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
+      <body className="min-h-screen bg-cream-100 font-sans text-ink antialiased">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-terracotta-400 focus:px-4 focus:py-2 focus:text-white"
+        >
+          Skip to content
+        </a>
+        <Header />
+        <main id="main" className="flex-1">
+          {children}
+        </main>
+        <Footer />
+
+        {umamiId && umamiSrc ? (
+          <Script src={umamiSrc} data-website-id={umamiId} strategy="lazyOnload" />
+        ) : null}
+
+        {adsenseClient ? (
+          <Script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseClient}`}
+            crossOrigin="anonymous"
+            strategy="lazyOnload"
+          />
+        ) : null}
+      </body>
+    </html>
+  );
+}
