@@ -84,22 +84,46 @@ Visit `https://recipecrave.com`. Should serve the live site.
 
 ## Step 4 — Push Supabase schema
 
-Locally with the Supabase DB URL set in `.env.local`:
+### Option A (easiest — paste SQL in dashboard)
+
+1. Open https://supabase.com/dashboard
+2. Select your `recipecrave` project
+3. If it shows "Paused," click **Restore** (free projects auto-pause after ~7 days idle)
+4. Left sidebar → **SQL Editor** → **New query**
+5. Open `drizzle/0000_clean_miss_america.sql` in this repo
+6. Copy entire contents → paste into SQL Editor → click **Run**
+7. Tables created in ~3 seconds
+
+### Option B (CLI push)
+
+Requires correct pooler URL from your Supabase dashboard:
+
+1. Supabase dashboard → **Project Settings → Database → Connection string → URI**
+2. Copy the **Transaction pooler** URL (port 6543)
+3. Replace `SUPABASE_DB_URL` in `.env.local`
+4. Run:
 
 ```bash
-npm run db:generate
 npm run db:push
 ```
 
-This creates all tables (recipes, users, collections, etc.) in your Supabase project.
-
-To inspect:
+### Inspect tables
 
 ```bash
 npm run db:studio
 ```
 
-Opens a local web UI at http://localhost:4983.
+Opens at https://local.drizzle.studio.
+
+### Seed recipes into the database
+
+Phase 2 — currently the app reads recipes from `src/content/seed-recipes.ts` (in-repo). To move them into Supabase:
+
+```bash
+npm run seed
+```
+
+(Seed script to be added in a future sprint.)
 
 ---
 

@@ -4,7 +4,7 @@ export const SITE = {
   description:
     'Free AI-powered recipe discovery, meal planning, and step-by-step cooking with calories, costs, and pantry-aware suggestions. The smartest free cooking app on the web.',
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://recipecrave.com',
-  ogImage: '/og-default.png',
+  ogImage: '/opengraph-image',
   twitter: '@recipecrave',
   email: 'hello@recipecrave.com',
   publisher: 'GridPoint Digital Solution',

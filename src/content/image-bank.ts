@@ -103,4 +103,32 @@ export const IMG = {
 
   // Mac & cheese
   macAndCheese: `https://images.unsplash.com/photo-1543339308-43e59d6b73a6?${W}`,
+
+  // === Phase D additions ===
+  frenchOnionSoup: `https://images.unsplash.com/photo-1574484284002-952d92456975?${W}`,
+  beefBourguignon: `https://images.unsplash.com/photo-1607330289024-1535c6b4e1c1?${W}`,
+  ratatouille: `https://images.unsplash.com/photo-1540420773420-3366772f4999?${W}`,
+  koreanBibimbap: `https://images.unsplash.com/photo-1553163147-622ab57be1c7?${W}`,
+  kimchi: `https://images.unsplash.com/photo-1607330289024-1535c6b4e1c1?${W}`,
+  koreanFriedChicken: `https://images.unsplash.com/photo-1626804475297-41608ea09aeb?${W}`,
+  bulgogi: `https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?${W}`,
+  paella: `https://images.unsplash.com/photo-1534080564583-6be75777b70a?${W}`,
+  tortillaEspanola: `https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?${W}`,
+  adobo: `https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?${W}`,
+  feijoada: `https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?${W}`,
+  caipirinha: `https://images.unsplash.com/photo-1551024506-0bccd828d307?${W}`,
+  greekSalad: `https://images.unsplash.com/photo-1540420773420-3366772f4999?${W}`,
+  gyros: `https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?${W}`,
+  banhMi: `https://images.unsplash.com/photo-1558030006-450675393462?${W}`,
+  injera: `https://images.unsplash.com/photo-1574484284002-952d92456975?${W}`,
+  bunnyChow: `https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?${W}`,
+  lebaneseHummus: `https://images.unsplash.com/photo-1540420773420-3366772f4999?${W}`,
+  tabbouleh: `https://images.unsplash.com/photo-1505576391880-b3f9d713dc4f?${W}`,
+  shawarma: `https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?${W}`,
+  tomYum: `https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?${W}`,
+  tiramisu: `https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?${W}`,
+  cheesecake: `https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?${W}`,
+  churros: `https://images.unsplash.com/photo-1551782450-a2132b4ba21d?${W}`,
+  eggsBenedict: `https://images.unsplash.com/photo-1565299507177-b0ac66763828?${W}`,
+  panditDal: `https://images.unsplash.com/photo-1565895405138-6c3a1555da6a?${W}`,
 } as const;

@@ -87,10 +87,6 @@ export const metadata: Metadata = {
     },
   },
   category: 'food',
-  icons: {
-    icon: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
-  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

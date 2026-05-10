@@ -101,3 +101,12 @@
 @media (max-width: 640px) {
   .ad-slot { min-height: 250px; }
 }
+
+@media print {
+  body { background: white !important; color: black !important; }
+  header, footer, .ad-slot, [data-noprint] { display: none !important; }
+  a { color: black !important; text-decoration: none !important; }
+  .container { max-width: none !important; padding: 0 !important; }
+  h1, h2, h3 { page-break-after: avoid; }
+  li, p { page-break-inside: avoid; }
+}

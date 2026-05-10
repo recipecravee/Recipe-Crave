@@ -1,12 +1,14 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Clock, Users, Flame, DollarSign, ChefHat, Printer, Share2, Heart } from 'lucide-react';
+import { Clock, Users, Flame, DollarSign, ChefHat } from 'lucide-react';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { RecipeCard } from '@/components/recipe/RecipeCard';
 import { RecipeImage } from '@/components/recipe/RecipeImage';
+import { RecipeActions } from '@/components/recipe/RecipeActions';
+import { ReviewsSection } from '@/components/recipe/ReviewsSection';
+import { StarRating } from '@/components/recipe/StarRating';
 import { AdSlot } from '@/components/site/AdSlot';
 import { getAllRecipes, getRecipeBySlug, getRelatedRecipes } from '@/lib/data/recipes';
 import { recipeJsonLd, faqJsonLd, breadcrumbJsonLd } from '@/lib/seo/structured-data';
@@ -89,6 +91,15 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
           ))}
         </div>
         <h1 className="font-serif text-4xl leading-tight text-ink sm:text-5xl text-balance">{recipe.title}</h1>
+        {recipe.ratingCount > 0 ? (
+          <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
+            <StarRating value={recipe.avgRating} size="md" />
+            <span className="font-medium">{recipe.avgRating.toFixed(1)}</span>
+            <span className="text-ink-muted">
+              ({recipe.ratingCount} review{recipe.ratingCount === 1 ? '' : 's'})
+            </span>
+          </div>
+        ) : null}
         <p className="mt-4 max-w-2xl text-lg text-ink-muted text-pretty">{recipe.description}</p>
 
         <dl className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm">
@@ -123,11 +134,7 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
           </div>
         </dl>
 
-        <div className="mt-6 flex flex-wrap gap-2">
-          <Button variant="default" size="sm"><Heart className="mr-1.5 h-4 w-4" /> Save</Button>
-          <Button variant="outline" size="sm"><Printer className="mr-1.5 h-4 w-4" /> Print</Button>
-          <Button variant="outline" size="sm"><Share2 className="mr-1.5 h-4 w-4" /> Share</Button>
-        </div>
+        <RecipeActions slug={recipe.slug} title={recipe.title} />
       </header>
 
       <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-2xl bg-cream-200">
@@ -252,6 +259,12 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
           ) : null}
         </div>
       </div>
+
+      <ReviewsSection
+        avgRating={recipe.avgRating}
+        ratingCount={recipe.ratingCount}
+        recipeTitle={recipe.title}
+      />
 
       {/* Related */}
       {related.length > 0 ? (

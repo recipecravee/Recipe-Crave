@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Clock, Flame, DollarSign, Users } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { RecipeImage } from '@/components/recipe/RecipeImage';
+import { StarRating } from '@/components/recipe/StarRating';
 import { formatMinutes, formatCurrency } from '@/lib/utils';
 import type { Recipe, RecipeSummary } from '@/types/recipe';
 
@@ -33,6 +34,14 @@ export function RecipeCard({ recipe, priority = false }: Props) {
         <h3 className="font-serif text-lg leading-snug text-ink group-hover:text-terracotta-500">
           {recipe.title}
         </h3>
+        {recipe.ratingCount > 0 ? (
+          <div className="flex items-center gap-2 text-xs text-ink-muted">
+            <StarRating value={recipe.avgRating} size="sm" />
+            <span>
+              {recipe.avgRating.toFixed(1)} ({recipe.ratingCount})
+            </span>
+          </div>
+        ) : null}
         <p className="line-clamp-2 text-sm text-ink-muted">{recipe.description}</p>
         <dl className="flex flex-wrap items-center gap-x-4 gap-y-1 pt-1 text-xs text-ink-muted">
           <div className="flex items-center gap-1">
