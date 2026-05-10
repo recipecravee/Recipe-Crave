@@ -14,7 +14,7 @@
     "db:migrate": "node --env-file=.env.local node_modules/drizzle-kit/bin.cjs migrate",
     "db:push": "node --env-file=.env.local node_modules/drizzle-kit/bin.cjs push",
     "db:studio": "node --env-file=.env.local node_modules/drizzle-kit/bin.cjs studio",
-    "seed": "tsx scripts/seed.ts"
+    "seed": "node --env-file=.env.local --import tsx scripts/seed.ts"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
