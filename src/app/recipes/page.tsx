@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default async function RecipesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; cuisine?: string; diet?: string }>;
+  searchParams: Promise<{ q?: string; cuisine?: string; diet?: string; course?: string }>;
 }) {
   const params = await searchParams;
   const query = params.q?.trim();
@@ -22,6 +22,7 @@ export default async function RecipesPage({
 
   if (params.cuisine) recipes = recipes.filter((r) => r.cuisine === params.cuisine);
   if (params.diet) recipes = recipes.filter((r) => r.dietaryTags.includes(params.diet!));
+  if (params.course) recipes = recipes.filter((r) => r.course === params.course);
 
   return (
     <div className="container py-10 lg:py-14">

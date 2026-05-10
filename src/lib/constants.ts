@@ -12,6 +12,10 @@ export const SITE = {
 } as const;
 
 export const CUISINES = [
+  { slug: 'nigerian', name: 'Nigerian', emoji: '🍲' },
+  { slug: 'ghanaian', name: 'Ghanaian', emoji: '🥘' },
+  { slug: 'jamaican', name: 'Jamaican', emoji: '🌶️' },
+  { slug: 'west-african', name: 'West African', emoji: '🍛' },
   { slug: 'italian', name: 'Italian', emoji: '🍝' },
   { slug: 'mexican', name: 'Mexican', emoji: '🌮' },
   { slug: 'indian', name: 'Indian', emoji: '🍛' },
@@ -22,12 +26,29 @@ export const CUISINES = [
   { slug: 'american', name: 'American', emoji: '🍔' },
   { slug: 'french', name: 'French', emoji: '🥐' },
   { slug: 'middle-eastern', name: 'Middle Eastern', emoji: '🧆' },
-  { slug: 'west-african', name: 'West African', emoji: '🍲' },
   { slug: 'korean', name: 'Korean', emoji: '🍚' },
   { slug: 'vietnamese', name: 'Vietnamese', emoji: '🍲' },
   { slug: 'caribbean', name: 'Caribbean', emoji: '🍹' },
   { slug: 'spanish', name: 'Spanish', emoji: '🥘' },
   { slug: 'greek', name: 'Greek', emoji: '🫒' },
+  { slug: 'south-african', name: 'South African', emoji: '🍖' },
+  { slug: 'ethiopian', name: 'Ethiopian', emoji: '🍛' },
+  { slug: 'brazilian', name: 'Brazilian', emoji: '🥩' },
+] as const;
+
+export const COURSES_NAV = [
+  { slug: 'breakfast', name: 'Breakfast', emoji: '🥞' },
+  { slug: 'lunch', name: 'Lunch', emoji: '🥪' },
+  { slug: 'dinner', name: 'Dinner', emoji: '🍽️' },
+  { slug: 'appetizer', name: 'Small Chops & Appetizers', emoji: '🥟' },
+  { slug: 'soup', name: 'Soups & Stews', emoji: '🍲' },
+  { slug: 'salad', name: 'Salads', emoji: '🥗' },
+  { slug: 'side', name: 'Sides', emoji: '🍚' },
+  { slug: 'snack', name: 'Snacks', emoji: '🍿' },
+  { slug: 'dessert', name: 'Cakes & Desserts', emoji: '🍰' },
+  { slug: 'pastry', name: 'Pastries & Baking', emoji: '🥐' },
+  { slug: 'smoothie', name: 'Smoothies', emoji: '🥤' },
+  { slug: 'drink', name: 'Drinks & Cocktails', emoji: '🍹' },
 ] as const;
 
 export const DIETS = [
@@ -58,6 +79,8 @@ export const COURSES = [
   'salad',
   'snack',
   'dessert',
+  'pastry',
+  'smoothie',
   'drink',
   'sauce',
 ] as const;
@@ -79,9 +102,9 @@ export const OCCASIONS = [
 
 export const NAV_LINKS = [
   { href: '/recipes', label: 'Recipes' },
+  { href: '/categories', label: 'Categories' },
   { href: '/collections', label: 'Collections' },
   { href: '/meal-planner', label: 'Meal Planner' },
   { href: '/pantry-match', label: "What's In My Fridge" },
   { href: '/how-to', label: 'How-To' },
-  { href: '/calculators', label: 'Free Tools' },
 ] as const;
