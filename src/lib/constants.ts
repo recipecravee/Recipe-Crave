@@ -6,8 +6,8 @@ export const SITE = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://recipecrave.com',
   ogImage: '/opengraph-image',
   twitter: '@recipecrave',
-  email: 'hello@recipecrave.com',
-  publisher: 'GridPoint Digital Solution',
+  email: 'recipecravee@gmail.com',
+  publisher: 'RecipeCrave',
   founded: '2026',
 } as const;
 

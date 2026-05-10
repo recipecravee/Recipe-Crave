@@ -161,6 +161,6 @@ See [DEPLOY.md](./DEPLOY.md) for a step-by-step Vercel + Cloudflare setup.
 
 ## License
 
-Proprietary. © 2026 GridPoint Digital Solution. All rights reserved.
+Proprietary. © 2026 RecipeCrave. All rights reserved.
 
 Recipes, photography, and original content may not be republished without written permission. Code structure and patterns are not licensed for redistribution.
