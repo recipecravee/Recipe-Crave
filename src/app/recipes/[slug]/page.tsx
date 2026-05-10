@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Clock, Users, Flame, DollarSign, ChefHat, Printer, Share2, Heart } from 'lucide-react';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { RecipeCard } from '@/components/recipe/RecipeCard';
+import { RecipeImage } from '@/components/recipe/RecipeImage';
 import { AdSlot } from '@/components/site/AdSlot';
 import { getAllRecipes, getRecipeBySlug, getRelatedRecipes } from '@/lib/data/recipes';
 import { recipeJsonLd, faqJsonLd, breadcrumbJsonLd } from '@/lib/seo/structured-data';
@@ -131,20 +131,13 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
       </header>
 
       <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-2xl bg-cream-200">
-        {recipe.heroImage ? (
-          <Image
-            src={recipe.heroImage}
-            alt={recipe.title}
-            fill
-            sizes="(min-width: 1024px) 800px, 100vw"
-            className="object-cover"
-            priority
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center bg-gradient-to-br from-cream-200 via-terracotta-50 to-forest-100">
-            <span className="font-serif text-7xl text-terracotta-300/60">{recipe.title.split(' ').slice(0, 2).join(' ')}</span>
-          </div>
-        )}
+        <RecipeImage
+          src={recipe.heroImage}
+          alt={recipe.title}
+          priority
+          sizes="(min-width: 1024px) 800px, 100vw"
+          fillTitle={recipe.title}
+        />
       </div>
 
       <div className="grid gap-10 lg:grid-cols-[1fr,2fr]">

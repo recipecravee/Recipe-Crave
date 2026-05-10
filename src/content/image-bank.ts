@@ -29,35 +29,35 @@ export const IMG = {
   // Seafood
   salmon: `https://images.unsplash.com/photo-1467003909585-2f8a72700288?${W}`,
   shrimp: `https://images.unsplash.com/photo-1633504581786-316c8002b1b9?${W}`,
-  fish: `https://images.unsplash.com/photo-1535140728325-a4d3707eee94?${W}`,
+  fish: `https://images.unsplash.com/photo-1485921325833-c519f76c4927?${W}`,
 
   // Rice / grains
   friedRice: `https://images.unsplash.com/photo-1603133872878-684f208fb84b?${W}`,
-  jollofRice: `https://images.unsplash.com/photo-1612392062798-2b96be33d4ad?${W}`,
+  jollofRice: `https://images.unsplash.com/photo-1567982047351-76b6f93e38ee?${W}`,
   riceBowl: `https://images.unsplash.com/photo-1546069901-ba9599a7e63c?${W}`,
-  ricePeas: `https://images.unsplash.com/photo-1604908554100-99c5f8c1f9d0?${W}`,
+  ricePeas: `https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?${W}`,
 
   // Curries / stews
   curry: `https://images.unsplash.com/photo-1565557623262-b51c2513a641?${W}`,
   egusi: `https://images.unsplash.com/photo-1505253758473-96b7015fcd40?${W}`,
   redRed: `https://images.unsplash.com/photo-1574484284002-952d92456975?${W}`,
-  pho: `https://images.unsplash.com/photo-1583224994076-ae3479e69e87?${W}`,
+  pho: `https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?${W}`,
   ramen: `https://images.unsplash.com/photo-1569718212165-3a8278d5f624?${W}`,
 
   // Vegetarian / bowls
   chickpeaCurry: `https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?${W}`,
-  falafel: `https://images.unsplash.com/photo-1593001874117-c99c800e3eb7?${W}`,
+  falafel: `https://images.unsplash.com/photo-1540420773420-3366772f4999?${W}`,
   saladBowl: `https://images.unsplash.com/photo-1512621776951-a57141f2eefd?${W}`,
   cucumber: `https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?${W}`,
 
   // Breakfast
   pancakes: `https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?${W}`,
-  plantain: `https://images.unsplash.com/photo-1604908554100-99c5f8c1f9d0?${W}`,
+  plantain: `https://images.unsplash.com/photo-1574484284002-952d92456975?${W}`,
   cornbread: `https://images.unsplash.com/photo-1612203985729-70726954388c?${W}`,
   akara: `https://images.unsplash.com/photo-1559561853-08451507cbe7?${W}`,
 
   // Small chops / appetizers
-  meatPie: `https://images.unsplash.com/photo-1626500155159-cabfe1101873?${W}`,
+  meatPie: `https://images.unsplash.com/photo-1621241441637-ea2d3f59db32?${W}`,
   springRolls: `https://images.unsplash.com/photo-1606471191009-63994c53433b?${W}`,
   samosas: `https://images.unsplash.com/photo-1601050690597-df0568f70950?${W}`,
   puffPuff: `https://images.unsplash.com/photo-1606471191009-63994c53433b?${W}`,

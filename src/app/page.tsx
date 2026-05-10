@@ -51,6 +51,7 @@ export default async function HomePage() {
                 height={400}
                 className="h-full w-full object-contain"
                 priority
+                unoptimized
               />
             </div>
             <div className="absolute -bottom-4 -left-4 max-w-[200px] rounded-2xl bg-white p-4 shadow-lg">

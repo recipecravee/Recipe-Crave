@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { Clock, Flame, DollarSign, Users } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { RecipeImage } from '@/components/recipe/RecipeImage';
 import { formatMinutes, formatCurrency } from '@/lib/utils';
 import type { Recipe, RecipeSummary } from '@/types/recipe';
 
@@ -17,20 +17,12 @@ export function RecipeCard({ recipe, priority = false }: Props) {
   return (
     <Link href={`/recipes/${recipe.slug}`} className="group card-recipe focus-ring">
       <div className="relative aspect-[4/3] bg-cream-200">
-        {recipe.heroImage ? (
-          <Image
-            src={recipe.heroImage}
-            alt={recipe.title}
-            fill
-            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-            priority={priority}
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center bg-gradient-to-br from-cream-200 to-terracotta-100">
-            <span className="font-serif text-5xl text-terracotta-300">RC</span>
-          </div>
-        )}
+        <RecipeImage
+          src={recipe.heroImage}
+          alt={recipe.title}
+          priority={priority}
+          fillTitle={recipe.title}
+        />
         {recipe.dietaryTags.length > 0 ? (
           <Badge variant="secondary" className="absolute left-3 top-3 capitalize">
             {recipe.dietaryTags[0]?.replace('-', ' ')}

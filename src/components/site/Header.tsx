@@ -8,7 +8,7 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-ink/10 bg-cream-100/80 backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between gap-6">
         <Link href="/" aria-label={`${SITE.name} home`} className="flex items-center gap-2 focus-ring rounded-md">
-          <Image src="/logo.png" alt="" width={36} height={36} className="h-9 w-9" priority />
+          <Image src="/logo.png" alt="" width={36} height={36} className="h-9 w-9" priority unoptimized />
           <span className="font-serif text-xl">
             <span className="text-ink">Recipe</span>
             <span className="text-terracotta-400">Crave</span>
