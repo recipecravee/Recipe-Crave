@@ -1,38 +1,56 @@
 import 'server-only';
 import { SEED_RECIPES, SEED_COLLECTIONS } from '@/content/seed-recipes';
+import { HILDA_RECIPES } from '@/content/hilda-baci-recipes';
 import type { Recipe } from '@/types/recipe';
 
 // Data access layer.
 // Reads from seed data at launch. Swap to Drizzle/Supabase queries once
 // the migration is applied and the seed is loaded into the database.
 
+// Combine seed-recipes (79) + Hilda Baci PDF recipes (126), deduped by slug.
+const COMBINED_RECIPES: Recipe[] = (() => {
+  const seen = new Set<string>();
+  const out: Recipe[] = [];
+  for (const r of SEED_RECIPES) {
+    if (seen.has(r.slug)) continue;
+    seen.add(r.slug);
+    out.push(r);
+  }
+  for (const r of HILDA_RECIPES) {
+    if (seen.has(r.slug)) continue;
+    seen.add(r.slug);
+    out.push(r);
+  }
+  return out;
+})();
+
 export async function getAllRecipes(): Promise<Recipe[]> {
-  return SEED_RECIPES;
+  return COMBINED_RECIPES;
 }
 
 export async function getRecipeBySlug(slug: string): Promise<Recipe | null> {
-  return SEED_RECIPES.find((r) => r.slug === slug) ?? null;
+  return COMBINED_RECIPES.find((r) => r.slug === slug) ?? null;
 }
 
 export async function getRecipesByCuisine(cuisine: string): Promise<Recipe[]> {
-  return SEED_RECIPES.filter((r) => r.cuisine === cuisine);
+  return COMBINED_RECIPES.filter((r) => r.cuisine === cuisine);
 }
 
 export async function getRecipesByDiet(diet: string): Promise<Recipe[]> {
-  return SEED_RECIPES.filter((r) => r.dietaryTags.includes(diet));
+  return COMBINED_RECIPES.filter((r) => r.dietaryTags.includes(diet));
 }
 
 export async function getRecipesByCourse(course: string): Promise<Recipe[]> {
-  return SEED_RECIPES.filter((r) => r.course === course);
+  return COMBINED_RECIPES.filter((r) => r.course === course);
 }
 
 export async function getRecipesByOccasion(occasion: string): Promise<Recipe[]> {
-  return SEED_RECIPES.filter((r) => r.occasion === occasion);
+  return COMBINED_RECIPES.filter((r) => r.occasion === occasion);
 }
 
 export async function searchRecipes(query: string): Promise<Recipe[]> {
   const q = query.toLowerCase();
-  return SEED_RECIPES.filter(
+  return COMBINED_RECIPES.filter(
     (r) =>
       r.title.toLowerCase().includes(q) ||
       r.description.toLowerCase().includes(q) ||
@@ -42,7 +60,7 @@ export async function searchRecipes(query: string): Promise<Recipe[]> {
 }
 
 export async function getRelatedRecipes(recipe: Recipe, limit = 6): Promise<Recipe[]> {
-  return SEED_RECIPES.filter((r) => r.slug !== recipe.slug)
+  return COMBINED_RECIPES.filter((r) => r.slug !== recipe.slug)
     .map((r) => ({
       recipe: r,
       score:
@@ -56,11 +74,11 @@ export async function getRelatedRecipes(recipe: Recipe, limit = 6): Promise<Reci
 }
 
 export async function getFeaturedRecipes(limit = 6): Promise<Recipe[]> {
-  return SEED_RECIPES.slice(0, limit);
+  return COMBINED_RECIPES.slice(0, limit);
 }
 
 export async function getTrendingRecipes(limit = 4): Promise<Recipe[]> {
-  return [...SEED_RECIPES].sort((a, b) => b.viewCount - a.viewCount).slice(0, limit);
+  return [...COMBINED_RECIPES].sort((a, b) => b.viewCount - a.viewCount).slice(0, limit);
 }
 
 export type Collection = {

@@ -1,4 +1,5 @@
 import { SEED_RECIPES } from '@/content/seed-recipes';
+import { HILDA_RECIPES } from '@/content/hilda-baci-recipes';
 import { CUISINES, DIETS } from '@/lib/constants';
 
 export type SearchItem = {
@@ -11,6 +12,7 @@ export type SearchItem = {
 
 const PAGES: SearchItem[] = [
   { kind: 'page', title: 'All Recipes', href: '/recipes', hint: 'Browse everything' },
+  { kind: 'page', title: 'Recipes A to Z', href: '/recipes/a-z', hint: 'Alphabetical index', keywords: 'a-z alphabetical index sorted list every recipe food network style' },
   { kind: 'page', title: 'Categories', href: '/categories', hint: 'By course / meal type' },
   { kind: 'page', title: 'Collections', href: '/collections', hint: 'Hand-picked sets' },
   { kind: 'page', title: 'AI Meal Planner', href: '/meal-planner', hint: 'Plan a full week' },
@@ -43,7 +45,11 @@ const CALCULATORS: SearchItem[] = [
   { kind: 'calculator', title: 'Pantry Inventory + Recipe Matcher', href: '/calculators/pantry-inventory-matcher', hint: 'Coming soon', keywords: 'pantry inventory what to cook' },
 ];
 
-const RECIPES: SearchItem[] = SEED_RECIPES.map((r) => ({
+const ALL_INDEXED = [...SEED_RECIPES, ...HILDA_RECIPES].filter(
+  (r, i, arr) => arr.findIndex((x) => x.slug === r.slug) === i,
+);
+
+const RECIPES: SearchItem[] = ALL_INDEXED.map((r) => ({
   kind: 'recipe' as const,
   title: r.title,
   href: `/recipes/${r.slug}`,

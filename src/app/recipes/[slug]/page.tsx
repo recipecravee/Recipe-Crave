@@ -224,6 +224,55 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
             ) : null}
           </div>
 
+          {/* Pro cooking guide (plating, mistakes, substitutions) */}
+          {(() => {
+            const guide = (recipe as unknown as { cookingGuide?: { platingTips: string; mistakesToAvoid: string[]; substitutions: Array<{ from: string; to: string; note?: string }> } }).cookingGuide;
+            if (!guide) return null;
+            return (
+              <section className="mt-10 space-y-6">
+                <div className="rounded-2xl border-2 border-forest-200 bg-gradient-to-br from-forest-50 via-cream-50 to-terracotta-50 p-6 shadow-sm">
+                  <p className="text-xs font-bold uppercase tracking-widest text-forest-600">Plating &amp; presentation</p>
+                  <h3 className="mt-1 font-serif text-2xl font-bold text-ink">How to plate this dish like a pro</h3>
+                  <p className="mt-3 text-base text-ink">{guide.platingTips}</p>
+                </div>
+
+                {guide.mistakesToAvoid.length > 0 ? (
+                  <div className="rounded-2xl border-2 border-amber-200 bg-amber-50 p-6">
+                    <p className="text-xs font-bold uppercase tracking-widest text-amber-700">Common mistakes</p>
+                    <h3 className="mt-1 font-serif text-2xl font-bold text-ink">What to avoid</h3>
+                    <ul className="mt-4 space-y-3">
+                      {guide.mistakesToAvoid.map((m, i) => (
+                        <li key={i} className="flex items-start gap-3 text-sm text-ink">
+                          <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-300 text-xs font-bold text-amber-900">{i + 1}</span>
+                          <span>{m}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+
+                {guide.substitutions.length > 0 ? (
+                  <div className="rounded-2xl border-2 border-ink/5 bg-white p-6 shadow-sm">
+                    <p className="text-xs font-bold uppercase tracking-widest text-terracotta-500">Ingredient swaps</p>
+                    <h3 className="mt-1 font-serif text-2xl font-bold text-ink">Substitutions for diet or availability</h3>
+                    <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                      {guide.substitutions.map((s, i) => (
+                        <div key={i} className="rounded-xl border border-ink/5 bg-cream-50 p-4">
+                          <p className="text-sm font-bold text-ink">
+                            <span className="text-ink-muted line-through">{s.from}</span>
+                            <span className="mx-2 text-terracotta-500">→</span>
+                            <span>{s.to}</span>
+                          </p>
+                          {s.note ? <p className="mt-1 text-xs text-ink-muted">{s.note}</p> : null}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+              </section>
+            );
+          })()}
+
           {/* Nutrition */}
           {recipe.nutrition ? (
             <section className="mt-10">

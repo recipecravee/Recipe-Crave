@@ -58,6 +58,7 @@ const FEATURES: Feature[] = [
 
 const BROWSE_LINKS = [
   { href: '/recipes', title: 'All Recipes', icon: BookOpen },
+  { href: '/recipes/a-z', title: 'A to Z Index', icon: LayoutGrid },
   { href: '/categories', title: 'Categories', icon: LayoutGrid },
   { href: '/collections', title: 'Collections', icon: Heart },
   { href: '/how-to', title: 'How-To Guides', icon: ChefHat },
