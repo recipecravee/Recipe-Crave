@@ -15,6 +15,7 @@
 | `e257ad1` | Handoff doc sixth-pass update |
 | `9e34938` | Handoff doc seventh-pass: DNS root-cause + exact user fix steps |
 | `2311668` | +5 coming-soon calculators: Storage Life Guide, Ingredient Subs Matcher, Baking Ratio, Seasoning by Weight, Temperature Adjuster. Servings Scaler + Temperature Adjuster tagged "Most valuable" (forest badge, terracotta ring). Grid sm:2 → lg:3 cols. |
+| `4ad4025` | Homepage 'Hand-picked collections' adaptive thumbnail grids (mirrors /collections logic, capped first 6). First LIVE calculator: `/calculators/unit-converter` Cups→Grams w/ 60+ ingredients, 10 units, density-accurate via USDA values, search, swap, copy, quick-ref card, localStorage persistence, 15-row common-conversions table, density explainer. Index page marks it "Live now" (forest green) instead of "Coming soon". |
 
 ### Critical bugs solved
 
