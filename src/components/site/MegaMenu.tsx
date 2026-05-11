@@ -112,7 +112,7 @@ export function MegaMenu({ userEmail }: { userEmail?: string }) {
   return (
     <>
       {/* Desktop nav */}
-      <nav aria-label="Main" className="hidden lg:flex items-center gap-7">
+      <nav aria-label="Main" className="hidden lg:flex flex-1 items-center gap-5">
         <div ref={featuresWrapRef} className="relative">
           <button
             type="button"
@@ -192,39 +192,43 @@ export function MegaMenu({ userEmail }: { userEmail?: string }) {
           Collections
           <span className="absolute inset-x-2 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full bg-terracotta-400 transition-transform duration-300 group-hover:scale-x-100" />
         </Link>
-        <Link
-          href="/calculators"
-          className="group relative rounded-md px-2 py-1.5 text-base font-bold text-forest-600 transition-colors hover:text-forest-700 focus-ring"
-        >
-          Kitchen Tools
-          <span className="absolute inset-x-2 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full bg-forest-500 transition-transform duration-300 group-hover:scale-x-100" />
-        </Link>
 
-        <div className="w-64">
-          <SiteSearch variant="inline" placeholder="Search recipes, tools…" />
+        {/* Right-aligned cluster */}
+        <div className="ml-auto flex items-center gap-3">
+          <div className="w-52 xl:w-64">
+            <SiteSearch variant="inline" placeholder="Search…" />
+          </div>
+
+          <Link
+            href="/calculators"
+            className="group inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-forest-500 to-forest-600 px-4 py-2 text-sm font-bold text-white shadow-sm transition-all hover:shadow-md hover:from-forest-600 hover:to-forest-700 focus-ring"
+          >
+            <Calculator className="h-4 w-4 transition-transform group-hover:rotate-6" aria-hidden />
+            Kitchen Tools
+          </Link>
+
+          {userEmail ? (
+            <Link
+              href="/account"
+              className="flex h-11 w-11 items-center justify-center rounded-full bg-terracotta-100 text-terracotta-600 hover:bg-terracotta-200 focus-ring"
+              aria-label="My account"
+              title={userEmail}
+            >
+              <User className="h-5 w-5" aria-hidden />
+            </Link>
+          ) : (
+            <Link
+              href="/login"
+              className="whitespace-nowrap rounded-full bg-terracotta-400 px-5 py-2 text-sm font-bold text-white shadow-sm transition-colors hover:bg-terracotta-500 focus-ring"
+            >
+              Log in
+            </Link>
+          )}
         </div>
-
-        {userEmail ? (
-          <Link
-            href="/account"
-            className="flex h-11 w-11 items-center justify-center rounded-full bg-terracotta-100 text-terracotta-600 hover:bg-terracotta-200 focus-ring"
-            aria-label="My account"
-            title={userEmail}
-          >
-            <User className="h-5 w-5" aria-hidden />
-          </Link>
-        ) : (
-          <Link
-            href="/login"
-            className="whitespace-nowrap rounded-full bg-terracotta-400 px-5 py-2 text-sm font-bold text-white shadow-sm transition-colors hover:bg-terracotta-500 focus-ring"
-          >
-            Log in
-          </Link>
-        )}
       </nav>
 
-      {/* Search + hamburger (desktop + mobile) */}
-      <div className="flex items-center gap-2">
+      {/* Search + hamburger (mobile only — desktop has inline nav) */}
+      <div className="flex items-center gap-2 lg:hidden">
         <SiteSearch variant="icon" />
         <button
           type="button"
