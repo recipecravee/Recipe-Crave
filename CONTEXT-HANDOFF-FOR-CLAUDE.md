@@ -3,26 +3,84 @@
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
 > Last updated: 2026-05-11 — **fifth pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
 
-## 🆕 Sixth pass (2026-05-11, late session — Claude caveman)
+## 🆕 Sixth + Seventh pass (2026-05-11 late session — Claude caveman, hamburger + DNS deep-dive)
 
-**Two critical bugs caught + fixed:**
+### Commits landed this session
 
-21. **Hamburger overlay invisible (CRITICAL UX BUG)** ✅ FIXED in commit `53c7d54`.
-    - Root cause: `<header>` had `backdrop-blur-md` (`backdrop-filter: blur`). Per CSS spec, `backdrop-filter` creates a containing block for fixed-positioned descendants. The overlay (`position:fixed; top:80px; bottom:0`) was nested inside `<header>` via `<MegaMenu>` and got clipped to the header's 80px height. JS audit: `getBoundingClientRect().height === 0` despite `display:block`.
-    - Fix: wrapped overlay JSX in `createPortal(jsx, document.body)` inside `src/components/site/MegaMenu.tsx`. Now renders at body root, outside any backdrop-filter containing block. Bumped z-index 40 → 60 for extra safety. Added `mounted` state to dodge SSR/CSR hydration mismatch.
-    - Verify: open `/`, click hamburger, full-page menu should appear with Features, Browse, Cuisines, Diets, Login CTA.
+| Commit | What |
+|---|---|
+| `9de00ee` | Fifth-pass polish: collections thumbnails, animated nav underline, voice picker, hamburger hardening, account dashboard "Coming Soon" badges |
+| `f8aefba` | Collections adaptive thumbnail grid (1/2/3/4+ layouts based on recipe count) |
+| `53c7d54` | Hamburger overlay portal fix (backdrop-filter containing block trap) |
+| `e257ad1` | Handoff doc sixth-pass update |
 
-22. **Collections page adaptive grid for <4-recipe collections** ✅ FIXED in commit `f8aefba`.
-    - Fancy French Classics (3 recipes) was showing only 1 thumbnail because page logic was binary: `recipes.length >= 4 ? grid : singleImage`. Skipped 2 + 3 recipe cases.
-    - Fix in `src/app/collections/page.tsx`: replaced binary check with switch on `withImages.length`. 1 → full hero; 2 → 2-col split; 3 → 1 tall + 2 stacked; 4+ → 2×2 grid.
+### Critical bugs solved
 
-23. **DNS for recipecrave.com** verified in this session.
-    - Vercel domains: `recipecrave.com` + `www` both show blue check + "DNS Change Recommended" (informational — old A 76.76.21.21 still works; Vercel suggests apex CNAME `0c1011e26eabdd00.vercel-dns-017.com` for new IP-range expansion).
-    - User reported `ERR_QUIC_PROTOCOL_ERROR` opening recipecrave.com in Chrome. That's client-side QUIC cache, NOT a server-side problem.
-    - User fix: clear Chrome QUIC cache (`chrome://net-internals/#sockets` → Flush socket pools) OR test in incognito OR wait ~10 min for browser cache TTL.
-    - DNS via 1.1.1.1: A `recipecrave.com` → `76.76.21.21`, CNAME `www` → `cname.vercel-dns.com` (both resolving correctly).
+**21. Hamburger overlay invisible** ✅ commit `53c7d54`
+- Root cause: `<header>` had `backdrop-blur-md` → `backdrop-filter: blur(12px)`. Per CSS spec, any element with `backdrop-filter` creates a containing block for `position: fixed` descendants. The overlay (`fixed; top:80; bottom:0`) was nested inside `<header>` via `<MegaMenu>` and got clipped to the header's 80px height.
+- Symptom: `getBoundingClientRect().height === 0` despite `display:block`, `visibility:visible`, full innerHTML (16785 chars).
+- Diagnosis path: opened live site, clicked hamburger, ran JS audit that walked computed styles up the parent chain. Found `<header>` had `backdropFilter: blur(12px)`. Confirmed via MDN spec.
+- Fix: wrapped overlay JSX in `createPortal(jsx, document.body)` from `react-dom`. Now renders at body root, outside any backdrop-filter containing block.
+- Extra hardening: bumped overlay z-index `40 → [60]` (header is z-40, search/burger button is z-50). Added `const [mounted, setMounted] = useState(false)` + `useEffect(() => setMounted(true), [])` guard to avoid SSR/CSR hydration mismatch when portal target (`document.body`) isn't available during SSR.
 
-24. **Live deploy chain verified** — Vercel auto-deploys on push to `main`. Production current = `53c7d54` (sixth-pass), latest "Ready" build ~1m 21s.
+**22. Collections page only showed 1 thumb for <4-recipe collections** ✅ commit `f8aefba`
+- Page logic was binary: `if (thumbs.length >= 4) <2x2-grid> else <single-bigImage>`. Skipped 2 and 3 recipe cases.
+- Affected: `Fancy French Classics` (3 recipes: French Onion Soup, Beef Bourguignon, Ratatouille).
+- Fix in `src/app/collections/page.tsx`: switch on `withImages.length`:
+  - 1 → full hero
+  - 2 → 2-col split
+  - 3 → 1 tall left + 2 stacked right
+  - 4+ → 2×2 grid (original)
+
+### 🚨 DNS for recipecrave.com — NOT WORKING ENDPOINT-WIDE (action required)
+
+Status: domain verified in Vercel ✅, SSL provisioned ✅, DNS resolves via 1.1.1.1 ✅. BUT `https://recipecrave.com` returns `ECONNREFUSED` to `76.76.21.21:443` from BOTH the user's Chrome AND my Node test. The legacy Vercel IP is no longer accepting connections from typical client networks (Vercel's IP-range expansion).
+
+**THE FIX (user must do — Cloudflare API token lacks DNS scope, dashboard kept hanging mid-session):**
+
+1. Open https://dash.cloudflare.com/9d977b053cb41ac4d3434eb29a8ab2e7/recipecrave.com/dns/records
+2. Find the A record: `recipecrave.com → 76.76.21.21` (Proxy: DNS only / gray cloud)
+3. Click **Edit** → change Type from `A` to `CNAME`
+4. Change Target to: `0c1011e26eabdd00.vercel-dns-017.com`
+5. Keep Proxy status: **DNS only (gray cloud)** — orange cloud breaks Vercel SSL
+6. Save
+7. Wait 1–5 minutes for propagation
+8. Visit `https://recipecrave.com` — should load with green padlock
+
+The exact value `0c1011e26eabdd00.vercel-dns-017.com` was shown in Vercel's "Manual setup" panel at https://vercel.com/bracknell-s-projects/recipe-crave/settings/domains under recipecrave.com → DNS Change Recommended → Manual setup. Vercel auto-generates this hostname per project; do not substitute.
+
+**Verified working alternative right now:** `https://recipe-crave.vercel.app` — fully live, latest deploy `53c7d54`. Use this URL until the apex CNAME swap above is done.
+
+### Why earlier session said "domain live" but it's not
+
+Earlier handoff entries (~mid-session) claimed recipecrave.com was live. That was based on Vercel's blue-check status which only verifies the *domain ownership + record presence*, not end-to-end reachability. Vercel doesn't actively probe the IP for client-facing connectivity. The A record points to a Vercel IP that has since become unroutable from this user's network and from generic IPv4 internet egress. Vercel's own dashboard explicitly says: "Old records will continue to work but we recommend you use the new ones." Translation: old records work for *some* networks, new CNAME works for all networks. Swap is mandatory in practice.
+
+### Cloudflare dashboard timeout note for next Claude
+
+During this session, I navigated to `dash.cloudflare.com/.../recipecrave.com/dns/records` four times and each time the page stuck on the loading spinner indefinitely (likely Cloudflare's anti-automation soft-block on extension-driven Chrome sessions). Cookie banner did appear once; clicking "Allow All" didn't break the loop. If the next Claude can't get the dashboard to load either, ask the user to:
+
+1. Either do the DNS swap manually (instructions above)
+2. Or generate a new Cloudflare API token with `Zone.DNS:Edit` permission for `recipecrave.com` and paste it in chat. The current token (`cfut_hxc…`) only has Workers AI scope (verified via `/user/tokens/verify` returning valid but zero zones listed).
+
+### Live deploy chain status
+
+| Surface | Status | URL |
+|---|---|---|
+| GitHub `main` branch | ✅ `e257ad1` pushed | https://github.com/recipecravee/Recipe-Crave |
+| Vercel auto-deploy | ✅ Ready on each push, ~1m 21s build time | https://vercel.com/bracknell-s-projects/recipe-crave |
+| `recipe-crave.vercel.app` | ✅ Live, latest commit serving | https://recipe-crave.vercel.app |
+| `recipecrave.com` | ❌ A record unreachable. Needs CNAME swap | (see DNS section above) |
+| `www.recipecrave.com` | ⚠️ CNAME points to `cname.vercel-dns.com` (verified resolving but parent apex broken) | n/a until apex fixed |
+
+### Pickup checklist for next Claude
+
+1. Read this section first.
+2. Ask user: "Did the apex CNAME swap happen?"
+   - If YES: verify `curl -sI https://recipecrave.com` returns 200 + Vercel headers. Then update this doc to mark DNS section ✅.
+   - If NO: re-deliver the DNS fix instructions (5-step list above) until done.
+3. Once `recipecrave.com` resolves, also confirm `https://www.recipecrave.com` redirects correctly (Vercel handles this).
+4. Run `npm run typecheck && npm run build` from repo root to confirm fresh build still works.
+5. Spot-check the live site for: hamburger menu opens with full overlay, /collections shows thumbnails for all 13 collections including Fancy French's 3-up adaptive grid.
 
 ## 🗺 Quick index — what's in this file
 
