@@ -19,7 +19,7 @@ export default async function HomePage() {
         <div className="container relative grid gap-10 py-16 lg:grid-cols-2 lg:items-center lg:py-24">
           <div>
             <Badge variant="secondary" className="mb-4">
-              <Sparkles className="mr-1.5 h-3 w-3" aria-hidden /> Free forever — no paywall
+              <Sparkles className="mr-1.5 h-3 w-3" aria-hidden /> Free forever. no paywall
             </Badge>
             <h1 className="text-balance font-serif text-4xl leading-tight text-ink sm:text-5xl lg:text-6xl">
               The AI cooking coach that turns <span className="text-terracotta-400">what you have</span> into{' '}
@@ -205,7 +205,7 @@ export default async function HomePage() {
             Build a week of meals in 30 seconds. Free, forever, no signup wall in your way.
           </p>
           <Button size="lg" variant="default" asChild className="mt-8 bg-terracotta-400 hover:bg-terracotta-500">
-            <Link href="/meal-planner">Plan my week — it&apos;s free</Link>
+            <Link href="/meal-planner">Plan my week. it&apos;s free</Link>
           </Button>
         </div>
       </section>

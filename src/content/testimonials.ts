@@ -56,7 +56,7 @@ export const TESTIMONIALS: Testimonial[] = [
     name: 'Olamide A.',
     role: 'Working dad, meal prepper',
     location: 'Lagos, Nigeria',
-    body: 'I cook five meals every Sunday for the week. The meal planner asks what I have, what I want, and gives me a grocery list I actually use. Cost is shown in naira too — incredible attention to detail.',
+    body: 'I cook five meals every Sunday for the week. The meal planner asks what I have, what I want, and gives me a grocery list I actually use. Cost is shown in naira too. incredible attention to detail.',
     rating: 5,
     avatarColor: '#2F5D50',
   },

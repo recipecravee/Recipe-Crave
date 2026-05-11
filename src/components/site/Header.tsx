@@ -75,17 +75,29 @@ export async function Header() {
         </div>
       </div>
 
-      <nav aria-label="Mobile" className="container flex gap-4 overflow-x-auto pb-3 pt-1 scrollbar-hide lg:hidden">
-        {NAV_LINKS.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className="whitespace-nowrap text-xs font-medium text-ink-muted transition-colors hover:text-ink"
-          >
-            {link.label}
-          </Link>
-        ))}
-      </nav>
+      <div className="relative lg:hidden">
+        <nav
+          aria-label="Mobile"
+          className="flex gap-2 overflow-x-auto px-4 pb-3 pt-1 scrollbar-hide"
+          style={{ WebkitOverflowScrolling: 'touch' }}
+        >
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="shrink-0 rounded-full border border-ink/10 bg-white px-3.5 py-1.5 text-xs font-medium text-ink-muted shadow-sm transition-colors hover:border-terracotta-400 hover:text-terracotta-500"
+            >
+              {link.label}
+            </Link>
+          ))}
+          <div className="shrink-0 w-4" aria-hidden />
+        </nav>
+        {/* Right-edge fade hint so users know it scrolls */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-cream-100/95 to-transparent"
+        />
+      </div>
     </header>
   );
 }

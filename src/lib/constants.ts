@@ -34,6 +34,16 @@ export const CUISINES = [
   { slug: 'south-african', name: 'South African', emoji: '🍖' },
   { slug: 'ethiopian', name: 'Ethiopian', emoji: '🍛' },
   { slug: 'brazilian', name: 'Brazilian', emoji: '🥩' },
+  { slug: 'russian', name: 'Russian', emoji: '🥟' },
+  { slug: 'canadian', name: 'Canadian', emoji: '🍁' },
+  { slug: 'indonesian', name: 'Indonesian', emoji: '🍚' },
+  { slug: 'german', name: 'German', emoji: '🥨' },
+  { slug: 'turkish', name: 'Turkish', emoji: '🌯' },
+  { slug: 'polish', name: 'Polish', emoji: '🥟' },
+  { slug: 'argentinian', name: 'Argentinian', emoji: '🥩' },
+  { slug: 'peruvian', name: 'Peruvian', emoji: '🌶️' },
+  { slug: 'egyptian', name: 'Egyptian', emoji: '🫓' },
+  { slug: 'australian', name: 'Australian', emoji: '🦘' },
 ] as const;
 
 export const COURSES_NAV = [
