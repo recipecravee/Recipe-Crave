@@ -149,7 +149,7 @@ export default async function HomePage() {
                       fill
                       sizes="(min-width: 1024px) 400px, 100vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
+                    loading="eager" />
                   ) : thumbs.length === 2 ? (
                     <div className="grid h-full w-full grid-cols-2 gap-0.5">
                       {thumbs.map((r) => (
@@ -160,20 +160,20 @@ export default async function HomePage() {
                             fill
                             sizes="(min-width: 1024px) 200px, 50vw"
                             className="object-cover transition-transform duration-500 group-hover:scale-105"
-                          />
+                          loading="eager" />
                         </div>
                       ))}
                     </div>
                   ) : thumbs.length === 3 ? (
                     <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-0.5">
                       <div className="relative row-span-2 h-full w-full overflow-hidden">
-                        <Image src={thumbs[0]!.heroImage!} alt="" fill sizes="(min-width: 1024px) 200px, 50vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                        <Image src={thumbs[0]!.heroImage!} alt="" fill sizes="(min-width: 1024px) 200px, 50vw" className="object-cover transition-transform duration-500 group-hover:scale-105" loading="eager" />
                       </div>
                       <div className="relative h-full w-full overflow-hidden">
-                        <Image src={thumbs[1]!.heroImage!} alt="" fill sizes="(min-width: 1024px) 200px, 50vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                        <Image src={thumbs[1]!.heroImage!} alt="" fill sizes="(min-width: 1024px) 200px, 50vw" className="object-cover transition-transform duration-500 group-hover:scale-105" loading="eager" />
                       </div>
                       <div className="relative h-full w-full overflow-hidden">
-                        <Image src={thumbs[2]!.heroImage!} alt="" fill sizes="(min-width: 1024px) 200px, 50vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                        <Image src={thumbs[2]!.heroImage!} alt="" fill sizes="(min-width: 1024px) 200px, 50vw" className="object-cover transition-transform duration-500 group-hover:scale-105" loading="eager" />
                       </div>
                     </div>
                   ) : (
@@ -186,7 +186,7 @@ export default async function HomePage() {
                             fill
                             sizes="(min-width: 1024px) 200px, 50vw"
                             className="object-cover transition-transform duration-500 group-hover:scale-105"
-                          />
+                          loading="eager" />
                         </div>
                       ))}
                     </div>
