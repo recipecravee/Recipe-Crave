@@ -1,7 +1,98 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-11 — **ELEVENTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+> Last updated: 2026-05-11 — **TWELFTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+
+## 🆕 TWELFTH pass (2026-05-11 — Hilda Baci Recipe Manual import + A-Z index + cooking-guide sections)
+
+### Commit landed this pass
+
+| Commit | What |
+|---|---|
+| `a10a644` | **MAJOR content drop**. Parsed `Hilda Baci Recipe Manual.pdf` (130 pages, 5MB) into 126 unique recipes across 14 categories. Built A-Z index page at `/recipes/a-z` (Food-Network-style). Extended recipe detail page with three new "pro cooking guide" sections (Plating & presentation, Common mistakes, Substitutions). Added 62 new Unsplash thumbnails to image-bank.ts. Wired everything into search index + mobile menu. Total live recipe count: ~203 (79 seed + 126 Hilda, deduped). |
+
+### Source + tooling
+
+User-provided PDF: `C:\Users\cbnot\OneDrive\Documents\my apps idea\Hilda Baci Recipe Manual.pdf`.
+
+Two-stage extraction pipeline (helper scripts at repo root, kept for re-runs):
+1. `parse-hilda-pdf.py` — reads `hilda-baci.txt` (poppler `pdftotext -layout` dump), walks every category in the menu (TOC at PDF pages 3-5), fuzzy-matches each menu item to an ALL-CAPS title block in the body, extracts description paragraph + numbered INGREDIENTS list. 165/190 matched, 126 unique after dedupe. Output: `hilda-recipes.json`.
+2. `gen-hilda-ts.py` — emits `src/content/hilda-baci-recipes.ts` from JSON. Per-recipe: standard Recipe fields populated with category-level defaults (prep/cook times, cost, servings, difficulty, cuisine inference) PLUS new `cookingGuide` metadata (plating tips per category, 3 mistakes-to-avoid per category, 3 substitutions per category — synthesised from Modernist Cuisine / ATK / Serious Eats / Marco Pierre White frameworks).
+
+Image bank: third helper `fetch-hilda-images.py` runs 67 Unsplash search queries via curl subprocess (urllib gets 401, curl with default UA works). Returns first non-premium photo ID per dish. 62/67 hit, 5 fallback to closest existing key (alfredo→pinkPasta, mashedPotatoes→generic, ofada→coconutJollof, subwaySandwich→generic sandwich, tigerNut→generic).
+
+### Files this pass
+
+```
+A  src/content/hilda-baci-recipes.ts            8627 lines — 126 GuideRecipe entries + HILDA_CATEGORIES const + types
+A  src/app/recipes/a-z/page.tsx                 ~165 lines — Food-Network-style A-Z index
+M  src/app/recipes/[slug]/page.tsx              +49 lines — 3 new cookingGuide sections (plating / mistakes / subs)
+M  src/components/site/MegaMenu.tsx             +1 — A-Z added to BROWSE_LINKS
+M  src/content/image-bank.ts                    +71 — 62 new keys + 5 fallbacks
+M  src/lib/data/recipes.ts                      +27 / -11 — COMBINED_RECIPES = seed + hilda deduped
+M  src/lib/search-index.ts                      +6 — A-Z page entry + ALL_INDEXED includes Hilda
+```
+
+Helper scripts (gitignored / left in repo root, not committed):
+- `F:/MY OWN APP RECEIP CRAVE/parse-hilda-pdf.py`
+- `F:/MY OWN APP RECEIP CRAVE/gen-hilda-ts.py`
+- `F:/MY OWN APP RECEIP CRAVE/fetch-hilda-images.py`
+- `F:/MY OWN APP RECEIP CRAVE/hilda-baci.txt` (pdftotext dump)
+- `F:/MY OWN APP RECEIP CRAVE/hilda-recipes.json` (parsed intermediate)
+- `F:/MY OWN APP RECEIP CRAVE/hilda-image-bank-additions.txt` (image search output)
+
+### CookingGuide type
+
+```ts
+type CookingGuideMeta = {
+  platingTips: string;
+  mistakesToAvoid: string[];
+  substitutions: Array<{ from: string; to: string; note?: string }>;
+};
+type GuideRecipe = Recipe & { cookingGuide: CookingGuideMeta };
+```
+
+Detail page reads `cookingGuide` via runtime cast `(recipe as unknown as { cookingGuide?: ... }).cookingGuide` so legacy SEED_RECIPES entries that don't have the field skip cleanly. To migrate seed recipes later, populate `cookingGuide` on each Recipe and the sections will appear automatically.
+
+### Verified live
+
+| Surface | Status |
+|---|---|
+| `/recipes/a-z` at 1280px | ✅ 203 recipes / 25 letter sections / 27 nav letters (A-Z + #) |
+| `/recipes/bolognese-sauce` (Hilda) | ✅ H1 renders, plating / mistakes / subs sections all present |
+| Typecheck `npx tsc --noEmit` | ✅ clean |
+| GitHub push | ✅ `a10a644` pushed to `recipecravee/Recipe-Crave:main` |
+| Vercel auto-deploy | ⏳ rebuilding now (~1 min after push) |
+
+### Self-score for this pass
+
+| Dimension | Score | Note |
+|---|---|---|
+| Scope coverage | 8/10 | 126 of 190 PDF menu items integrated. 25 menu items still unmatched (alias gaps); 39 are cross-category dupes already covered once. |
+| Data fidelity | 6/10 | Names, descriptions, ingredient names extracted accurately from PDF. Quantities + step-by-step methods are synthesised templates (PDF lacks them in source). |
+| Image accuracy | 7/10 | 62 fresh Unsplash matches via dish-specific queries. ~10 may be loose matches. Refine by swapping photo IDs as user flags. |
+| Architecture | 9/10 | Clean separation: HILDA_RECIPES is its own module, combined via dedupe in data layer. cookingGuide field is forward-compatible — old recipes work without it. |
+| UX polish | 8/10 | A-Z page has sticky letter nav, gradient letter badges, thumb-prefixed cards. Detail-page cookingGuide cards use distinct color systems (forest plating / amber mistakes / cream subs). |
+| Performance | 9/10 | Server-rendered pages, static-friendly. No runtime DB calls. Image lazy-loading still works via Next/Image. |
+| Mobile responsive | 8/10 | A-Z grid drops to single column on mobile. Letter nav scrolls horizontally if needed. Sticky top still fights with header z-index — sticky offset `top-20` matches header height. |
+| Tests / verification | 7/10 | Typecheck clean + live preview confirmed 203 recipes + 3 detail sections render. No unit tests for the parser scripts. |
+| **Overall** | **7.75/10** | Strong feature delivery with documented data-quality caveats. Production-shippable. |
+
+### Open gaps + recommended follow-up
+
+1. **25 menu items still need alias matches** in `parse-hilda-pdf.py` `SPELLING_ALIASES` dict (e.g. `LASAGNA` ↔ `LASAGNE`, `SHARWAMA` ↔ `SHAWARMA`, `EDIKA IKONG` ↔ `EDIKAIKONG`). Re-run pipeline to add them.
+2. **Ingredient quantities are missing** — every Hilda ingredient is `qty: 1, unit: 'as recipe'`. Source PDF doesn't have grams/cups. To fix: watch Hilda Baci's Record Breaking Online Class videos and transcribe quantities into a YAML override file, or use Gemini to extract from video transcripts.
+3. **Instructions are 4-step category templates** — not per-recipe. Replace with real per-dish steps from the class video.
+4. **5 Unsplash images are fallbacks** — alfredo / mashedPotatoes / ofada / subwaySandwich / tigerNut. Replace with locally-uploaded JPGs at `/public/images/<key>.jpg` and update image-bank.ts when better photos available.
+5. **Supabase reseed needed** — Hilda recipes are static-seed-only. To push into prod DB, extend `scripts/seed.ts` to also iterate `HILDA_RECIPES` from `@/content/hilda-baci-recipes`. Or skip if SSG-only display is enough.
+
+### Pickup checklist for next Claude
+
+1. Hilda Baci import landed. 203 recipes live, 14 categories.
+2. A-Z index renders all 203 at `/recipes/a-z`.
+3. Detail page has plating + mistakes + subs sections (only on Hilda recipes for now).
+4. Vercel deploy on commit `a10a644`. URL: https://recipecrave.com/recipes/a-z and https://recipecrave.com/recipes/bolognese-sauce.
+5. Next default build: Seasoning by Weight Calculator (per ELEVENTH pass pickup). OR backfill ingredient quantities for Hilda recipes if user prefers content depth.
 
 ## 🆕 ELEVENTH pass (2026-05-11 — desktop nav restructure + Baking Ratio Calculator live)
 
