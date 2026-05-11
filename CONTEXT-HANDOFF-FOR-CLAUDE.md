@@ -16,6 +16,7 @@
 | `9e34938` | Handoff doc seventh-pass: DNS root-cause + exact user fix steps |
 | `2311668` | +5 coming-soon calculators: Storage Life Guide, Ingredient Subs Matcher, Baking Ratio, Seasoning by Weight, Temperature Adjuster. Servings Scaler + Temperature Adjuster tagged "Most valuable" (forest badge, terracotta ring). Grid sm:2 → lg:3 cols. |
 | `4ad4025` | Homepage 'Hand-picked collections' adaptive thumbnail grids (mirrors /collections logic, capped first 6). First LIVE calculator: `/calculators/unit-converter` Cups→Grams w/ 60+ ingredients, 10 units, density-accurate via USDA values, search, swap, copy, quick-ref card, localStorage persistence, 15-row common-conversions table, density explainer. Index page marks it "Live now" (forest green) instead of "Coming soon". |
+| `608bc90` | Homepage collections thumbnails STILL didn't load on prod despite 4ad4025: Next/Image lazy-load got stuck in viewport. JS audit showed src valid, fetch returns 200 JPEG, naturalWidth 0, complete:false. Loading=lazy with nested overflow:hidden + aspect-ratio + position:absolute fill confused IntersectionObserver. Fix: added `loading="eager"` to all 6 Image elements in homepage Collections section. Also added 2 more coming-soon calculators: realtime-recipe-scaler, pantry-inventory-matcher. Now 11 tools listed on /calculators (1 live, 10 coming-soon). |
 
 ### Critical bugs solved
 
