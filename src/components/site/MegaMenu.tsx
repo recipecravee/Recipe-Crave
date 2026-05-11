@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -65,8 +66,14 @@ const BROWSE_LINKS = [
 export function MegaMenu({ userEmail }: { userEmail?: string }) {
   const [open, setOpen] = useState(false);
   const [featuresOpen, setFeaturesOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const featuresWrapRef = useRef<HTMLDivElement>(null);
+
+  // Avoid SSR mismatch when portaling
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -255,9 +262,10 @@ export function MegaMenu({ userEmail }: { userEmail?: string }) {
         </button>
       </div>
 
-      {/* Fullscreen overlay menu (desktop + mobile) */}
-      {open ? (
-        <div id="primary-menu-overlay" role="dialog" aria-modal="true" aria-label="Main navigation" className="animate-fade-in fixed inset-x-0 top-20 bottom-0 z-40 overflow-y-auto overscroll-contain bg-gradient-to-b from-cream-100 via-cream-50 to-cream-200 pb-safe backdrop-blur-sm">
+      {/* Fullscreen overlay menu (desktop + mobile) — portaled to body to escape header's backdrop-filter containing block */}
+      {open && mounted
+        ? createPortal(
+        <div id="primary-menu-overlay" role="dialog" aria-modal="true" aria-label="Main navigation" className="animate-fade-in fixed inset-x-0 top-20 bottom-0 z-[60] overflow-y-auto overscroll-contain bg-gradient-to-b from-cream-100 via-cream-50 to-cream-200 pb-safe backdrop-blur-sm">
           <div className="container py-8">
             <p className="mb-4 font-serif text-2xl font-bold text-ink">
               What <span className="text-terracotta-400">RecipeCrave</span> does
@@ -339,8 +347,10 @@ export function MegaMenu({ userEmail }: { userEmail?: string }) {
               )}
             </div>
           </div>
-        </div>
-      ) : null}
+        </div>,
+        document.body,
+      )
+        : null}
     </>
   );
 }
