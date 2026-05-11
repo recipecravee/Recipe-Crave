@@ -13,6 +13,8 @@
 | `f8aefba` | Collections adaptive thumbnail grid (1/2/3/4+ layouts based on recipe count) |
 | `53c7d54` | Hamburger overlay portal fix (backdrop-filter containing block trap) |
 | `e257ad1` | Handoff doc sixth-pass update |
+| `9e34938` | Handoff doc seventh-pass: DNS root-cause + exact user fix steps |
+| `2311668` | +5 coming-soon calculators: Storage Life Guide, Ingredient Subs Matcher, Baking Ratio, Seasoning by Weight, Temperature Adjuster. Servings Scaler + Temperature Adjuster tagged "Most valuable" (forest badge, terracotta ring). Grid sm:2 → lg:3 cols. |
 
 ### Critical bugs solved
 
