@@ -1,7 +1,84 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-11 — **TENTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+> Last updated: 2026-05-11 — **ELEVENTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+
+## 🆕 ELEVENTH pass (2026-05-11 — desktop nav restructure + Baking Ratio Calculator live)
+
+### Commits landed this pass
+
+| Commit | What |
+|---|---|
+| `60c33c9` | **One-line desktop nav with right-aligned Kitchen Tools pill**. User complaint: nav cramped, Kitchen Tools buried, doesn't stand out. Restructured MegaMenu desktop nav: left cluster (Features ▾, Recipes, Categories, Collections) + `ml-auto` right cluster (search 208px / 256px at xl + Kitchen Tools forest-gradient pill w/ Calculator icon + Login terracotta pill). Search input shrunk from `w-64` → `w-52 xl:w-64` for breathing room. Kitchen Tools no longer a plain forest text-link — now a proper button-pill matching Login styling (gradient `from-forest-500 to-forest-600`, white text, shadow, Calculator icon w/ `group-hover:rotate-6`). Restored `lg:hidden` on hamburger column so desktop has no redundant control. Mobile (`<1024px`) unchanged: logo + search icon + hamburger pill; hamburger overlay still shows Kitchen Tools hero card. Verified at 1280 (7 items in line, no overflow, no scroll) and 375 (nav hidden, hamburger visible, overlay opens with 35 links). |
+| `e0e4ecb` | **Sixth LIVE calculator: Baking Ratio Calculator** at `/calculators/baking-ratio`. Baker's-percentage scaling tool: input target flour weight (g) + pick preset → get exact grams for water/milk/eggs/fat/sugar/starter/salt/yeast. Hydration slider with per-preset min/max clamp. 10 built-in presets across 4 categories: lean-bread, enriched-bread, pizza-napoletana, pizza-newyork, sourdough, brioche, focaccia, bagels, pie-crust, pancake-batter. Custom-preset save flow (localStorage `recipecrave-baking-presets`), per-card delete, terracotta-themed section under built-ins. Quick-pick flour chips: 250 / 500 / 750 / 1000 / 1500g. Flour weight + last-selected-preset also persisted (`recipecrave-baking-flour`, `recipecrave-baking-preset`). Portion math grid: 1 large / 2 medium / 4 small with per-piece weight. Preset notes in amber callout. Educational sections: how baker's percentage works, hydration cheat sheet (5 tiers), salt/yeast/starter ranges, sources (King Arthur, Serious Eats, ATK). |
+
+### New files this pass
+
+```
+A  src/content/baking-ratios.ts                    (10 presets + scalePreset + roundIngredient)
+A  src/app/calculators/baking-ratio/page.tsx       (server + metadata + edu)
+A  src/app/calculators/baking-ratio/BakingRatio.tsx (client component, ~340 lines)
+M  src/app/calculators/page.tsx                    (baking-ratio → live: true)
+M  src/components/site/Footer.tsx                  (strip: "5 live tools" → "6 live tools")
+M  src/lib/search-index.ts                         (hint: "Live · 10 presets" + expanded keywords)
+M  src/components/site/MegaMenu.tsx                (desktop nav restructure — separate commit 60c33c9)
+M  CONTEXT-HANDOFF-FOR-CLAUDE.md
+```
+
+### Math reference (so next Claude can verify or extend)
+
+```ts
+// All percentages are of flour weight. Flour = 100% always.
+type BakingRatioPreset = {
+  slug: string;
+  name: string;
+  description: string;
+  category: 'bread' | 'pizza' | 'enriched' | 'pastry';
+  hydration: number;        // water %
+  salt: number;             // salt %
+  yeast?: number;           // instant yeast %
+  starter?: number;         // sourdough levain %
+  fat?: number;             // butter / oil %
+  sugar?: number;           // sugar / honey %
+  eggs?: number;            // eggs %
+  milk?: number;            // milk % (replaces some water)
+  notes?: string;
+  hydrationRange?: { min: number; max: number };
+};
+
+// scalePreset(preset, flourGrams, hydrationOverride?) -> ScaledRecipe
+// roundIngredient(grams, 'flour' | 'micro' | 'normal') -> grams snapped to 5g / 0.1g / 1g
+```
+
+Verified live: lean-bread @ 500g flour, 70% hydration = 500F + 350W + 10S + 4Y = 864g total. Sourdough @ 500g, 75% = 500F + 375W + 100starter + 10S = 985g total.
+
+### Calculator inventory update
+
+**LIVE (6 / 11):**
+1. `/calculators/unit-converter` — Cups→Grams (60+ ingredients)
+2. `/calculators/temperature-adjuster` — Oven temp converter
+3. `/calculators/realtime-recipe-scaler` — Recipe scaler w/ cost
+4. `/calculators/storage-life-guide` — 75+ foods
+5. `/calculators/ingredient-substitutions` — 60+ ingredients
+6. `/calculators/baking-ratio` — 10 baker's-percentage presets ← NEW
+
+**COMING SOON (5 / 11):**
+7. Recipe Cost Calculator
+8. Calorie Estimator
+9. Servings Scaler (still pending merge decision)
+10. Seasoning by Weight Calculator ← **next recommended build**
+11. Pantry Inventory + Recipe Matcher (DB-heavy, last)
+
+### Tailwind cache footgun (recurring)
+
+When `lg:hidden` first appeared in source this session, Tailwind dev compiler did NOT pick it up — the class was completely absent from compiled CSS, leaving the hamburger visible on desktop. Spent ~5 min fighting this. **Cause**: Tailwind only generates utilities that appear in scanned source files; the codebase had **zero prior `lg:hidden` usage**, so the JIT had never generated it. Fix that worked: save the file, wait ~6 sec, hard-reload browser with cache-bust query param. Arbitrary variants (`[@media(min-width:1024px)]:hidden`) also failed to compile in this state — only restoring the plain `lg:hidden` and letting the watcher re-tick produced output. **If you hit this again**: touch the file (any tiny edit), wait ~6s, reload with bust param. Don't blame your CSS — blame the watcher.
+
+### Pickup checklist for next Claude
+
+1. 6 calculators live, 5 coming-soon
+2. Desktop nav now sits on one line at lg+. If user complains again, check viewport width and whether `lg:hidden` is in compiled CSS via `Array.from(document.styleSheets[0].cssRules).find(r => r.cssText?.includes('lg\\:hidden'))` in console
+3. Next default build: **Seasoning by Weight Calculator** (`/calculators/seasoning-by-weight`) — full spec preserved in EIGHTH-pass section below
+4. Continue updating handoff at every commit
 
 ## 🆕 TENTH pass (2026-05-11 — Ingredient Substitution Matcher live)
 
