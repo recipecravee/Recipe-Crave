@@ -11,13 +11,15 @@ export const metadata: Metadata = {
 export default function PantryMatchPage() {
   return (
     <div className="container py-10 lg:py-14">
-      <header className="mb-8 max-w-2xl">
-        <h1 className="font-serif text-4xl text-ink sm:text-5xl">What&apos;s in my fridge?</h1>
-        <p className="mt-3 text-ink-muted">
-          Type what you have. We match it to recipes you can cook tonight. The more ingredients you list, the better the matches.
-        </p>
-      </header>
-      <PantryMatchClient />
+      <div className="mx-auto max-w-5xl">
+        <header className="mb-8 max-w-2xl">
+          <h1 className="font-serif text-4xl text-ink sm:text-5xl">What&apos;s in my fridge?</h1>
+          <p className="mt-3 text-ink-muted">
+            Snap a photo or type what you have. We match it to recipes you can cook tonight. Free, no signup.
+          </p>
+        </header>
+        <PantryMatchClient />
+      </div>
     </div>
   );
 }

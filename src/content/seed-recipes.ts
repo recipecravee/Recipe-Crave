@@ -393,7 +393,7 @@ export const SEED_RECIPES: Recipe[] = [
   // GHANAIAN
   // ============================================================
   {
-    ...base('ghanaian-jollof', IMG.jollofRice, 4.9, 78),
+    ...base('ghanaian-jollof', IMG.ghanaianJollof, 4.9, 78),
     title: 'Ghanaian Jollof Rice',
     description: 'Smokier and more aromatic than its Nigerian cousin. Ghanaian jollof leans on long-grain jasmine rice and bay-and-thyme bouquet. Cook the rice in the stew, never separately.',
     prepTimeMin: 15, cookTimeMin: 45, totalTimeMin: 60, servings: 6, difficulty: 'medium',

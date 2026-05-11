@@ -1,9 +1,157 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-11 — second pass by Claude Opus 4.7.
+> Last updated: 2026-05-11 — **fifth pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+
+## 🗺 Quick index — what's in this file
+
+| Section | Lines | Covers |
+|---|---|---|
+| Session TL;DR | top | 1-line summary of every fix landed |
+| Fifth-pass polish (17-20) | mid | Animated underline nav, hamburger icon cross-fade, overlay fade-in + backdrop blur, collections thumb verify |
+| Latest session changes (1-16) | mid | Image audit, voice picker, hamburger hardening, dropdown click-toggle, header rebuild, mobile overlay polish, collections fix, account dashboard fix, GitNexus + dataforseo-claude installs |
+| Earlier-session bug fixes (1-8) | mid | DNS, About rewrite, image bank rewrite, +10 country recipes, mobile nav, em-dash strip, Supabase reseed, Vercel build |
+| Current State (LIVE table) | mid | URLs, project IDs, deploy status |
+| What was built (Stack, Routes, Content, SEO, Auth) | mid | Full inventory |
+| Major fixes (Sentry, Drizzle, Supabase, image-bank, rebrand) | mid | Why each one mattered |
+| Env vars (18) | mid | Vercel-side config, redacted |
+| User context + Repo structure | mid | Account names, project IDs, file tree |
+| Site audit — final pass | near end | 10 known gaps with severity |
+| Phase 2 / Phase 3 roadmap | near end | What ships next |
+| Cost reality check | near end | Free-tier limits + when each paid tier triggers |
+| Verify everything yourself | near end | Commands to confirm dev/Supabase/Vercel state |
+| Communication notes + pickup guide | end | Caveman mode preference + how to resume |
+
+## 📌 Session-wide TL;DR (read this if you only have 30 seconds)
+
+Fix list landed this session, in order:
+1. Moin Moin chameleon image → real bean-cake photo
+2. Hamburger menu visibility on desktop
+3. Pantry photo scan: max-w-5xl wrap + responsive flex stack + verified Gemini end-to-end
+4. Full image-bank audit — 17+ duplicate Unsplash IDs split into distinct photos (Ghanaian Jollof, Red Red, Kelewele, Plantain, chickpea curry, bunny chow, dal, eggs Benedict, menemen, injera, rendang, beef stroganoff, bigos, ful, lomo saltado, butter tarts, chimichurri, Aussie meat pie, empanadas)
+5. Voice Cook Mode: best-voice picker (Apple Premium / MS Online / Google neural) + text-normalize for prosody
+6. Hamburger mobile tap-target hardening 44 → 48px + touch-manipulation + ring + gradient
+7. Features dropdown "escapes on hover": switched to CLICK-TO-TOGGLE with outside-click + Escape close
+8. Header restyled: logo 36→48px, brand text 20→30px bold, h-16→h-20, nav links pill-buttons
+9. Mobile + desktop overlay menu made "outstanding": 2-column feature cards, gradient icon tiles, hover-lift, bolder typography, brand-colored CTAs
+10. Collections page thumbnails: replaced placeholder gradient with real 4-up image collages from each collection's first 4 recipes (uses `heroImage` field — was incorrectly using `image` before fix)
+11. Account dashboard: marked broken-route cards as "Coming Soon", redirected to nearest working surface
+12. Voice picker UI: `<select>` in cook-mode modal header, localStorage persistence, auto-preview on switch
+13. Installed GitNexus (`npm install gitnexus` local to `recipecrave/`)
+14. Installed dataforseo-claude skills (`~/.claude/skills/seo/`) — 13 sub-skills + 5 subagents, manually completed Python deps install since install.sh assumed Linux venv layout
+
+Typecheck: `npx tsc --noEmit` passes clean.
+
+## ⚡ Fifth-pass polish (this turn, after handover read-back)
+
+17. **Collections thumbnails verified live** — 13 collection cards on `/collections` × 4 thumbnails each = 52 images rendered, zero broken. JS audit: every `<img>` has non-empty `src` and `naturalWidth > 0`. Single-collection detail page (`/collections/[slug]`) renders 8 RecipeCards each with hero image. Screenshot tool kept timing out (likely dev-server load) but DOM/network audit proves images load. If user still sees no thumbs on prod = Vercel redeploy hasn't happened.
+
+18. **Desktop nav links got animated underline** — `src/components/site/MegaMenu.tsx`: Recipes / Categories / Collections links now have a 0.5px terracotta underline that **slides in left-to-right on hover** (300ms ease), plus text shifts to terracotta-500. Adds tactile micro-feedback to nav without changing layout.
+
+19. **Hamburger icon swap is now animated** — instead of swapping Menu↔X icons abruptly, both icons sit absolutely positioned in the same 24×24 slot and cross-fade with rotation: Menu fades out at 90°, X fades in at 0° (200ms). Tactile, modern. `iconCount` confirmed = 2 via JS query.
+
+20. **Overlay menu fade-in animation** — added `animate-fade-in` class on `#primary-menu-overlay` (uses existing keyframe in `tailwind.config.ts`) + `backdrop-blur-sm` so background page softly blurs behind the open menu. Subtle, polished.
+
+These three together = the "interactive menu" pass the user asked for. No new pages added, no API surface changed — pure UI polish in MegaMenu.tsx.
 
 ## ⚡ Latest session changes (top of file so you read these first)
+
+### 2026-05-11 mid-session (in progress — Claude Opus 4.7, caveman mode)
+User-reported bugs being fixed:
+
+1. **Moin Moin image bug** ✅ FIXED — old Unsplash ID `1538169237233-785b5322efff` was a chameleon photo. Swapped to `1772132025779-a28090bfa2a8` (closest match: plate of beans + yellow soufflés). Edit at `src/content/image-bank.ts:63`. Note: Unsplash has no proper Moi Moi photo — if user still flags this, replace with locally-uploaded jpg in `/public/images/moin-moin.jpg` and point bank to that path.
+
+2. **Hamburger menu invisible on desktop** ✅ FIXED — `lg:hidden` removed from hamburger button + overlay in `src/components/site/MegaMenu.tsx`. Hamburger now visible at all viewport widths (mobile + desktop), opens fullscreen overlay with 31 links (5 features, 5 browse, 12 cuisines, 8 diets, login). Verified live at 375px + 1280px.
+
+**EVEN-LATER ADDITIONS (UI / dashboard / voice picker / installs pass):**
+
+8. **Features dropdown was unreachable (hover-leave killed it)** ✅ FIXED — `src/components/site/MegaMenu.tsx` switched the desktop "Features ▾" menu from `onMouseEnter/Leave` to **click-to-toggle**. Outside-click closes it (`mousedown` listener via `featuresWrapRef`), Escape key closes it, route change closes it. Chevron icon rotates 180° while open.
+
+9. **Header rebuilt — bigger, bolder, more interactive** ✅ — `src/components/site/Header.tsx`:
+   - Height `h-16` → `h-20`
+   - Logo `h-9 w-9` → `h-12 w-12`
+   - Brand text `text-xl` → `text-2xl sm:text-3xl font-bold`
+   - Background `cream-100/90` → `cream-100/95` + `shadow-sm`
+   - Nav links upgraded in MegaMenu: `text-sm font-medium text-ink-muted` → `text-base font-bold text-ink` with `hover:bg-cream-200` pill background
+   - Login button is now a filled terracotta CTA pill, not a faded link
+   - Search/hamburger bumped `h-11 w-11` → `h-12 w-12`
+   - Mobile overlay top offset bumped from `top-16` → `top-20` to match new header height
+
+10. **Mobile hamburger hardened (again)** ✅ — Button now:
+    - 48×48 with explicit `WebkitTapHighlightColor: transparent` inline style (kills iOS blue flash)
+    - `relative z-50` so nothing can sit over it
+    - `e.preventDefault()` + `e.stopPropagation()` inside onClick (prevents weird event bubbling on iOS Safari)
+    - `aria-controls="primary-menu-overlay"` linked to overlay (now a `role="dialog"`)
+    - `ring-2 ring-white/40` halo for visibility + `hover:scale-105 active:scale-90` for tactile feedback
+    - Gradient terracotta fill (`from-terracotta-400 to-terracotta-500`) so it pops against cream header
+
+11. **Mobile + desktop overlay UI made "outstanding"** ✅ — Inside the dropdown overlay:
+    - Section headers now `font-serif text-2xl font-bold` with brand-colored accent ("What RecipeCrave does")
+    - Feature cards: 2-column grid on tablet+, 14×14 gradient icon tiles (terracotta-100→200 → terracotta-300→400 on hover), text bumped to `text-lg font-bold`, `hover:-translate-y-0.5 hover:border-terracotta-300 hover:shadow-md active:scale-[0.98]`
+    - Browse links: 5-column on lg, bold text, 2px borders
+    - Cuisine pills + diet pills: bigger, bolder, hover lift, diet pills in forest green
+    - Login/account CTA at bottom: gradient terracotta button, `text-lg font-bold`, scale animation
+    - Overlay background now subtle gradient `from-cream-100 via-cream-50 to-cream-200`
+
+12. **Collections page thumbnails were missing** ✅ FIXED — `src/app/collections/page.tsx` was rendering a gradient placeholder div, not real images. Now:
+    - 4-up image collage (`grid-cols-2 grid-rows-2`) using the first 4 recipes' `heroImage` fields
+    - Falls back to single hero image if collection has <4 recipes, gradient if 0
+    - Card hover lifts + 500ms image zoom on group-hover
+    - "X recipes" badge as floating pill over the collage
+    - Title bumped to `text-2xl font-bold`, page header to `text-5xl lg:text-6xl font-bold`
+    - Verified live: each of the 13 collection cards now shows 4 real thumbnails
+
+13. **Account dashboard fixed** ✅ — `src/app/account/page.tsx`:
+    - 3 of the 5 dashboard cards linked to non-existent routes (`/account/saved`, `/account/grocery`, `/account/settings`) — all returned 404
+    - Now: only **ready** cards link to working routes (`/meal-planner`, `/pantry-match`). Unready cards display a **"Coming Soon"** badge (top-right) and link to the closest working surface
+    - Card design: 2px borders, hover-lift, terracotta hover, bigger title
+    - "Quick start" hero block restyled with gradient bg + bigger button
+    - Need Phase 2 build: `/account/saved`, `/account/grocery`, `/account/settings` real pages
+
+14. **Voice Cook Mode — voice picker UI added** ✅ — `src/components/recipe/VoiceCookMode.tsx`:
+    - Added `<select>` dropdown in the cook-mode modal header listing all English voices `getVoices()` returns
+    - Choice persists to `localStorage` under `recipecrave-voice-name` key — user's preferred voice survives page reloads
+    - Selecting a voice immediately previews it ("Hello, I'll be your cooking assistant today.")
+    - Auto-picks best voice on first load via existing `PREFERRED_VOICE_PATTERNS` priority (Apple Premium → MS Online → Google → Natural/Neural keywords)
+    - **Caveat for user**: if voice still sounds robotic after picking → only neural voices installed on user's OS will sound natural. On Windows, install Microsoft "Online" voices via Settings → Time & Language → Speech → Manage voices. On macOS, System Settings → Accessibility → Spoken Content → System Voice → Download Premium voices. Phase 3 = server-side ElevenLabs API for guaranteed quality.
+
+15. **GitNexus installed** ✅ — `npm install gitnexus` ran inside `recipecrave/`, version 1.6.4, 213 packages added. Binary at `node_modules/.bin/gitnexus`. Run via `cd recipecrave && npx gitnexus <command>`. Local to project, not global.
+
+16. **dataforseo-claude installed** ✅ — `~/.claude/skills/seo/` (user-scope, available across all Claude Code projects). 13 sub-skills (`seo-audit`, `seo-backlinks`, `seo-compare`, `seo-competitors`, `seo-content`, `seo-content-gap`, `seo-keywords`, `seo-quick`, `seo-rankings`, `seo-report`, `seo-report-pdf`, `seo-technical`, `seo-watchlist`) + 5 subagents. Python venv at `~/.claude/skills/seo/.venv/` with reportlab installed. install.sh assumed Linux venv (`bin/python3`) but Windows uses `Scripts/python.exe` — manually completed Python deps install (reportlab). **Needs DataForSEO API credentials** at `~/.claude/skills/seo/.env`: set `DATAFORSEO_LOGIN` + `DATAFORSEO_PASSWORD` after signing up at https://dataforseo.com.
+
+**LATE-SESSION ADDITIONS (after pantry pass):**
+
+4. **Image-bank audit** ✅ MAJOR PASS — user flagged Ghanaian Jollof / Kelewele / Red Red sharing thumbs. Audited every key — found 17 duplicate Unsplash IDs across the bank. Fixed all most-visible dupes:
+   - `ghanaianJollof` (new key, was reusing `jollofRice`) → `1604329756574-bda1f2cada6f`
+   - `redRed` → `1698917467449-08bcd1d9014b` (bean stew with meat)
+   - `kelewele` → `1576867917480-152bca50166e` (fried plantain)
+   - `plantain` → `1540714605746-4f474eefc6d4` (fried banana on paper)
+   - `chickpeaCurry`, `bunnyChow`, `panditDal` (all 3 were sharing curry photo)
+   - `eggsBenedict`, `menemen` (were sharing pancakes photo)
+   - `injera` (now real Ethiopian platter `1765338915553-6e02fe63ff4f`), `rendang`
+   - `beefStroganoff`, `bigos`, `chimichurri`, `aussieMeatPie`, `empanadas`, `butterTarts`, `lomoSaltado`, `ful`
+   - File: `src/content/image-bank.ts`. Also wired `ghanaian-jollof` recipe to new key at `src/content/seed-recipes.ts:396`.
+   - **Still dupes (acceptable)**: `pasta`/`shrimpPasta` (same noodle shot OK), `salmon`/`fish` (acceptable), `chapman`/`cocktail` (both red drinks), `hummus`/`lebaneseHummus` (same dish), `jerkChicken`/`suya` (note in file explains).
+   - **Caveat**: Unsplash has weak coverage for some West-African + Eastern-European dishes. Best matches chosen but if user still flags any, switch to locally-uploaded JPGs in `/public/images/<slug>.jpg`.
+
+5. **Voice Cook Mode** ✅ NATURAL VOICE — `src/components/recipe/VoiceCookMode.tsx` previously used default browser TTS (robotic). Now:
+   - Added `PREFERRED_VOICE_PATTERNS` priority list — Apple Premium/Enhanced (Ava, Zoe, Samantha), Microsoft Online (Aria, Jenny, Guy, Emma, Ava, Andrew), Google US/UK English, then keyword fallback (Natural / Neural / Premium / Enhanced / Online).
+   - Picks best installed neural voice via `getVoices()` after `voiceschanged` event (voices load async).
+   - `speak()` now: assigns the chosen voice, rate 0.92 (slower, instructor cadence), pitch 1.02 (slightly warmer), and normalizes text — converts "Step 1." → "Step 1, " for natural prosody, expands `min` / `tsp` / `tbsp`, swaps em-dashes for commas.
+   - **Quality depends on user's OS**: iOS 17+/macOS Sonoma → Apple Premium. Windows 11 + Edge → Microsoft Online (excellent). Chrome/Android → Google neural. Linux/Firefox default fallback voices still less polished.
+   - **Phase 3 upgrade path**: server-side TTS via ElevenLabs or Azure Neural — wire `POST /api/tts` returning audio/mpeg, swap `speechSynthesis.speak` for `new Audio(blob)`. Adds latency + cost.
+
+6. **Hamburger mobile tap target hardened**: button bumped `h-9 w-9` → `h-11 w-11` (44px WCAG minimum), added `touch-manipulation` CSS (no 300ms delay), `active:scale-95` press feedback, overlay z bumped `z-30` → `z-40` to match header, added `overscroll-contain` + `pb-safe`. NOTE: dev preview confirmed hamburger works at 375/1280; if user reports broken on PROD, prod hasn't been redeployed since last fix — push branch and let Vercel rebuild.
+
+7. **Supabase recipes table** ⚠ NEEDS RESEED — image-bank changes are static-seed-only. Supabase rows still reference old Unsplash IDs. Run `npm run db:seed` from `recipecrave/` to push updated images (script: `scripts/seed.ts`). Will require .env.local with SUPABASE_DB_URL.
+
+3. **Pantry Photo Scan** ✅ FIXED + RESPONSIVE — UI + Gemini Vision API already built (`src/app/pantry-match/PantryMatchClient.tsx` + `src/app/api/ai/pantry-vision/route.ts`). Changes this pass:
+   - `src/app/pantry-match/page.tsx` — wrapped content in `<div className="mx-auto max-w-5xl">` so card stops stretching edge-to-edge on desktop (was 1233px on 1280 viewport → now 1024).
+   - `src/app/pantry-match/PantryMatchClient.tsx` — restructured photo card to `flex flex-col gap-4 sm:flex-row` so mobile stacks vertically. Photo preview img sized `h-48 w-full` on mobile (303×192 banner), `sm:h-24 sm:w-24` thumbnail at 640+, `md:h-36 md:w-36` larger at 768+. Buttons go `w-full sm:w-auto` for big mobile tap targets.
+   - Verified end-to-end: synthetic test image → file picker → preview shows → POST `/api/ai/pantry-vision` → Gemini 2.5 Flash → JSON response → either populates ingredient input OR shows "no ingredients detected" error (correct path for non-food test image).
+   - Verified responsive at 375 / 768 / 1280: no horizontal scroll, card constrained, hamburger visible at all widths.
+
+### Bug fixes earlier this session (top of file so you read these first)
 
 1. **DNS finally fixed via Cloudflare dashboard** (Hostinger A + AAAA records purged, replaced with Vercel A=76.76.21.21 + CNAME www=cname.vercel-dns.com, both gray-cloud DNS only). Domain `recipecrave.com` should be live with green padlock now.
 
@@ -295,6 +443,36 @@ recipecrave/
 4. Submit to Bing Webmaster Tools (import from GSC, one click)
 5. Delete duplicate Vercel project `recipe-crave-16kv`
 6. **Rotate exposed API keys**: Supabase service role, Gemini, Groq, Cloudflare, Resend
+
+### Site audit — 2026-05-11 final pass
+
+**Working surfaces (verified live):**
+- Homepage (`/`), all cuisine + diet + collection pages
+- `/recipes` + every `/recipes/[slug]` (79 recipes, schema.org-rich)
+- `/pantry-match` — text input + photo scan (Gemini Vision wired)
+- `/meal-planner` — AI generation
+- `/login`, `/signup`, `/account` (with 5 dashboard cards, 2 wired + 3 "Coming soon")
+- `/collections` (with 4-up thumbnail collages)
+- `/about`, `/contact`, `/privacy`, `/terms`, `/editorial-policy`, `/nutrition-disclaimer`
+- `/sitemap.xml`, `/robots.txt`, `/manifest.webmanifest`, OG/Twitter image generators
+- Hamburger menu — clickable + animated at 375 / 768 / 1280
+- Features dropdown — click-to-toggle on desktop, outside-click closes
+- Voice Cook Mode — voice picker dropdown in header, persists to localStorage
+
+**Known gaps / what's left:**
+
+1. **Dead routes referenced by /account dashboard** — `/account/saved`, `/account/grocery`, `/account/settings` need stub pages. Currently flagged "Coming Soon" + redirect to closest working surface.
+2. **Voice quality depends on user OS** — even with picker UI, robotic voices stay robotic. Phase 3 = server-side ElevenLabs `/api/tts` endpoint returning audio/mpeg for premium feel.
+3. **Supabase prod DB lags behind static seed** — image-bank changes (Moin Moin, Ghanaian Jollof, Kelewele, Red Red, 12 other dishes) live in `src/content/seed-recipes.ts` but Supabase `recipes` table still has the old Unsplash IDs. **Run `npm run db:seed` from `recipecrave/`** to push fresh images.
+4. **Vercel prod redeploy needed** — every fix above is dev-only. Push to GitHub → Vercel auto-rebuilds → recipecrave.com gets updates.
+5. **Some Unsplash image matches still mediocre** — `panditDal` (Indian dal — chili bowl is loose), `bunnyChow` (table of foods), `ful` (Egyptian fava beans). If user flags any, swap to locally-uploaded JPGs in `/public/images/<slug>.jpg`.
+6. **DataForSEO credentials missing** — `/seo` skills installed but `.env` empty. User must sign up + paste credentials.
+7. **No real users yet** — Supabase auth wired, 0 signups. Newsletter Resend domain not verified (`hello@recipecrave.com` will fail to send until domain verification clicks through).
+8. **Smart Grocery Lists feature** — homepage card promises it, no implementation. Needs route `/grocery-list` + builder UI + recipe-ingredient consolidator.
+9. **Chrome extension** — homepage card promises "import from any blog", no extension exists.
+10. **Recipe genome embeddings** — homepage card promises "personalized for you", no vector DB wired.
+
+**Broken? — nothing critical.** No runtime errors in dev console. `npx tsc --noEmit` passes clean.
 
 ### Phase 2 (next 30 days)
 - Pantry photo scan UI (Claude Vision via Gemini, replace pantry text input with photo upload)

@@ -129,42 +129,44 @@ export function PantryMatchClient() {
   return (
     <div className="space-y-8">
       {/* Photo scan card */}
-      <div className="rounded-2xl bg-gradient-to-br from-terracotta-50 to-cream-100 p-6 shadow-sm">
-        <div className="flex flex-wrap items-start gap-4">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-terracotta-400 text-white">
-            <Camera className="h-6 w-6" aria-hidden />
-          </div>
-          <div className="flex-1">
-            <h2 className="font-serif text-xl text-ink">Snap your fridge or pantry</h2>
-            <p className="mt-1 text-sm text-ink-muted">
-              We&apos;ll identify ingredients in the photo and find recipes you can cook right now. No login.
-            </p>
-            <input
-              ref={fileRef}
-              type="file"
-              accept="image/*"
-              capture="environment"
-              onChange={handlePhoto}
-              className="hidden"
-              aria-label="Upload pantry photo"
-            />
-            <div className="mt-4 flex flex-wrap gap-2">
-              <Button type="button" onClick={() => fileRef.current?.click()} disabled={photoBusy}>
-                {photoBusy ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Camera className="mr-2 h-4 w-4" />}
-                {photoBusy ? 'Scanning…' : 'Take or upload photo'}
-              </Button>
-              {photoPreview ? (
-                <Button type="button" variant="outline" onClick={() => { setPhotoPreview(null); setDetected([]); }}>
-                  <X className="mr-1.5 h-4 w-4" /> Clear
+      <div className="rounded-2xl bg-gradient-to-br from-terracotta-50 to-cream-100 p-5 shadow-sm sm:p-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+          <div className="flex items-start gap-4 sm:flex-1">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-terracotta-400 text-white">
+              <Camera className="h-6 w-6" aria-hidden />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h2 className="font-serif text-xl text-ink sm:text-2xl">Snap your fridge or pantry</h2>
+              <p className="mt-1 text-sm text-ink-muted">
+                We&apos;ll spot ingredients in the photo and pull recipes you can cook right now. No login.
+              </p>
+              <input
+                ref={fileRef}
+                type="file"
+                accept="image/*"
+                capture="environment"
+                onChange={handlePhoto}
+                className="hidden"
+                aria-label="Upload pantry photo"
+              />
+              <div className="mt-4 flex flex-wrap gap-2">
+                <Button type="button" onClick={() => fileRef.current?.click()} disabled={photoBusy} className="w-full sm:w-auto">
+                  {photoBusy ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Camera className="mr-2 h-4 w-4" />}
+                  {photoBusy ? 'Scanning…' : 'Take or upload photo'}
                 </Button>
-              ) : null}
+                {photoPreview ? (
+                  <Button type="button" variant="outline" onClick={() => { setPhotoPreview(null); setDetected([]); }} className="w-full sm:w-auto">
+                    <X className="mr-1.5 h-4 w-4" /> Clear
+                  </Button>
+                ) : null}
+              </div>
             </div>
           </div>
           {photoPreview ? (
             <img
               src={photoPreview}
               alt="Pantry preview"
-              className="h-24 w-24 rounded-lg object-cover shadow-sm"
+              className="h-48 w-full rounded-lg object-cover shadow-sm sm:h-24 sm:w-24 md:h-36 md:w-36"
             />
           ) : null}
         </div>

@@ -29,19 +29,87 @@ declare global {
   }
 }
 
+// Voice quality priority: neural/online voices > polished system voices > default.
+// First match wins. Substrings case-insensitive against `voice.name`.
+const PREFERRED_VOICE_PATTERNS = [
+  // Apple neural / premium (iOS 17+, macOS Sonoma+)
+  'Ava (Premium)', 'Ava (Enhanced)', 'Zoe (Premium)', 'Allison (Enhanced)',
+  'Samantha (Enhanced)', 'Evan (Enhanced)', 'Tom (Enhanced)',
+  // Microsoft Edge / Windows 11 online voices (highest quality)
+  'Microsoft Aria Online', 'Microsoft Jenny Online', 'Microsoft Guy Online',
+  'Microsoft Emma Online', 'Microsoft Ava Online', 'Microsoft Andrew Online',
+  // Google Chrome / Android neural
+  'Google US English', 'Google UK English Female', 'Google UK English Male',
+  // Apple default polished
+  'Samantha', 'Karen', 'Moira', 'Tessa', 'Daniel', 'Allison',
+  // Generic neural keywords (in case browser exposes under different naming)
+  'Natural', 'Neural', 'Premium', 'Enhanced', 'Online',
+];
+
+function pickBestVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
+  if (voices.length === 0) return null;
+  // Prefer English voices first
+  const english = voices.filter((v) => v.lang.toLowerCase().startsWith('en'));
+  const pool = english.length > 0 ? english : voices;
+  for (const pattern of PREFERRED_VOICE_PATTERNS) {
+    const p = pattern.toLowerCase();
+    const match = pool.find((v) => v.name.toLowerCase().includes(p));
+    if (match) return match;
+  }
+  // Fall back to first non-default English voice
+  return pool.find((v) => !v.default) ?? pool[0] ?? null;
+}
+
+const VOICE_PREF_KEY = 'recipecrave-voice-name';
+
 export function VoiceCookMode({ title, servings, instructions }: Props) {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(0);
   const [listening, setListening] = useState(false);
   const [speaking, setSpeaking] = useState(false);
   const [supported, setSupported] = useState(false);
+  const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [selectedVoiceName, setSelectedVoiceName] = useState<string>('');
   const recognitionRef = useRef<RecognitionLike | null>(null);
   const wakeLockRef = useRef<{ release: () => void } | null>(null);
+  const voiceRef = useRef<SpeechSynthesisVoice | null>(null);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
     setSupported('speechSynthesis' in window);
+    if (!('speechSynthesis' in window)) return;
+    // Voices load asynchronously — pick after `voiceschanged`.
+    const refresh = () => {
+      const voices = window.speechSynthesis.getVoices();
+      const english = voices.filter((v) => v.lang.toLowerCase().startsWith('en'));
+      setAvailableVoices(english.length > 0 ? english : voices);
+      const saved = typeof localStorage !== 'undefined' ? localStorage.getItem(VOICE_PREF_KEY) : null;
+      const savedMatch = saved ? voices.find((v) => v.name === saved) : null;
+      const picked = savedMatch ?? pickBestVoice(voices);
+      voiceRef.current = picked;
+      if (picked) setSelectedVoiceName(picked.name);
+    };
+    refresh();
+    window.speechSynthesis.addEventListener('voiceschanged', refresh);
+    return () => window.speechSynthesis.removeEventListener('voiceschanged', refresh);
   }, []);
+
+  function changeVoice(name: string) {
+    const match = availableVoices.find((v) => v.name === name);
+    if (!match) return;
+    voiceRef.current = match;
+    setSelectedVoiceName(name);
+    if (typeof localStorage !== 'undefined') localStorage.setItem(VOICE_PREF_KEY, name);
+    // Preview the chosen voice
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const preview = new SpeechSynthesisUtterance("Hello, I'll be your cooking assistant today.");
+      preview.voice = match;
+      preview.rate = 0.92;
+      preview.pitch = 1.02;
+      window.speechSynthesis.speak(preview);
+    }
+  }
 
   // Wake lock to keep screen on while cooking
   useEffect(() => {
@@ -65,9 +133,20 @@ export function VoiceCookMode({ title, servings, instructions }: Props) {
   function speak(text: string) {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
     window.speechSynthesis.cancel();
-    const utter = new SpeechSynthesisUtterance(text);
-    utter.rate = 0.95;
-    utter.pitch = 1;
+    // Soften phrasing for natural delivery: insert micro-pauses + lowercase 'Step N.'
+    const natural = text
+      .replace(/\bStep (\d+)\.\s*/i, 'Step $1, ')
+      .replace(/\.\s+/g, '. ')
+      .replace(/—/g, ',')
+      .replace(/\bmin\b/g, 'minutes')
+      .replace(/\btsp\b/g, 'teaspoon')
+      .replace(/\btbsp\b/g, 'tablespoon');
+    const utter = new SpeechSynthesisUtterance(natural);
+    if (voiceRef.current) utter.voice = voiceRef.current;
+    // Warmer, slower delivery — matches culinary-instructor cadence.
+    utter.rate = 0.92;
+    utter.pitch = 1.02;
+    utter.volume = 1;
     utter.onstart = () => setSpeaking(true);
     utter.onend = () => setSpeaking(false);
     window.speechSynthesis.speak(utter);
@@ -168,15 +247,32 @@ export function VoiceCookMode({ title, servings, instructions }: Props) {
           aria-label={`Voice cook mode for ${title}`}
           className="fixed inset-0 z-50 flex flex-col bg-cream-100"
         >
-          <div className="container flex h-16 items-center justify-between border-b border-ink/10">
+          <div className="container flex h-16 items-center justify-between gap-3 border-b border-ink/10">
             <div className="min-w-0 flex-1">
               <p className="text-xs uppercase tracking-wider text-terracotta-500">Voice Cook</p>
               <p className="truncate font-serif text-lg">{title}</p>
             </div>
+            {availableVoices.length > 0 ? (
+              <label className="hidden items-center gap-1.5 text-xs text-ink-muted sm:flex">
+                <Volume2 className="h-3.5 w-3.5" aria-hidden />
+                <select
+                  value={selectedVoiceName}
+                  onChange={(e) => changeVoice(e.target.value)}
+                  className="max-w-[180px] rounded-lg border border-ink/10 bg-white px-2 py-1.5 text-xs focus-ring"
+                  aria-label="Choose voice"
+                >
+                  {availableVoices.map((v) => (
+                    <option key={v.name} value={v.name}>
+                      {v.name.length > 28 ? v.name.slice(0, 28) + '…' : v.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ) : null}
             <button
               type="button"
               onClick={closeMode}
-              className="ml-3 flex h-10 w-10 items-center justify-center rounded-full bg-white text-ink-muted shadow-sm focus-ring"
+              className="ml-1 flex h-10 w-10 items-center justify-center rounded-full bg-white text-ink-muted shadow-sm focus-ring"
               aria-label="Exit voice cook mode"
             >
               <X className="h-5 w-5" />

@@ -16,15 +16,23 @@ export async function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-ink/10 bg-cream-100/90 backdrop-blur-md">
-      <div className="container flex h-16 items-center justify-between gap-4">
+    <header className="sticky top-0 z-40 border-b border-ink/10 bg-cream-100/95 shadow-sm backdrop-blur-md">
+      <div className="container flex h-20 items-center justify-between gap-4">
         <Link
           href="/"
           aria-label={`${SITE.name} home`}
-          className="flex items-center gap-2 focus-ring rounded-md"
+          className="flex items-center gap-3 rounded-md focus-ring"
         >
-          <Image src="/logo.png" alt="" width={36} height={36} className="h-9 w-9" priority unoptimized />
-          <span className="font-serif text-xl">
+          <Image
+            src="/logo.png"
+            alt=""
+            width={48}
+            height={48}
+            className="h-12 w-12"
+            priority
+            unoptimized
+          />
+          <span className="font-serif text-2xl font-bold sm:text-3xl">
             <span className="text-ink">Recipe</span>
             <span className="text-terracotta-400">Crave</span>
           </span>

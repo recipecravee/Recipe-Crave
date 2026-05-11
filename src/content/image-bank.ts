@@ -34,24 +34,25 @@ export const IMG = {
   // === Rice / grains ===
   friedRice: `https://images.unsplash.com/photo-1603133872878-684f208fb84b?${W}`,
   jollofRice: `https://images.unsplash.com/photo-1665332195309-9d75071138f0?${W}`,
+  ghanaianJollof: `https://images.unsplash.com/photo-1604329756574-bda1f2cada6f?${W}`,
   riceBowl: `https://images.unsplash.com/photo-1665332195309-9d75071138f0?${W}`,
   ricePeas: `https://images.unsplash.com/photo-1632852576480-c10a8e19496a?${W}`,
 
   // === Curries / stews ===
   curry: `https://images.unsplash.com/photo-1731328351443-ea233d9b8037?${W}`,
   egusi: `https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?${W}`,
-  redRed: `https://images.unsplash.com/photo-1540716189226-20cc9c9116e0?${W}`,
+  redRed: `https://images.unsplash.com/photo-1698917467449-08bcd1d9014b?${W}`,
   pho: `https://images.unsplash.com/photo-1631709497146-a239ef373cf1?${W}`,
 
   // === Vegetarian / bowls ===
-  chickpeaCurry: `https://images.unsplash.com/photo-1731328351443-ea233d9b8037?${W}`,
+  chickpeaCurry: `https://images.unsplash.com/photo-1634234498505-51b316832b28?${W}`,
   falafel: `https://images.unsplash.com/photo-1700513971603-eda40374ba0a?${W}`,
   saladBowl: `https://images.unsplash.com/photo-1636654931290-418d20865e03?${W}`,
   cucumber: `https://images.unsplash.com/photo-1679735107918-15112296e28d?${W}`,
 
   // === Breakfast ===
   pancakes: `https://images.unsplash.com/photo-1606149186228-4e5ac94a742e?${W}`,
-  plantain: `https://images.unsplash.com/photo-1540716189226-20cc9c9116e0?${W}`,
+  plantain: `https://images.unsplash.com/photo-1540714605746-4f474eefc6d4?${W}`,
   cornbread: `https://images.unsplash.com/photo-1664339031047-970bf639e43f?${W}`,
   akara: `https://images.unsplash.com/photo-1647162264554-5f60af27f052?${W}`,
 
@@ -60,7 +61,7 @@ export const IMG = {
   springRolls: `https://images.unsplash.com/photo-1695712641569-05eee7b37b6d?${W}`,
   samosas: `https://images.unsplash.com/photo-1601050690597-df0568f70950?${W}`,
   puffPuff: `https://images.unsplash.com/photo-1665833613236-7c1d087463b1?${W}`,
-  moinMoin: `https://images.unsplash.com/photo-1538169237233-785b5322efff?${W}`,
+  moinMoin: `https://images.unsplash.com/photo-1772132025779-a28090bfa2a8?${W}`,
 
   // === Cakes / desserts ===
   cookies: `https://images.unsplash.com/photo-1499636136210-6f4ee915583e?${W}`,
@@ -97,8 +98,8 @@ export const IMG = {
   // === Ackee ===
   ackee: `https://images.unsplash.com/photo-1632859965308-d15227508c4b?${W}`,
 
-  // === Kelewele / plantain (search returned nothing, reuse plantain) ===
-  kelewele: `https://images.unsplash.com/photo-1540716189226-20cc9c9116e0?${W}`,
+  // === Kelewele (spicy fried plantain cubes) ===
+  kelewele: `https://images.unsplash.com/photo-1576867917480-152bca50166e?${W}`,
 
   // === Mac & cheese ===
   macAndCheese: `https://images.unsplash.com/photo-1667499989723-c4ab9549d63c?${W}`,
@@ -133,10 +134,10 @@ export const IMG = {
   banhMi: `https://images.unsplash.com/photo-1599719455360-ff0be7c4dd06?${W}`,
 
   // === Ethiopian ===
-  injera: `https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?${W}`,
+  injera: `https://images.unsplash.com/photo-1765338915553-6e02fe63ff4f?${W}`,
 
   // === South African ===
-  bunnyChow: `https://images.unsplash.com/photo-1731328351443-ea233d9b8037?${W}`,
+  bunnyChow: `https://images.unsplash.com/photo-1694643666478-87660ba357a4?${W}`,
 
   // === Lebanese / Middle Eastern ===
   lebaneseHummus: `https://images.unsplash.com/photo-1687244433510-747e3fd97afe?${W}`,
@@ -152,28 +153,28 @@ export const IMG = {
   churros: `https://images.unsplash.com/photo-1547149685-22d7efe78c2d?${W}`,
 
   // === Eggs/breakfast ===
-  eggsBenedict: `https://images.unsplash.com/photo-1606149186228-4e5ac94a742e?${W}`,
-  panditDal: `https://images.unsplash.com/photo-1731328351443-ea233d9b8037?${W}`,
+  eggsBenedict: `https://images.unsplash.com/photo-1613769049987-b31b641f25b1?${W}`,
+  panditDal: `https://images.unsplash.com/photo-1777613112793-4fb0717c193b?${W}`,
 
   // === Phase D new countries ===
   borscht: `https://images.unsplash.com/photo-1677889173479-c8a0ab15ae18?${W}`,
-  beefStroganoff: `https://images.unsplash.com/photo-1644592219048-5c070fd3c91c?${W}`,
+  beefStroganoff: `https://images.unsplash.com/photo-1594610352455-e4d10d2f2cf0?${W}`,
   poutine: `https://images.unsplash.com/photo-1585460379355-de1c92466a17?${W}`,
-  butterTarts: `https://images.unsplash.com/photo-1676300186098-9b5ae9916e3c?${W}`,
+  butterTarts: `https://images.unsplash.com/photo-1673412810304-47c149ed0231?${W}`,
   nasiGoreng: `https://images.unsplash.com/photo-1680674774705-90b4904b3a7f?${W}`,
-  rendang: `https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?${W}`,
+  rendang: `https://images.unsplash.com/photo-1642509600566-96fe95a744b3?${W}`,
   schnitzel: `https://images.unsplash.com/photo-1599921841143-819065a55cc6?${W}`,
   bratwurst: `https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?${W}`,
   doner: `https://images.unsplash.com/photo-1699728088614-7d1d4277414b?${W}`,
-  menemen: `https://images.unsplash.com/photo-1606149186228-4e5ac94a742e?${W}`,
+  menemen: `https://images.unsplash.com/photo-1630684789450-dd7da2124df1?${W}`,
   pierogi: `https://images.unsplash.com/photo-1581515092908-42bae9a80350?${W}`,
-  bigos: `https://images.unsplash.com/photo-1644592219048-5c070fd3c91c?${W}`,
-  empanadas: `https://images.unsplash.com/photo-1601050690597-df0568f70950?${W}`,
-  chimichurri: `https://images.unsplash.com/photo-1569229490681-4085b3f54ba3?${W}`,
+  bigos: `https://images.unsplash.com/photo-1695089027936-465ca9835017?${W}`,
+  empanadas: `https://images.unsplash.com/photo-1619926096619-5956ab4dfb1b?${W}`,
+  chimichurri: `https://images.unsplash.com/photo-1624384081876-152eca2583b1?${W}`,
   cevichePeru: `https://images.unsplash.com/photo-1611262359546-64e2822b2ab5?${W}`,
-  lomoSaltado: `https://images.unsplash.com/photo-1603133872878-684f208fb84b?${W}`,
+  lomoSaltado: `https://images.unsplash.com/photo-1668724776332-a20685b85151?${W}`,
   koshari: `https://images.unsplash.com/photo-1628606336803-77914bbe8225?${W}`,
-  ful: `https://images.unsplash.com/photo-1687244433510-747e3fd97afe?${W}`,
-  aussieMeatPie: `https://images.unsplash.com/photo-1610213011891-68167bbe574c?${W}`,
+  ful: `https://images.unsplash.com/photo-1585029780574-65af8aa61abd?${W}`,
+  aussieMeatPie: `https://images.unsplash.com/photo-1756137948749-84e73141137b?${W}`,
   pavlova: `https://images.unsplash.com/photo-1602563388174-b3803da472d4?${W}`,
 } as const;
