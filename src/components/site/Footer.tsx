@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Calculator, Sliders, Thermometer, Scale } from 'lucide-react';
 import { SITE, CUISINES, DIETS } from '@/lib/constants';
 import { NewsletterForm } from '@/components/site/NewsletterForm';
 
@@ -6,6 +7,41 @@ export function Footer() {
   return (
     <footer className="border-t border-ink/10 bg-cream-200/40">
       <div className="container py-12 lg:py-16">
+        {/* Prominent Kitchen Tools strip */}
+        <Link
+          href="/calculators"
+          className="group mb-12 flex flex-col gap-4 rounded-2xl border-2 border-forest-300 bg-gradient-to-r from-forest-50 via-forest-100 to-cream-100 p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-forest-500 hover:shadow-md sm:flex-row sm:items-center sm:gap-6 sm:p-6"
+        >
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-forest-500 to-forest-700 text-white shadow-sm transition-transform group-hover:scale-110">
+            <Calculator className="h-7 w-7" aria-hidden />
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-forest-600">
+              Free · No signup · 3 live tools
+            </p>
+            <p className="font-serif text-xl font-bold text-ink sm:text-2xl">
+              Kitchen Tools &amp; Calculators
+            </p>
+            <p className="mt-0.5 text-sm text-ink-muted">
+              Cups→grams · Oven temps · Real-time recipe scaler &amp; more.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2 sm:flex-nowrap">
+            <span className="inline-flex items-center gap-1 rounded-full bg-white px-3 py-1 text-xs font-bold text-forest-700 shadow-sm">
+              <Scale className="h-3.5 w-3.5" aria-hidden /> Units
+            </span>
+            <span className="inline-flex items-center gap-1 rounded-full bg-white px-3 py-1 text-xs font-bold text-forest-700 shadow-sm">
+              <Thermometer className="h-3.5 w-3.5" aria-hidden /> Temp
+            </span>
+            <span className="inline-flex items-center gap-1 rounded-full bg-white px-3 py-1 text-xs font-bold text-forest-700 shadow-sm">
+              <Sliders className="h-3.5 w-3.5" aria-hidden /> Scaler
+            </span>
+            <span className="hidden sm:inline-flex shrink-0 rounded-full bg-forest-600 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white shadow-sm">
+              Open →
+            </span>
+          </div>
+        </Link>
+
         <div className="grid gap-10 lg:grid-cols-5">
           <div className="lg:col-span-2">
             <h2 className="font-serif text-2xl">

@@ -5,10 +5,11 @@ import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  Menu, X, Sparkles, Camera, Mic, ShoppingCart, Flame, Search, User,
+  Menu, X, Sparkles, Camera, Mic, ShoppingCart, Flame, User,
   ChefHat, Heart, BookOpen, LayoutGrid, Calculator, ChevronDown,
 } from 'lucide-react';
 import { CUISINES, DIETS } from '@/lib/constants';
+import { SiteSearch } from './SiteSearch';
 
 type Feature = {
   href: string;
@@ -199,20 +200,9 @@ export function MegaMenu({ userEmail }: { userEmail?: string }) {
           <span className="absolute inset-x-2 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full bg-forest-500 transition-transform duration-300 group-hover:scale-x-100" />
         </Link>
 
-        <form
-          action="/recipes"
-          method="get"
-          className="flex w-56 items-center gap-2 rounded-full border border-ink/10 bg-white px-3 py-1.5 shadow-sm focus-within:border-terracotta-400"
-        >
-          <Search className="h-4 w-4 text-ink-subtle" aria-hidden />
-          <input
-            type="search"
-            name="q"
-            placeholder="Search recipes…"
-            aria-label="Search recipes"
-            className="w-full bg-transparent text-sm outline-none placeholder:text-ink-subtle"
-          />
-        </form>
+        <div className="w-64">
+          <SiteSearch variant="inline" placeholder="Search recipes, tools…" />
+        </div>
 
         {userEmail ? (
           <Link
@@ -235,13 +225,7 @@ export function MegaMenu({ userEmail }: { userEmail?: string }) {
 
       {/* Search + hamburger (desktop + mobile) */}
       <div className="flex items-center gap-2">
-        <Link
-          href="/recipes"
-          className="flex h-12 w-12 touch-manipulation items-center justify-center rounded-full bg-white text-ink-muted shadow-sm hover:text-ink focus-ring"
-          aria-label="Search recipes"
-        >
-          <Search className="h-5 w-5" aria-hidden />
-        </Link>
+        <SiteSearch variant="icon" />
         <button
           type="button"
           aria-label={open ? 'Close menu' : 'Open menu'}
