@@ -8,11 +8,23 @@ export const metadata: Metadata = {
   alternates: { canonical: '/calculators' },
 };
 
-const TOOLS = [
+type Tool = {
+  slug: string;
+  title: string;
+  body: string;
+  featured?: boolean;
+};
+
+const TOOLS: Tool[] = [
   { slug: 'unit-converter', title: 'Cups → Grams Converter', body: 'Convert between US, metric, and UK measurements instantly.' },
   { slug: 'recipe-cost', title: 'Recipe Cost Calculator', body: 'Estimate the cost per serving for any recipe.' },
   { slug: 'calorie-estimator', title: 'Calorie Estimator', body: 'Get approximate calorie counts from your ingredient list.' },
-  { slug: 'servings-scaler', title: 'Servings Scaler', body: 'Scale any recipe up or down with adjusted cook times.' },
+  { slug: 'servings-scaler', title: 'Servings Scaler', body: 'Scale any recipe up or down with adjusted cook times.', featured: true },
+  { slug: 'temperature-adjuster', title: 'Temperature Adjuster', body: 'Convert oven temps across °F, °C, gas marks, and air fryer equivalents. Adjusts for fan-forced vs conventional too.', featured: true },
+  { slug: 'storage-life-guide', title: 'Storage Life Guide', body: 'Searchable database. "How long is opened mayo safe?" "Do eggs go bad?" Simple lookup, saves decisions.' },
+  { slug: 'ingredient-substitutions', title: 'Ingredient Substitution Matcher', body: 'Searchable swaps. Buttermilk to yogurt, Greek yogurt to sour cream. 1:1 conversions with ratios where they differ.' },
+  { slug: 'baking-ratio', title: 'Baking Ratio Calculator', body: 'Baker\'s percentages. Input flour weight, get exact grams for water, salt, yeast. Consistency across recipes.' },
+  { slug: 'seasoning-by-weight', title: 'Seasoning by Weight Calculator', body: 'Most recipes say "salt to taste." Input dish weight and protein type, suggest starting salt amount. Reduces over-salting.' },
 ];
 
 export default function CalculatorsIndex() {
@@ -24,15 +36,26 @@ export default function CalculatorsIndex() {
           Practical tools for the kitchen. No signup, no paywall — just useful math.
         </p>
       </header>
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {TOOLS.map((t) => (
           <Link
             key={t.slug}
             href={`/calculators/${t.slug}`}
-            className="block rounded-2xl bg-white p-6 shadow-sm transition-shadow hover:shadow-md focus-ring"
+            className={`block rounded-2xl bg-white p-6 shadow-sm transition-shadow hover:shadow-md focus-ring ${
+              t.featured ? 'ring-2 ring-terracotta-200' : ''
+            }`}
           >
-            <p className="text-xs uppercase tracking-wider text-terracotta-500">Coming soon</p>
-            <h2 className="mt-1 font-serif text-xl">{t.title}</h2>
+            <div className="flex items-center gap-2">
+              <p className="text-xs font-semibold uppercase tracking-wider text-terracotta-500">
+                Coming soon
+              </p>
+              {t.featured ? (
+                <span className="rounded-full bg-forest-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-forest-700">
+                  Most valuable
+                </span>
+              ) : null}
+            </div>
+            <h2 className="mt-2 font-serif text-xl">{t.title}</h2>
             <p className="mt-2 text-sm text-ink-muted">{t.body}</p>
           </Link>
         ))}
