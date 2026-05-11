@@ -3,6 +3,27 @@
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
 > Last updated: 2026-05-11 — **fifth pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
 
+## 🆕 Sixth pass (2026-05-11, late session — Claude caveman)
+
+**Two critical bugs caught + fixed:**
+
+21. **Hamburger overlay invisible (CRITICAL UX BUG)** ✅ FIXED in commit `53c7d54`.
+    - Root cause: `<header>` had `backdrop-blur-md` (`backdrop-filter: blur`). Per CSS spec, `backdrop-filter` creates a containing block for fixed-positioned descendants. The overlay (`position:fixed; top:80px; bottom:0`) was nested inside `<header>` via `<MegaMenu>` and got clipped to the header's 80px height. JS audit: `getBoundingClientRect().height === 0` despite `display:block`.
+    - Fix: wrapped overlay JSX in `createPortal(jsx, document.body)` inside `src/components/site/MegaMenu.tsx`. Now renders at body root, outside any backdrop-filter containing block. Bumped z-index 40 → 60 for extra safety. Added `mounted` state to dodge SSR/CSR hydration mismatch.
+    - Verify: open `/`, click hamburger, full-page menu should appear with Features, Browse, Cuisines, Diets, Login CTA.
+
+22. **Collections page adaptive grid for <4-recipe collections** ✅ FIXED in commit `f8aefba`.
+    - Fancy French Classics (3 recipes) was showing only 1 thumbnail because page logic was binary: `recipes.length >= 4 ? grid : singleImage`. Skipped 2 + 3 recipe cases.
+    - Fix in `src/app/collections/page.tsx`: replaced binary check with switch on `withImages.length`. 1 → full hero; 2 → 2-col split; 3 → 1 tall + 2 stacked; 4+ → 2×2 grid.
+
+23. **DNS for recipecrave.com** verified in this session.
+    - Vercel domains: `recipecrave.com` + `www` both show blue check + "DNS Change Recommended" (informational — old A 76.76.21.21 still works; Vercel suggests apex CNAME `0c1011e26eabdd00.vercel-dns-017.com` for new IP-range expansion).
+    - User reported `ERR_QUIC_PROTOCOL_ERROR` opening recipecrave.com in Chrome. That's client-side QUIC cache, NOT a server-side problem.
+    - User fix: clear Chrome QUIC cache (`chrome://net-internals/#sockets` → Flush socket pools) OR test in incognito OR wait ~10 min for browser cache TTL.
+    - DNS via 1.1.1.1: A `recipecrave.com` → `76.76.21.21`, CNAME `www` → `cname.vercel-dns.com` (both resolving correctly).
+
+24. **Live deploy chain verified** — Vercel auto-deploys on push to `main`. Production current = `53c7d54` (sixth-pass), latest "Ready" build ~1m 21s.
+
 ## 🗺 Quick index — what's in this file
 
 | Section | Lines | Covers |
