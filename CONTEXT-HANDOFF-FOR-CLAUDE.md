@@ -1,7 +1,237 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-11 — **fifth pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+> Last updated: 2026-05-11 — **EIGHTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+
+## 🆕 EIGHTH pass (2026-05-11 — Recipe Scaler live + global site search + footer Kitchen Tools strip)
+
+### DNS resolved ✅
+User completed Cloudflare apex A → CNAME swap (`recipecrave.com → 0c1011e26eabdd00.vercel-dns-017.com`). Site loads with green padlock. No more `ECONNREFUSED`. The DNS section under "Sixth + Seventh pass" is now historical only.
+
+### Commits landed this pass
+
+| Commit | What |
+|---|---|
+| `0c9409a` | **Third LIVE calculator + Kitchen Tools menu prominence**. Real-time Recipe Scaler at `/calculators/realtime-recipe-scaler` (full spec below). MegaMenu desktop: forest-green `Kitchen Tools` link between Collections and search w/ animated underline distinct from terracotta nav. MegaMenu hamburger overlay: pulled `/calculators` out of generic `BROWSE_LINKS` grid (was buried as 5th tile) and elevated to dedicated hero card above Browse section — forest gradient border, gradient pill icon, "Free · No signup" eyebrow, "Open" CTA badge on sm+. Browse grid rebalanced from `lg:grid-cols-5` → `sm:grid-cols-4` (4 items remain: All Recipes, Categories, Collections, How-To). |
+| `e5baed5` | **Global site search w/ live suggestions + Footer Kitchen Tools strip**. New `SiteSearch.tsx` client component: opens via icon button right next to hamburger OR inline pill in desktop nav. Modal with live results after 2 chars (`useMemo`-debounced). Keyboard nav (↑ ↓ Enter Esc) + global Ctrl/Cmd+K shortcut. Empty-state suggestion chips (jollof, pasta, pancakes, scaler, temperature, vegan, breakfast). Groups results by type w/ colored icon badges (Tool/Recipe/Page/Cuisine/Diet). New `src/lib/search-index.ts`: unified index of 17 pages + 11 calculators + 79 recipes (title + keywords) + 32 cuisines + 14 diets ≈ 153 items. Token-AND scoring w/ title-prefix boost + calculator/page boosts. MegaMenu: replaced static `/recipes` Search `Link` AND plain GET form w/ new component (both variants use same modal). Footer: prominent Kitchen Tools strip across full width above the columns — forest gradient, 3 capability chips (Units/Temp/Scaler) + Open CTA. Now obvious in all 3 surfaces (footer + desktop nav + hamburger hero card). |
+
+### New file: `src/app/calculators/realtime-recipe-scaler/page.tsx` + `RealtimeRecipeScaler.tsx`
+
+Full live recipe scaler. Spec:
+
+**INPUT panel (left):**
+- Recipe title (text)
+- Original servings (number)
+- Currency picker: 10 options (`$ £ € ¥ ₹ ₦ ₱ R$ kr CHF`)
+- Optional manual total cost (overrides line-cost sum)
+- Dynamic ingredient table. Each row: qty + unit dropdown + name + per-line cost. Add/remove rows.
+- Unit dropdown options (16): `cup, tbsp, tsp, ml, l, fl-oz, oz, g, kg, lb, whole, slice, clove, pinch, dash, (none)`
+- Fraction parser: handles `1/2`, `1 1/2`, `0.5`, decimals all → number
+- Tip footer: "type 1/2 or 1 1/4. use unit `whole` for eggs (rounds up). write 'to taste' in the name and it passes through unscaled."
+
+**OUTPUT panel (right):**
+- Servings slider (1→48) + preset chips (1/2/4/6/8/12/24)
+- Big numeric display: desired servings + ratio % (e.g. "8 from 4 (200%)")
+- Cost breakdown card: Total scaled + Per serving (with currency)
+- Footer line: "Base recipe: ${baseTotal} (manual total | sum of line costs)"
+- Scaled ingredients list w/ formatted qty (fractions back: `1 1/2 cup flour`). Pass-through items get "· as written" pill
+- Warning banner at ratio >3× or <0.5× ("extreme scaling — cook times, pan size, seasoning need manual adjustment")
+- Buttons: Copy (clipboard), Print/PDF (`window.print()`), Save recipe
+
+**Persistence:**
+- `rc:scaler:current` localStorage → autosaves every keystroke
+- `rc:scaler:saved` localStorage array (max 30 entries) → explicit named-save list w/ load/delete UI in a foldout
+
+**Edge case handling:**
+- Whole-type units (`whole`, `slice`, `clove`) → `Math.ceil` (1.7 eggs → 2)
+- `pinch`, `dash` → pass-through unchanged
+- Regex `/to taste|as needed|optional/i` in ingredient name → pass-through
+- Empty qty → pass-through  
+- Unparseable qty → display as written
+
+**Math:**
+```
+ratio = desiredServings / origServings
+baseTotal = parseFloat(manualTotal) > 0 ? manualTotal : Σ(line.cost)
+scaledTotal = baseTotal * ratio
+perServing = scaledTotal / desiredServings
+scaledQty[i] = parseQty(line.qty) * ratio
+```
+
+**Educational sections on page:**
+- "How scaling works" — ratio math, whole-count, to-taste, extreme-warning explainer
+- "Supported units" callout
+- "Tips for scaling recipes" — baking sensitive, salt non-linear, liquid evaporation, pan size
+
+Marked `featured: true, live: true` in `src/app/calculators/page.tsx`. Wears terracotta ring + green "Most Valuable" badge + "Live now" green pill.
+
+### New file: `src/components/site/SiteSearch.tsx`
+
+Site-wide live search component. Two variants:
+- `variant="icon"` → 12×12 round button w/ Search icon (matches existing hamburger sibling)
+- `variant="inline"` → pill input "Search recipes, tools…" w/ ⌘K kbd hint (used in desktop nav)
+
+Modal (z-index `[80]`, above header/menu z-40/50/60):
+- Backdrop: `bg-ink/40 backdrop-blur-sm`
+- Panel: white rounded-2xl, max-w-2xl, opens at 12vh from top
+- Header bar: Search icon + input + X close button
+- Body: scrollable max-h-[60vh]. Empty state shows 7 suggestion chips. <2 chars hint. No-results message w/ "Press Enter to search all recipes" fallback
+- Footer bar: ↑ ↓ navigate · Enter open · Esc close
+
+Interaction:
+- `useEffect` focuses input on open (30ms delay)
+- Esc + outside click close
+- Global `Cmd/Ctrl+K` listener opens
+- ArrowUp/ArrowDown move `active` index, Enter calls `router.push(item.href)`, fallback to `/recipes?q=...`
+- Mouse hover sets active index → match keyboard cursor
+
+### New file: `src/lib/search-index.ts`
+
+Pure data + scoring. Exports `SEARCH_INDEX` (all items) and `searchItems(query, limit=12)`.
+
+Item shape: `{ kind, title, href, hint?, keywords? }` where `kind ∈ {page, calculator, recipe, cuisine, diet}`.
+
+Sources:
+- `PAGES`: 17 hand-curated entries (All Recipes, Categories, Collections, Meal Planner, Pantry Photo Scan, Voice Cook Mode, Smart Grocery Lists, Kitchen Tools, How-To Guides, About, Contact, Editorial Policy, Nutrition Disclaimer, Privacy, Terms, Account, Login)
+- `CALCULATORS`: all 11 (3 live, 8 coming-soon) w/ slugs matching `/calculators/page.tsx` TOOLS array
+- `RECIPES`: maps `SEED_RECIPES` → `{ title, href: /recipes/{slug}, hint: '{cuisine} · {totalTimeMin}m', keywords: keywords.join(' ') }`
+- `CUISINES`: maps `CUISINES` → `{ title: '{emoji} {name} cuisine', href: /cuisine/{slug} }`
+- `DIETS`: maps `DIETS` → `{ title: '{name} recipes', href: /diet/{slug} }`
+
+Scoring (`searchItems`):
+- Tokenize query on whitespace
+- Each token must hit (`indexOf >= 0`) somewhere in `title + keywords + hint` (lowercased). If any miss → exclude.
+- Score per token: 100 if token starts the title, 50 if anywhere in title, 10 if only in keywords/hint
+- Bonus: `+25` if calculator, `+15` if page (surface tools/pages first)
+- Sort desc, return top `limit`
+
+### Footer Kitchen Tools strip (in `src/components/site/Footer.tsx`)
+
+Big prominent Link card across full width ABOVE the 5-column layout:
+- `border-2 border-forest-300` + `from-forest-50 via-forest-100 to-cream-100` gradient
+- 14×14 gradient pill w/ Calculator icon (forest-500 → forest-700)
+- Eyebrow: "Free · No signup · 3 live tools"
+- Title: "Kitchen Tools & Calculators" font-serif text-2xl
+- Subtitle: "Cups→grams · Oven temps · Real-time recipe scaler & more."
+- 3 chips on right: Units (Scale icon), Temp (Thermometer icon), Scaler (Sliders icon)
+- "Open →" pill on sm+
+- Hover: `-translate-y-0.5` + shadow lift
+
+### Calculator inventory snapshot (3 live / 11 total)
+
+**LIVE:**
+1. `/calculators/unit-converter` — Cups→Grams Converter (60+ ingredients, 10 units, density-accurate via USDA, search/swap/copy, localStorage, 15-row reference table)
+2. `/calculators/temperature-adjuster` — Oven Temp Converter (°C/°F/Gas/Fan/Air-fryer, 6 presets, 10-row reference, fan + gas mark history explainer)
+3. `/calculators/realtime-recipe-scaler` — Real-time Recipe Scaler (servings slider 1-48, 10 currencies, fraction math, ceil for wholes, to-taste pass-through, extreme-scale warning, autosave + named-save list, copy + print)
+
+**COMING SOON (8) — full specs for next builds:**
+
+4. **`/calculators/recipe-cost`** — Recipe Cost Calculator
+   - Job: simpler than Scaler. Total + per-serving cost only, no slider.
+   - Input: ingredient list w/ qty+unit+price (per pack OR per unit). If pack price → pack size field
+   - Output: total recipe cost, cost-per-serving, % of total per ingredient (bar chart)
+   - Edge: "pantry staple" toggle excludes from cost. Ignore "to taste"
+   - Persistence: save as cost template, reuse across recipes
+
+5. **`/calculators/calorie-estimator`** — Calorie Estimator
+   - Job: kcal + macros from ingredient list
+   - Input: qty + unit + free-text ingredient name
+   - Processing: match name → internal USDA-derived calorie/100g table (start ~200 common ingredients). Convert qty→g via unit-converter logic. Multiply kcal/g.
+   - Output: total kcal, protein g, carb g, fat g + per-serving column
+   - Edge: unmatched → "no data" badge + manual kcal/100g override
+   - Persistence: save recipe nutrition, link to scaler
+
+6. **`/calculators/servings-scaler`** — Servings Scaler
+   - Note: subset of Real-time Recipe Scaler. **Decision pending: merge or keep as lightweight no-cost variant?**
+   - If kept: quick scale, no cost fields. Plus cook-time hint: 50–150% keep, 150–300% +10–20%, >300% split batches.
+
+7. **`/calculators/storage-life-guide`** — Storage Life Guide
+   - Job: "how long does X last in fridge/freezer/pantry"
+   - Input: searchable database of ~300 common foods (USDA FoodKeeper data)
+   - Output card: pantry / fridge / freezer days, opened vs unopened, reheating safety, spoilage signs
+   - No persistence — pure lookup
+
+8. **`/calculators/ingredient-substitutions`** — Ingredient Substitution Matcher
+   - Job: "out of X, what swaps in 1:1?"
+   - Input: searchable database of ~200 ingredients
+   - Static map: ingredient → `[(sub, ratio, notes)]`. e.g. buttermilk → 1c milk + 1tbsp vinegar (1:1, rest 5min)
+   - Output: ranked subs (best→acceptable), ratio, flavor impact, allergen flags
+   - Edge: "best for baking vs cooking" tag, dairy/gluten/egg flag
+
+9. **`/calculators/baking-ratio`** — Baker's Percentage Calculator
+   - Input: target flour weight (g) + ratio preset (lean bread / enriched / pizza / sourdough / brioche)
+   - Math: flour=100%, water=65%, salt=2%, yeast=1% per preset. Multiply each by flour weight.
+   - Output: exact grams for water/salt/yeast/fat/sugar/eggs. Plus hydration % slider, total dough weight, portions
+   - Persistence: save custom presets
+
+10. **`/calculators/seasoning-by-weight`** — Seasoning by Weight Calculator
+    - Job: replace "salt to taste" w/ gram amount
+    - Input: dish weight (g) + dish type (red meat / poultry / fish / veg / soup / dough)
+    - Math: salt = weight × type% (red meat 0.7%, chicken 1.0%, fish 0.9%, veg 1.2%, soup 0.6%, dough 1.8%)
+    - Output: salt g + tsp equivalent. Pepper / garlic powder / herbs scaled relative to salt
+    - Disclaimer: "start with 80%, taste, adjust"
+
+11. **`/calculators/pantry-inventory-matcher`** — Pantry Inventory + Recipe Matcher
+    - Job: log pantry → suggest recipes you can make now
+    - Input: checkbox grid of ~150 pantry items + free-text add. Optional Gemini Vision photo scan (already at `/pantry-match`)
+    - Processing: match user set against `SEED_RECIPES` ingredient names. Score = % of recipe ingredients owned. Show recipes ≥80%.
+    - Output: ranked recipe list w/ "need 2 more items" hints
+    - Persistence: Supabase user pantry table if logged in; localStorage fallback
+    - **Heaviest build — last in queue.** Needs DB schema + cross-table match.
+
+### Build order recommendation (value × effort)
+
+1. Storage Life Guide (easy, daily use)
+2. Ingredient Substitution Matcher (easy, saves grocery trips)
+3. Seasoning by Weight (small, high "wow")
+4. Recipe Cost Calculator (leverages Scaler logic)
+5. Calorie Estimator (medium — needs ingredient calorie table)
+6. Baking Ratio Calculator (medium, niche)
+7. Servings Scaler (decide: merge into Scaler or keep)
+8. Pantry Inventory + Recipe Matcher (biggest, DB-heavy)
+
+Awaiting user pick. Default if no answer: start with Storage Life Guide.
+
+### Live deploy chain status (current)
+
+| Surface | Status | URL |
+|---|---|---|
+| GitHub `main` branch | ✅ `e5baed5` pushed | https://github.com/recipecravee/Recipe-Crave |
+| Vercel auto-deploy | ✅ Ready ~1m post-push | https://vercel.com/bracknell-s-projects/recipe-crave |
+| `recipe-crave.vercel.app` | ✅ Live | https://recipe-crave.vercel.app |
+| `recipecrave.com` | ✅ **LIVE (DNS swap done)** | https://recipecrave.com |
+| `www.recipecrave.com` | ✅ CNAME resolves | https://www.recipecrave.com |
+
+### Files touched / created this pass
+
+```
+M  CONTEXT-HANDOFF-FOR-CLAUDE.md
+M  src/app/calculators/page.tsx               (3rd live tool marked + featured)
+M  src/components/site/Footer.tsx             (added Kitchen Tools strip)
+M  src/components/site/MegaMenu.tsx           (Kitchen Tools desktop link + overlay hero card + SiteSearch wiring + removed unused Search import)
+A  src/app/calculators/realtime-recipe-scaler/page.tsx
+A  src/app/calculators/realtime-recipe-scaler/RealtimeRecipeScaler.tsx
+A  src/components/site/SiteSearch.tsx
+A  src/lib/search-index.ts
+```
+
+### Auth note for next push
+
+Remote `recipecravee/Recipe-Crave` requires PAT auth (local git config still has `gridpointdigitalsolution-sys` identity → 403 on plain push). Workaround: push via tokenized URL:
+
+```
+git push "https://recipecravee:<PAT>@github.com/recipecravee/Recipe-Crave.git" main
+```
+
+PAT lives in `F:/MY OWN APP RECEIP CRAVE/ALL API.txt` under `GITHUB → PAT:` (do not commit). Replace token if rotated. Long-term fix: update local git remote URL or system credential manager to recipecravee PAT.
+
+### Pickup checklist for next Claude
+
+1. ✅ DNS fixed (recipecrave.com live)
+2. 3 calculators live, 8 coming-soon
+3. Global search shipped — test on prod after Vercel build
+4. Next task: build 1 more calculator per user pick (default: Storage Life Guide)
+5. Continue updating this handoff at every commit
 
 ## 🆕 Sixth + Seventh pass (2026-05-11 late session — Claude caveman, hamburger + DNS deep-dive)
 
