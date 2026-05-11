@@ -30,35 +30,95 @@ export default async function CollectionsPage() {
               className="group block overflow-hidden rounded-2xl border-2 border-ink/5 bg-white shadow-sm transition-all hover:-translate-y-1 hover:border-terracotta-300 hover:shadow-lg focus-ring"
             >
               <div className="relative aspect-[16/10] overflow-hidden bg-cream-200">
-                {thumbs.length >= 4 ? (
-                  <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-0.5">
-                    {thumbs.map((r) =>
-                      r.heroImage ? (
-                        <div key={r.slug} className="relative h-full w-full overflow-hidden">
+                {(() => {
+                  const withImages = thumbs.filter((r) => r.heroImage);
+                  if (withImages.length === 0) {
+                    return (
+                      <div
+                        className="h-full w-full bg-gradient-to-br from-forest-100 via-cream-200 to-terracotta-100"
+                        aria-hidden
+                      />
+                    );
+                  }
+                  if (withImages.length === 1) {
+                    const r = withImages[0]!;
+                    return (
+                      <Image
+                        src={r.heroImage!}
+                        alt={r.title}
+                        fill
+                        sizes="(min-width: 1024px) 400px, (min-width: 768px) 500px, 800px"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    );
+                  }
+                  if (withImages.length === 2) {
+                    return (
+                      <div className="grid h-full w-full grid-cols-2 gap-0.5">
+                        {withImages.map((r) => (
+                          <div key={r.slug} className="relative h-full w-full overflow-hidden">
+                            <Image
+                              src={r.heroImage!}
+                              alt=""
+                              fill
+                              sizes="(min-width: 1024px) 200px, (min-width: 768px) 250px, 400px"
+                              className="object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  }
+                  if (withImages.length === 3) {
+                    return (
+                      <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-0.5">
+                        <div className="relative row-span-2 h-full w-full overflow-hidden">
                           <Image
-                            src={r.heroImage}
+                            src={withImages[0]!.heroImage!}
                             alt=""
                             fill
                             sizes="(min-width: 1024px) 200px, (min-width: 768px) 250px, 400px"
                             className="object-cover transition-transform duration-500 group-hover:scale-105"
                           />
                         </div>
-                      ) : (
-                        <div key={r.slug} className="h-full w-full bg-cream-200" aria-hidden />
-                      )
-                    )}
-                  </div>
-                ) : thumbs[0]?.heroImage ? (
-                  <Image
-                    src={thumbs[0].heroImage}
-                    alt={thumbs[0].title}
-                    fill
-                    sizes="(min-width: 1024px) 400px, (min-width: 768px) 500px, 800px"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                ) : (
-                  <div className="h-full w-full bg-gradient-to-br from-forest-100 via-cream-200 to-terracotta-100" aria-hidden />
-                )}
+                        <div className="relative h-full w-full overflow-hidden">
+                          <Image
+                            src={withImages[1]!.heroImage!}
+                            alt=""
+                            fill
+                            sizes="(min-width: 1024px) 200px, (min-width: 768px) 250px, 400px"
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                        </div>
+                        <div className="relative h-full w-full overflow-hidden">
+                          <Image
+                            src={withImages[2]!.heroImage!}
+                            alt=""
+                            fill
+                            sizes="(min-width: 1024px) 200px, (min-width: 768px) 250px, 400px"
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                        </div>
+                      </div>
+                    );
+                  }
+                  // 4+ recipes
+                  return (
+                    <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-0.5">
+                      {withImages.slice(0, 4).map((r) => (
+                        <div key={r.slug} className="relative h-full w-full overflow-hidden">
+                          <Image
+                            src={r.heroImage!}
+                            alt=""
+                            fill
+                            sizes="(min-width: 1024px) 200px, (min-width: 768px) 250px, 400px"
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  );
+                })()}
                 <div className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1 text-xs font-bold uppercase tracking-wider text-forest-600 shadow-sm backdrop-blur">
                   {c.recipes.length} recipes
                 </div>
