@@ -26,7 +26,7 @@ const TOOLS: Tool[] = [
   { slug: 'ingredient-substitutions', title: 'Ingredient Substitution Matcher', body: 'Searchable swaps. Buttermilk to yogurt, Greek yogurt to sour cream. 1:1 conversions with ratios where they differ.' },
   { slug: 'baking-ratio', title: 'Baking Ratio Calculator', body: 'Baker\'s percentages. Input flour weight, get exact grams for water, salt, yeast. Consistency across recipes.' },
   { slug: 'seasoning-by-weight', title: 'Seasoning by Weight Calculator', body: 'Most recipes say "salt to taste." Input dish weight and protein type, suggest starting salt amount. Reduces over-salting.' },
-  { slug: 'realtime-recipe-scaler', title: 'Real-time Recipe Scaler', body: 'Load any recipe, drag a servings slider. Ingredients, nutrition facts, cost per serving, and cook time update instantly.' },
+  { slug: 'realtime-recipe-scaler', title: 'Real-time Recipe Scaler', body: 'Load any recipe, drag a servings slider. Ingredients, total cost, and cost per serving update instantly. Saves locally.', featured: true, live: true },
   { slug: 'pantry-inventory-matcher', title: 'Pantry Inventory + Recipe Matcher', body: 'Log what you have at home. App suggests recipes you can make right now from your inventory. Saves grocery runs and food waste.' },
 ];
 

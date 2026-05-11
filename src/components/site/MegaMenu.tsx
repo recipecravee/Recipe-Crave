@@ -60,7 +60,6 @@ const BROWSE_LINKS = [
   { href: '/categories', title: 'Categories', icon: LayoutGrid },
   { href: '/collections', title: 'Collections', icon: Heart },
   { href: '/how-to', title: 'How-To Guides', icon: ChefHat },
-  { href: '/calculators', title: 'Free Tools', icon: Calculator },
 ];
 
 export function MegaMenu({ userEmail }: { userEmail?: string }) {
@@ -192,6 +191,13 @@ export function MegaMenu({ userEmail }: { userEmail?: string }) {
           Collections
           <span className="absolute inset-x-2 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full bg-terracotta-400 transition-transform duration-300 group-hover:scale-x-100" />
         </Link>
+        <Link
+          href="/calculators"
+          className="group relative rounded-md px-2 py-1.5 text-base font-bold text-forest-600 transition-colors hover:text-forest-700 focus-ring"
+        >
+          Kitchen Tools
+          <span className="absolute inset-x-2 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full bg-forest-500 transition-transform duration-300 group-hover:scale-x-100" />
+        </Link>
 
         <form
           action="/recipes"
@@ -288,8 +294,25 @@ export function MegaMenu({ userEmail }: { userEmail?: string }) {
               ))}
             </div>
 
+            <Link
+              href="/calculators"
+              className="group mt-8 flex items-center gap-4 rounded-2xl border-2 border-forest-300 bg-gradient-to-r from-forest-50 via-forest-100 to-cream-100 p-5 shadow-md transition-all hover:-translate-y-0.5 hover:border-forest-500 hover:shadow-lg active:scale-[0.99]"
+            >
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-forest-500 to-forest-700 text-white shadow-sm group-hover:scale-110 transition-transform">
+                <Calculator className="h-7 w-7" aria-hidden />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-forest-600">Free · No signup</p>
+                <p className="font-serif text-lg font-bold text-ink">Kitchen Tools &amp; Calculators</p>
+                <p className="mt-0.5 text-sm text-ink-muted">Cups→grams, oven temps, recipe scaler &amp; more.</p>
+              </div>
+              <span className="hidden sm:inline-flex shrink-0 rounded-full bg-forest-600 px-3 py-1 text-xs font-bold uppercase tracking-wider text-white">
+                Open
+              </span>
+            </Link>
+
             <p className="mb-4 mt-10 font-serif text-2xl font-bold text-ink">Browse</p>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               {BROWSE_LINKS.map((b) => (
                 <Link
                   key={b.href}
