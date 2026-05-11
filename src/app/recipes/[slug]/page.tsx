@@ -9,6 +9,7 @@ import { RecipeImage } from '@/components/recipe/RecipeImage';
 import { RecipeActions } from '@/components/recipe/RecipeActions';
 import { ReviewsSection } from '@/components/recipe/ReviewsSection';
 import { StarRating } from '@/components/recipe/StarRating';
+import { VoiceCookMode } from '@/components/recipe/VoiceCookMode';
 import { AdSlot } from '@/components/site/AdSlot';
 import { getAllRecipes, getRecipeBySlug, getRelatedRecipes } from '@/lib/data/recipes';
 import { recipeJsonLd, faqJsonLd, breadcrumbJsonLd } from '@/lib/seo/structured-data';
@@ -134,7 +135,10 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
           </div>
         </dl>
 
-        <RecipeActions slug={recipe.slug} title={recipe.title} />
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <RecipeActions slug={recipe.slug} title={recipe.title} />
+          <VoiceCookMode title={recipe.title} servings={recipe.servings} instructions={recipe.instructions} />
+        </div>
       </header>
 
       <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-2xl bg-cream-200">
