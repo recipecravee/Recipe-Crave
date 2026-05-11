@@ -1,7 +1,103 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-11 — **EIGHTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+> Last updated: 2026-05-11 — **NINTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+
+## 🆕 NINTH pass (2026-05-11 — Storage Life Guide live)
+
+### Commits landed this pass
+
+| Commit | What |
+|---|---|
+| _pending_ | **Fourth LIVE calculator**: Storage Life Guide at `/calculators/storage-life-guide`. Searchable food-storage database. 75+ items across 10 categories (Dairy & Eggs, Meat & Poultry, Seafood, Produce — Fruit, Produce — Vegetables, Pantry Staples, Condiments & Sauces, Bakery & Grains, Leftovers & Cooked, Beverages). Per item: pantry/fridge/freezer life (unopened vs opened), notes, spoilage signs, optional reheating safety. UI: left column search input + 10 collapsible category browse buttons + popular-lookups chips (10 quick picks). Right column: result card with 3 colored storage-zone tiles (amber pantry / blue fridge / sky freezer) + amber spoilage-signs list + forest reheating-safety callout when applicable. Token-AND search w/ name-prefix boost. localStorage persists last query. Educational sections: how to read times, danger-zone explainer (40-140°F), two-hour rule, zone definitions, sources (USDA FoodKeeper + FDA cold-chain). Marked `live: true` in calculators index. Footer Kitchen Tools strip eyebrow bumped "3 live tools" → "4 live tools". search-index.ts entry updated hint from "Coming soon" → "Live · 75+ foods" + expanded keywords (mayo eggs spoil pantry). |
+
+### New file: `src/content/storage-data.ts`
+
+Pure data + search. Exports `STORAGE_ITEMS` (75+ entries), `STORAGE_CATEGORIES` (10), `findStorageItem(query)`, `searchStorageItems(query, limit)`.
+
+Item shape:
+```ts
+type StorageItem = {
+  slug: string;
+  name: string;
+  category: string;
+  aliases?: string[];
+  pantry?: { unopened?: string; opened?: string; note?: string };
+  fridge?: { unopened?: string; opened?: string; note?: string };
+  freezer?: { time?: string; note?: string };
+  spoilageSigns: string[];
+  reheating?: string;
+};
+```
+
+Search scoring: token-AND across `name + aliases + category` lowercased. Per token: 100 if name-prefix, 50 if anywhere in name, 10 if only in aliases/category. Plus position bonus.
+
+### New file: `src/app/calculators/storage-life-guide/StorageLifeGuide.tsx`
+
+Client component. Two-column layout `lg:grid-cols-[1fr,1.4fr]`.
+
+**Left column:**
+- Search input (pill style, ink-subtle Search icon, X clear button)
+- Popular-lookups chips when empty: 10 slugs (eggs, milk, chicken-raw, leftovers-cooked-meat, cooked-rice, bread-sliced, avocado, ground-beef, fish-fresh, mayo)
+- Category browse list: 10 toggle buttons w/ item-count + chevron. Clicking expands → results list right below.
+- Results list: clickable rows; selected row highlighted terracotta-50
+
+**Right column (`#storage-result` for scroll-into-view):**
+- Empty state: cream gradient card w/ Package icon + "Pick a food on the left" prompt
+- Result card: terracotta gradient header w/ category eyebrow + food name (font-serif 3xl)
+- 3-tile grid (sm:grid-cols-3): Pantry (amber), Fridge (blue), Freezer (sky). Each tile shows unopened (or "best quality" label for freezer) + opened + note. Empty zones render "Not recommended" placeholder.
+- Spoilage-signs card: amber AlertTriangle + bullet list w/ dot markers
+- Reheating-safety card (conditional): forest-50 + Flame icon + rule text (typically 165°F / 74°C internal)
+
+`smoothScroll` on pick → keeps result visible on mobile.
+
+### New file: `src/app/calculators/storage-life-guide/page.tsx`
+
+Server component. Metadata: title `Food Storage Life Guide — How Long Does It Last?`, full description, canonical, 9 SEO keywords (incl. "how long does mayo last", "USDA FoodKeeper", "food spoilage signs").
+
+Educational sections below the tool:
+- "How to read these times" — best-quality vs safety, freezer indefinite at 0°F, two-hour rule, when-in-doubt-throw-it-out
+- "Storage zones explained" — pantry 50-70°F, fridge ≤40°F, freezer ≤0°F (3-tile grid)
+- "Sources" — USDA FoodKeeper + FDA + FoodSafety.gov
+
+### Calculator inventory update
+
+**LIVE (4 / 11):**
+1. `/calculators/unit-converter` — Cups→Grams (60+ ingredients)
+2. `/calculators/temperature-adjuster` — Oven temp converter
+3. `/calculators/realtime-recipe-scaler` — Recipe scaler w/ cost
+4. `/calculators/storage-life-guide` — Storage Life Guide ← NEW
+
+**COMING SOON (7 / 11):**
+5. Recipe Cost Calculator
+6. Calorie Estimator
+7. Servings Scaler (decision pending: merge w/ Scaler?)
+8. Ingredient Substitution Matcher ← **next recommended build**
+9. Baking Ratio Calculator
+10. Seasoning by Weight Calculator
+11. Pantry Inventory + Recipe Matcher (DB-heavy, last)
+
+Full specs for unbuilt 7 preserved in EIGHTH pass section below.
+
+### Files touched / created this pass
+
+```
+M  CONTEXT-HANDOFF-FOR-CLAUDE.md
+M  src/app/calculators/page.tsx               (storage-life-guide → live: true)
+M  src/components/site/Footer.tsx             (strip: "3 live tools" → "4 live tools")
+M  src/lib/search-index.ts                    (hint: Live · 75+ foods)
+A  src/content/storage-data.ts                (~75 food items + search fns)
+A  src/app/calculators/storage-life-guide/page.tsx
+A  src/app/calculators/storage-life-guide/StorageLifeGuide.tsx
+```
+
+### Pickup checklist for next Claude
+
+1. 4 calculators live, 7 coming-soon
+2. Next default build: Ingredient Substitution Matcher (`/calculators/ingredient-substitutions`) — full spec in EIGHTH pass section
+3. Continue updating handoff at every commit
+
+## 🆕 EIGHTH pass (2026-05-11 — Recipe Scaler live + global site search + footer Kitchen Tools strip)
 
 ## 🆕 EIGHTH pass (2026-05-11 — Recipe Scaler live + global site search + footer Kitchen Tools strip)
 
