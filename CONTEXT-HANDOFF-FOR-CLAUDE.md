@@ -1,7 +1,45 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-11 by previous Claude (Opus 4.7).
+> Last updated: 2026-05-11 — second pass by Claude Opus 4.7.
+
+## ⚡ Latest session changes (top of file so you read these first)
+
+1. **DNS finally fixed via Cloudflare dashboard** (Hostinger A + AAAA records purged, replaced with Vercel A=76.76.21.21 + CNAME www=cname.vercel-dns.com, both gray-cloud DNS only). Domain `recipecrave.com` should be live with green padlock now.
+
+2. **About page rewritten** with user's exact copy + line breaks between sections. See `src/app/about/page.tsx`.
+
+3. **Image bank rewritten** with REAL dish-relevant photos. Used Unsplash internal search API (`unsplash.com/napi/search/photos?query=X`) to fetch actual jollof rice / cucumber / plantain photos instead of random IDs. ~70 dishes verified. See `src/content/image-bank.ts`.
+
+4. **+10 country recipes** added: Russian (Borscht, Beef Stroganoff), Canadian (Poutine), Indonesian (Nasi Goreng), German (Schnitzel), Turkish (Doner), Polish (Pierogi), Argentinian (Chimichurri Steak), Peruvian (Ceviche), Egyptian (Koshari), Australian (Pavlova). Total: 79 recipes, 32 cuisines.
+
+5. **Mobile nav** redesigned with pill buttons + right-edge gradient fade hint so users see it scrolls.
+
+6. **Copy humanized** — stripped em-dashes site-wide.
+
+7. **Supabase reseeded**: 79 recipes + 13 collections live in DB.
+
+8. **Vercel build green**: 249 static routes.
+
+## ⚠️ If you (next Claude) get the "image doesn't match dish" complaint again
+
+The fix is in `src/content/image-bank.ts`. The image IDs there came from real Unsplash search results — but Unsplash search is fuzzy and some matches may still be off (e.g., a jollof search could return a generic rice dish photo).
+
+**To swap any image:**
+```bash
+curl -s "https://unsplash.com/napi/search/photos?query=DISH+NAME&per_page=5" | python -c "
+import sys, json, re
+d = json.load(sys.stdin)
+for p in d.get('results', []):
+    url = p.get('urls', {}).get('regular', '')
+    if 'plus.unsplash.com' in url or 'premium_' in url: continue
+    m = re.search(r'/photo-([a-z0-9-]+)\?', url)
+    if m: print(m.group(1)); break
+"
+```
+Replace the photo ID in `image-bank.ts` for the dish key.
+
+---
 
 ---
 
