@@ -1,7 +1,141 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-11 — **NINTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+> Last updated: 2026-05-11 — **TENTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+
+## 🆕 TENTH pass (2026-05-11 — Ingredient Substitution Matcher live)
+
+### Commits landed this pass
+
+| Commit | What |
+|---|---|
+| _pending_ | **Fifth LIVE calculator**: Ingredient Substitution Matcher at `/calculators/ingredient-substitutions`. Searchable swap database. 60+ ingredients across 12 categories (Dairy, Eggs, Flour & Starch, Fat & Oil, Sweetener, Leavening, Acid & Vinegar, Herb & Spice, Sauce & Condiment, Liquid, Protein, Pantry). Each ingredient has 2–7 ranked substitutes. UI: left column search + 12 collapsible category browse + 10 popular-sub chips + **filter panel** (6 allergen toggles: dairy/gluten/egg/nut/soy/vegan + 5 use-case toggles: baking/cooking/sauces/frying/raw). Right column: result card w/ category + count + filtered-out count + ranked sub cards. Each sub card: name, ratio (terracotta), Best-match/Good/Acceptable badge, notes, bestFor pills, flavor-impact pill (subtle/noticeable/major), red "contains [allergen]" pills. Empty filter state shows amber warning. Active filter line at bottom. localStorage persists filter selection. |
+
+### New file: `src/content/substitution-data.ts`
+
+Pure data + ranking. Exports `SUBSTITUTION_ITEMS` (60+ ingredients), `SUBSTITUTION_CATEGORIES` (12), `findSubstitution`, `searchSubstitutions`, `rankSubsByContext`.
+
+Types:
+```ts
+type AllergenFlag = 'dairy' | 'gluten' | 'egg' | 'nut' | 'soy' | 'animal';
+type BestFor = 'baking' | 'cooking' | 'sauces' | 'frying' | 'raw' | 'sweet' | 'savory';
+type Quality = 'best' | 'good' | 'acceptable';
+
+type Substitute = {
+  name: string;
+  ratio: string;            // "1:1" or "1 cup milk + 1 tbsp lemon juice"
+  quality: Quality;
+  bestFor?: BestFor[];
+  flavorImpact?: 'subtle' | 'noticeable' | 'major';
+  allergenFlags?: AllergenFlag[];
+  notes?: string;
+};
+
+type IngredientSub = {
+  slug: string;
+  name: string;
+  category: string;
+  aliases?: string[];
+  subs: Substitute[];
+};
+```
+
+Search scoring: same token-AND + name-prefix boost as storage-data.ts.
+
+`rankSubsByContext(subs, allergens, bestForFilter)` — filters subs containing any selected allergen, then optionally only subs whose `bestFor` includes selected use-case, then sorts by quality rank (best 3 → good 2 → acceptable 1). Subs with no `bestFor` array are treated as "works for any" and always pass use-case filter.
+
+### Ingredient coverage
+
+- **Dairy (7):** buttermilk, heavy cream, sour cream, whole milk, butter, cream cheese, parmesan
+- **Eggs (2):** whole egg, egg white
+- **Flour & Starch (6):** AP flour, cake flour, self-rising, bread flour, cornstarch, breadcrumbs
+- **Fat & Oil (3):** vegetable oil, olive oil, shortening
+- **Sweetener (4):** white sugar, brown sugar, powdered sugar, honey
+- **Leavening (3):** baking powder, baking soda, yeast
+- **Acid & Vinegar (4):** lemon juice, white vinegar, balsamic, red wine vinegar
+- **Herb & Spice (7):** fresh herbs, dried herbs, allspice, pumpkin spice, Italian seasoning, Cajun seasoning, fresh garlic
+- **Sauce & Condiment (6):** soy sauce, Worcestershire, tomato sauce, tomato paste, ketchup, mayo, Dijon
+- **Liquid (4):** white wine, red wine, chicken stock, beef stock
+- **Protein (2):** ground beef, bacon
+- **Pantry (5):** cocoa powder, chocolate chips, cornmeal, pine nuts, vanilla extract
+
+Total: 53 ingredients × avg 3.5 subs = ~185 swap entries.
+
+### New file: `src/app/calculators/ingredient-substitutions/IngredientSubstitutions.tsx`
+
+Client component. Layout `lg:grid-cols-[1fr,1.4fr]`.
+
+**Left column:**
+- Search input pill (Search icon + X clear)
+- Popular subs chips when empty (10 slugs: buttermilk, egg, butter, heavy-cream, sour-cream, all-purpose-flour, cornstarch, sugar-white, soy-sauce, vegetable-oil)
+- **Filter panel** (white card, forest eyebrow):
+  - 6 allergen toggle pills (forest-600 when on)
+  - 5 use-case toggle pills + "Any" (terracotta-500 when on)
+- Category browse list: 12 toggle buttons w/ counts
+- Results list: clickable rows
+
+**Right column (`#sub-result`):**
+- Empty state: cream gradient + ArrowLeftRight icon + prompt
+- Result card: terracotta gradient header "Out of {ingredient}?" + filtered count + hidden count
+- "No subs match your filters" amber alert when filter strips everything
+- Sub cards (one per ranked substitute):
+  - Sparkles icon on #1 when quality=best
+  - Name (font-serif 1.125rem)
+  - Ratio (terracotta-600, font-semibold)
+  - Quality badge (forest/amber/ink)
+  - Optional notes (ink-muted)
+  - Pills row: bestFor (cream), flavor-impact (amber-tiered), allergenFlags (red)
+- Active-filters footer line
+
+### New file: `src/app/calculators/ingredient-substitutions/page.tsx`
+
+Server component. Metadata: title `Ingredient Substitution Matcher — Free Cooking Swap Database`, 10 SEO keywords (incl. "buttermilk substitute", "egg substitute baking", "vegan substitute").
+
+Educational sections:
+- "How substitution quality works" — Best/Good/Acceptable rubric
+- "Tips for swapping ingredients" — baking is least forgiving, ratio carefully, flavor-impact pill, allergen-flag semantics
+- "Sources" — King Arthur, Serious Eats, ATK, USDA
+
+### Calculator inventory update
+
+**LIVE (5 / 11):**
+1. `/calculators/unit-converter` — Cups→Grams
+2. `/calculators/temperature-adjuster` — Oven temp
+3. `/calculators/realtime-recipe-scaler` — Recipe scaler w/ cost
+4. `/calculators/storage-life-guide` — 75+ foods
+5. `/calculators/ingredient-substitutions` — 60+ ingredients ← NEW
+
+**COMING SOON (6 / 11):**
+6. Recipe Cost Calculator
+7. Calorie Estimator
+8. Servings Scaler (still pending merge decision)
+9. Baking Ratio Calculator ← **next recommended build**
+10. Seasoning by Weight Calculator
+11. Pantry Inventory + Recipe Matcher (DB-heavy, last)
+
+### Surface updates
+
+- `src/app/calculators/page.tsx`: ingredient-substitutions → `live: true`
+- `src/components/site/Footer.tsx`: strip eyebrow "4 live tools" → "5 live tools"
+- `src/lib/search-index.ts`: hint "Coming soon" → "Live · 60+ ingredients" + expanded keywords (dairy free, gluten free, vegan, butter, flour)
+
+### Files touched / created this pass
+
+```
+M  CONTEXT-HANDOFF-FOR-CLAUDE.md
+M  src/app/calculators/page.tsx               (ingredient-substitutions → live: true)
+M  src/components/site/Footer.tsx             (strip: 4 → 5 live tools)
+M  src/lib/search-index.ts                    (hint update)
+A  src/content/substitution-data.ts           (~53 ingredients, ~185 swaps + ranking)
+A  src/app/calculators/ingredient-substitutions/page.tsx
+A  src/app/calculators/ingredient-substitutions/IngredientSubstitutions.tsx
+```
+
+### Pickup checklist for next Claude
+
+1. 5 calculators live, 6 coming-soon
+2. Next default build: Baking Ratio Calculator (`/calculators/baking-ratio`) — full spec in EIGHTH pass section below
+3. Continue updating handoff at every commit
 
 ## 🆕 NINTH pass (2026-05-11 — Storage Life Guide live)
 
