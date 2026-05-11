@@ -131,20 +131,75 @@ export default async function HomePage() {
       <section className="container py-16">
         <h2 className="mb-8 font-serif text-3xl text-ink sm:text-4xl">Hand-picked collections</h2>
         <div className="grid gap-6 md:grid-cols-3">
-          {collections.map((col) => (
-            <Link
-              key={col.slug}
-              href={`/collections/${col.slug}`}
-              className="group block overflow-hidden rounded-2xl bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus-ring"
-            >
-              <div className="aspect-[16/9] bg-gradient-to-br from-forest-100 via-cream-200 to-terracotta-100" aria-hidden />
-              <div className="space-y-2 p-5">
-                <p className="text-xs font-medium uppercase tracking-wider text-forest-500">{col.recipes.length} recipes</p>
-                <h3 className="font-serif text-xl text-ink group-hover:text-terracotta-500">{col.title}</h3>
-                <p className="text-sm text-ink-muted">{col.description}</p>
-              </div>
-            </Link>
-          ))}
+          {collections.slice(0, 6).map((col) => {
+            const thumbs = col.recipes.filter((r) => r.heroImage).slice(0, 4);
+            return (
+              <Link
+                key={col.slug}
+                href={`/collections/${col.slug}`}
+                className="group block overflow-hidden rounded-2xl bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus-ring"
+              >
+                <div className="relative aspect-[16/9] overflow-hidden bg-cream-200">
+                  {thumbs.length === 0 ? (
+                    <div className="h-full w-full bg-gradient-to-br from-forest-100 via-cream-200 to-terracotta-100" aria-hidden />
+                  ) : thumbs.length === 1 ? (
+                    <Image
+                      src={thumbs[0]!.heroImage!}
+                      alt=""
+                      fill
+                      sizes="(min-width: 1024px) 400px, 100vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  ) : thumbs.length === 2 ? (
+                    <div className="grid h-full w-full grid-cols-2 gap-0.5">
+                      {thumbs.map((r) => (
+                        <div key={r.slug} className="relative h-full w-full overflow-hidden">
+                          <Image
+                            src={r.heroImage!}
+                            alt=""
+                            fill
+                            sizes="(min-width: 1024px) 200px, 50vw"
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  ) : thumbs.length === 3 ? (
+                    <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-0.5">
+                      <div className="relative row-span-2 h-full w-full overflow-hidden">
+                        <Image src={thumbs[0]!.heroImage!} alt="" fill sizes="(min-width: 1024px) 200px, 50vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                      </div>
+                      <div className="relative h-full w-full overflow-hidden">
+                        <Image src={thumbs[1]!.heroImage!} alt="" fill sizes="(min-width: 1024px) 200px, 50vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                      </div>
+                      <div className="relative h-full w-full overflow-hidden">
+                        <Image src={thumbs[2]!.heroImage!} alt="" fill sizes="(min-width: 1024px) 200px, 50vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-0.5">
+                      {thumbs.map((r) => (
+                        <div key={r.slug} className="relative h-full w-full overflow-hidden">
+                          <Image
+                            src={r.heroImage!}
+                            alt=""
+                            fill
+                            sizes="(min-width: 1024px) 200px, 50vw"
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <div className="space-y-2 p-5">
+                  <p className="text-xs font-medium uppercase tracking-wider text-forest-500">{col.recipes.length} recipes</p>
+                  <h3 className="font-serif text-xl text-ink group-hover:text-terracotta-500">{col.title}</h3>
+                  <p className="text-sm text-ink-muted">{col.description}</p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 

@@ -13,10 +13,11 @@ type Tool = {
   title: string;
   body: string;
   featured?: boolean;
+  live?: boolean;
 };
 
 const TOOLS: Tool[] = [
-  { slug: 'unit-converter', title: 'Cups → Grams Converter', body: 'Convert between US, metric, and UK measurements instantly.' },
+  { slug: 'unit-converter', title: 'Cups → Grams Converter', body: 'Convert any cooking ingredient between US, metric, and UK measurements. 60+ ingredients with density-accurate ratios.', live: true },
   { slug: 'recipe-cost', title: 'Recipe Cost Calculator', body: 'Estimate the cost per serving for any recipe.' },
   { slug: 'calorie-estimator', title: 'Calorie Estimator', body: 'Get approximate calorie counts from your ingredient list.' },
   { slug: 'servings-scaler', title: 'Servings Scaler', body: 'Scale any recipe up or down with adjusted cook times.', featured: true },
@@ -46,8 +47,12 @@ export default function CalculatorsIndex() {
             }`}
           >
             <div className="flex items-center gap-2">
-              <p className="text-xs font-semibold uppercase tracking-wider text-terracotta-500">
-                Coming soon
+              <p
+                className={`text-xs font-semibold uppercase tracking-wider ${
+                  t.live ? 'text-forest-600' : 'text-terracotta-500'
+                }`}
+              >
+                {t.live ? 'Live now' : 'Coming soon'}
               </p>
               {t.featured ? (
                 <span className="rounded-full bg-forest-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-forest-700">
