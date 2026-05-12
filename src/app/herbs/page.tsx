@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Leaf, Heart, Brain, Activity, Coffee } from 'lucide-react';
 import { HERBS, CONDITIONS, SYNERGIES } from '@/content/herbs';
+import { SeasonalHerbs } from '@/components/site/SeasonalHerbs';
 
 export const metadata: Metadata = {
   title: 'Therapeutic Herbs & Functional Ingredients — Food as Preventive Health',
@@ -40,6 +41,11 @@ export default function HerbsLanding() {
           replacing medical care.
         </p>
       </header>
+
+      {/* Seasonal herb rotation — surfaces 4 in-season herbs per current month */}
+      <div className="mb-12">
+        <SeasonalHerbs />
+      </div>
 
       <section className="mb-12">
         <h2 className="mb-4 font-serif text-2xl">By health condition</h2>
