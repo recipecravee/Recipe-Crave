@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Leaf, Activity, AlertTriangle, ChefHat, Sparkles } from 'lucide-react';
+import { Leaf, Activity, AlertTriangle, ChefHat, Sparkles, FlaskConical, ExternalLink } from 'lucide-react';
 import { HERBS, getHerb, SYNERGIES } from '@/content/herbs';
+import { getCitationsForHerb } from '@/content/herb-citations';
 
 export async function generateStaticParams() {
   return HERBS.map((h) => ({ slug: h.slug }));
@@ -155,6 +156,8 @@ export default async function HerbPage({ params }: { params: Promise<{ slug: str
         </div>
       </section>
 
+      <CitationsBlock herbSlug={slug} />
+
       <section className="mt-12 rounded-2xl bg-cream-100 p-6">
         <h2 className="font-serif text-xl">Other therapeutic herbs</h2>
         <div className="mt-3 flex flex-wrap gap-2">
@@ -170,5 +173,50 @@ export default async function HerbPage({ params }: { params: Promise<{ slug: str
         </div>
       </section>
     </div>
+  );
+}
+
+function CitationsBlock({ herbSlug }: { herbSlug: string }) {
+  const citations = getCitationsForHerb(herbSlug);
+  if (citations.length === 0) return null;
+  return (
+    <section className="mt-12 rounded-2xl bg-white p-6 shadow-sm">
+      <div className="flex items-center gap-2">
+        <FlaskConical className="h-5 w-5 text-forest-700" aria-hidden />
+        <h2 className="font-serif text-xl">Scientific research</h2>
+      </div>
+      <p className="mt-2 text-xs text-ink-muted">
+        Peer-reviewed studies cited from NIH PubMed. Click any PMID to read
+        the abstract.
+      </p>
+      <ul className="mt-4 space-y-3">
+        {citations.map((c) => (
+          <li key={c.pmid} className="rounded-xl border border-ink/5 p-3">
+            <div className="flex items-baseline gap-2">
+              <span className="rounded-full bg-forest-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-forest-700">
+                {c.studyType}
+              </span>
+              <span className="text-[11px] text-ink-subtle">{c.year}</span>
+            </div>
+            <p className="mt-1 text-sm font-bold text-ink">{c.title}</p>
+            <p className="mt-0.5 text-xs text-ink-muted">{c.authors}</p>
+            <p className="mt-2 text-sm text-ink">{c.finding}</p>
+            <a
+              href={`https://pubmed.ncbi.nlm.nih.gov/${c.pmid}/`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-terracotta-600 hover:underline"
+            >
+              PubMed PMID: {c.pmid}
+              <ExternalLink className="h-3 w-3" aria-hidden />
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p className="mt-4 text-[10px] text-ink-subtle">
+        Studies summarized for plain-English understanding. Read the full
+        abstract on PubMed for methodology, sample size, and limitations.
+      </p>
+    </section>
   );
 }
