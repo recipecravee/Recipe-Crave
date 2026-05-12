@@ -35,7 +35,7 @@ const CALCULATORS: SearchItem[] = [
   { kind: 'calculator', title: 'Cups → Grams Converter', href: '/calculators/unit-converter', hint: 'Live · 60+ ingredients', keywords: 'cups grams measurement unit converter ml oz tbsp tsp' },
   { kind: 'calculator', title: 'Temperature Adjuster', href: '/calculators/temperature-adjuster', hint: 'Live · °C / °F / gas mark / air fryer', keywords: 'oven temperature celsius fahrenheit gas mark fan forced convection air fryer' },
   { kind: 'calculator', title: 'Real-time Recipe Scaler', href: '/calculators/realtime-recipe-scaler', hint: 'Live · Most valuable', keywords: 'scale recipe servings cost per serving slider' },
-  { kind: 'calculator', title: 'Recipe Cost Calculator', href: '/calculators/recipe-cost', hint: 'Coming soon', keywords: 'cost per serving budget cheap meal' },
+  { kind: 'calculator', title: 'Recipe Cost Calculator', href: '/calculators/recipe-cost', hint: 'Live · multi-currency', keywords: 'cost per serving budget cheap meal food cost percentage restaurant pop-up pricing pack price' },
   { kind: 'calculator', title: 'Calorie Estimator', href: '/calculators/calorie-estimator', hint: 'Coming soon', keywords: 'calories macros nutrition' },
   { kind: 'calculator', title: 'Storage Life Guide', href: '/calculators/storage-life-guide', hint: 'Live · 75+ foods', keywords: 'food safety how long fridge freezer expired pantry spoil mayo eggs' },
   { kind: 'calculator', title: 'Ingredient Substitution Matcher', href: '/calculators/ingredient-substitutions', hint: 'Live · 60+ ingredients', keywords: 'substitute replacement swap buttermilk yogurt egg flour butter dairy free gluten free vegan' },

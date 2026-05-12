@@ -17,7 +17,7 @@ export function Footer() {
           </div>
           <div className="min-w-0 flex-1">
             <p className="text-[10px] font-bold uppercase tracking-widest text-forest-600">
-              Free · No signup · 7 live tools
+              Free · No signup · 8 live tools
             </p>
             <p className="font-serif text-xl font-bold text-ink sm:text-2xl">
               Kitchen Tools &amp; Calculators

@@ -18,7 +18,7 @@ type Tool = {
 
 const TOOLS: Tool[] = [
   { slug: 'unit-converter', title: 'Cups → Grams Converter', body: 'Convert any cooking ingredient between US, metric, and UK measurements. 60+ ingredients with density-accurate ratios.', live: true },
-  { slug: 'recipe-cost', title: 'Recipe Cost Calculator', body: 'Estimate the cost per serving for any recipe.' },
+  { slug: 'recipe-cost', title: 'Recipe Cost Calculator', body: 'Pack-price or per-unit pricing, automatic cost-per-serving, pantry-staple exclusion, ranked ingredient-share bar chart, multi-currency, save/load.', live: true },
   { slug: 'calorie-estimator', title: 'Calorie Estimator', body: 'Get approximate calorie counts from your ingredient list.' },
   { slug: 'temperature-adjuster', title: 'Temperature Adjuster', body: 'Convert oven temps across °F, °C, gas marks, and air fryer equivalents. Adjusts for fan-forced vs conventional too.', featured: true, live: true },
   { slug: 'storage-life-guide', title: 'Storage Life Guide', body: 'Searchable database. "How long is opened mayo safe?" "Do eggs go bad?" Simple lookup, saves decisions.', live: true },

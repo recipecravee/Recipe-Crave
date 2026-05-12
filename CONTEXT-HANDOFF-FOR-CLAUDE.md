@@ -1,7 +1,105 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **SIXTEENTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+> Last updated: 2026-05-12 — **SEVENTEENTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+
+## 🆕 SEVENTEENTH pass (2026-05-12 — Recipe Cost Calculator live)
+
+### Commit landed
+
+| Commit | What |
+|---|---|
+| _pending_ | **Eighth LIVE calculator — Recipe Cost.** Per-pack OR per-unit pricing toggle, automatic cost-per-serving, pantry-staple exclusion (billable cost excludes staples; total includes them), ranked bar-chart breakdown of where money goes, 10-currency picker, save/load (max 30), copy + print. Pre-loaded EXAMPLE recipe = "Family-style chicken & rice" (9 ingredients incl. 3 pantry staples). |
+
+### New file: `src/app/calculators/recipe-cost/RecipeCost.tsx`
+
+`lg:grid-cols-[1.4fr,1fr]` split — input-heavy.
+
+**Cost math (the key logic):**
+```ts
+function lineCost(ing) {
+  if (ing.priceMode === 'per-unit') return qty * unitPrice;
+  return (qty / packSize) * packPrice;
+}
+const billableTotal = ingredients
+  .filter((i) => !i.staple)
+  .reduce((s, i) => s + lineCost(i), 0);
+const stapleCost = ingredients
+  .filter((i) => i.staple)
+  .reduce((s, i) => s + lineCost(i), 0);
+const total = billableTotal + stapleCost;
+const perServing = billableTotal / servingsN;  // staples excluded
+```
+
+**Ingredient row UI (mobile-first):**
+- Row 1: name (1fr) + qty (90px) + unit dropdown (80px). 12 units (g, kg, ml, l, oz, lb, cup, tbsp, tsp, whole, slice, each).
+- Row 2: price-mode segmented control (`Per pack` / `Per unit`, 110px) + dynamic fields (per-pack: 2-col packPrice + packSize; per-unit: 1-col unitPrice) + trash button.
+- Row 3: pantry-staple checkbox + live line-cost pill.
+- Staple rows tint cream-50; non-staple rows white.
+
+**Output panel:**
+- Cost summary: gradient forest→cream→terracotta. 2-tile grid: Total cost (white) + Per serving (forest-100 emphasised). Plus pantry-staple disclosure line.
+- "Where the money goes" bar chart: top 10 rows sorted by line cost desc. Per row: name (italic+muted if staple) + cost + percentage + horizontal bar (terracotta or muted gray for staples). Bar width = min(100, pct).
+- Empty-state amber warning when total === 0.
+- Action buttons: Copy (clipboard, 2s checkmark feedback) + Print (window.print) + Save recipe (full-width).
+
+**Persistence:**
+- `rc:recipe-cost:current` — autosave on every keystroke
+- `rc:recipe-cost:saved` — named-save list (max 30)
+
+### New file: `src/app/calculators/recipe-cost/page.tsx`
+
+Server component. Metadata:
+- Title: `Recipe Cost Calculator — Cost Per Serving & Food Cost Percentage`
+- 9 keywords: recipe cost calculator, cost per serving, food cost calculator, meal cost, how much does this recipe cost, restaurant food cost percentage, meal prep budget, budget cooking, price per serving
+
+Below-tool sections (~1100 words, original):
+- "How to enter prices accurately" — per-pack vs per-unit guidance with chicken thighs example (£7.50 / 900g)
+- "The pantry staple rule" — total vs per-serving distinction, bar-chart staple visualization
+- "For restaurants and pop-ups: food cost percentage" — industry 28-32% target, menu-pricing formula (£3.50 ÷ 0.30 = £11.67), staple-toggle reversal advice
+- "How to drive recipe cost down" — 5 actionable tips (look at bar chart first, swap cut not type, buy whole/butcher, seasonal swaps, bigger pack sizes)
+- "Pair this with other RecipeCrave tools" — cross-links to Recipe Scaler, Unit Converter, Substitution Matcher
+
+### Surface updates
+
+- `src/app/calculators/page.tsx`: recipe-cost `live: true` + new body
+- `src/lib/search-index.ts`: hint "Coming soon" → "Live · multi-currency" + expanded keywords (food cost percentage, restaurant pop-up pricing, pack price)
+- `src/components/site/Footer.tsx`: strip eyebrow "7 live tools" → "8 live tools"
+
+### Files touched / created this pass
+
+```
+M  CONTEXT-HANDOFF-FOR-CLAUDE.md
+M  src/app/calculators/page.tsx                    (recipe-cost live)
+M  src/components/site/Footer.tsx                  (strip 7→8 live)
+M  src/lib/search-index.ts                         (recipe-cost hint)
+A  src/app/calculators/recipe-cost/RecipeCost.tsx  (~470 lines)
+A  src/app/calculators/recipe-cost/page.tsx        (~150 lines)
+```
+
+### Calculator inventory now
+
+**LIVE (8 / 10):**
+1. Cups → Grams Converter
+2. Temperature Adjuster
+3. Real-time Recipe Scaler (also serves /servings-scaler via redirect)
+4. Storage Life Guide
+5. Ingredient Substitution Matcher
+6. Baking Ratio Calculator
+7. Seasoning by Weight Calculator
+8. Recipe Cost Calculator ← NEW
+
+**COMING SOON (2 / 10):**
+9. Calorie Estimator ← next build
+10. Pantry Inventory + Recipe Matcher (last)
+
+### Pickup checklist for next Claude
+
+1. 8 calculators live, 2 coming-soon
+2. Next default: Calorie Estimator with internal ~200-row USDA kcal/100g + macros table. Unit-to-gram conversion via cups-to-grams logic. "No data" badge + manual override for unmatched ingredients.
+3. Then Pantry Inventory + Recipe Matcher (largest — score each `COMBINED_RECIPES` entry vs user's pantry set, rank ≥80% matches)
+
+## 🆕 SIXTEENTH pass (2026-05-12 — Servings Scaler redirect + Seasoning by Weight live)
 
 ## 🆕 SIXTEENTH pass (2026-05-12 — Servings Scaler redirect + Seasoning by Weight live)
 
@@ -13,8 +111,8 @@ User asked for thorough completion of all remaining coming-soon calculators with
 
 | Commit | What |
 |---|---|
-| _pending_ | **Servings Scaler → Real-time Recipe Scaler permanent redirect.** Real-time Recipe Scaler already does servings scaling + cost. No reason to maintain two tools. `src/app/calculators/servings-scaler/page.tsx` is now a 5-line `redirect('/calculators/realtime-recipe-scaler')` server component. Preserves any inbound SEO equity. Removed from calculators index TOOLS array + search-index.ts. |
-| _pending_ | **Seventh LIVE calculator — Seasoning by Weight.** Full industry-standard salt-by-percentage calculator at `/calculators/seasoning-by-weight`. 20 dish-type presets organized in 5 categories (Protein-raw, Vegetables, Soups/Sauces/Cooking-water, Bread/Grains, Brines/Cures). Each preset has canonical % + min/max range + stage (raw/finished/cooking-water/dough) + sourced notes + companion aromatic ratios (pepper, garlic powder, onion powder, paprika, dried herbs, sugar) + timing + recommended salt type. |
+| `deb8a68` | **Servings Scaler → Real-time Recipe Scaler permanent redirect.** Real-time Recipe Scaler already does servings scaling + cost. No reason to maintain two tools. `src/app/calculators/servings-scaler/page.tsx` is now a 5-line `redirect('/calculators/realtime-recipe-scaler')` server component. Preserves any inbound SEO equity. Removed from calculators index TOOLS array + search-index.ts. |
+| `deb8a68` | **Seventh LIVE calculator — Seasoning by Weight.** Full industry-standard salt-by-percentage calculator at `/calculators/seasoning-by-weight`. 20 dish-type presets organized in 5 categories (Protein-raw, Vegetables, Soups/Sauces/Cooking-water, Bread/Grains, Brines/Cures). Each preset has canonical % + min/max range + stage (raw/finished/cooking-water/dough) + sourced notes + companion aromatic ratios (pepper, garlic powder, onion powder, paprika, dried herbs, sugar) + timing + recommended salt type. |
 
 ### New file: `src/content/seasoning-data.ts` (~280 lines)
 
