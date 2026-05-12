@@ -32,7 +32,11 @@ export async function Header() {
             priority
             unoptimized
           />
-          <span className="font-serif text-2xl font-bold sm:text-3xl">
+          {/* Wordmark scales with viewport. Hidden on ultra-narrow (<360px) so the
+              logo + search + hamburger fit without clipping. */}
+          {/* Wordmark scales with viewport. Hidden on ultra-narrow (<360px) so the
+              logo + search + hamburger fit without clipping. */}
+          <span className="hidden font-serif text-xl font-bold min-[360px]:inline sm:text-2xl lg:text-3xl">
             <span className="text-ink">Recipe</span>
             <span className="text-terracotta-400">Crave</span>
           </span>

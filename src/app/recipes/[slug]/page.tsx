@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Clock, Users, Flame, DollarSign, ChefHat } from 'lucide-react';
+import { Clock, Users, Flame, DollarSign, ChefHat, UtensilsCrossed } from 'lucide-react';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { Badge } from '@/components/ui/badge';
 import { RecipeCard } from '@/components/recipe/RecipeCard';
@@ -168,13 +168,38 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
                 </li>
               ))}
             </ul>
-            {recipe.equipment.length > 0 ? (
-              <div className="mt-6 border-t border-ink/10 pt-4">
-                <h3 className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Equipment</h3>
-                <p className="mt-2 text-sm">{recipe.equipment.join(', ')}</p>
-              </div>
-            ) : null}
           </div>
+
+          {/* Kitchen tools / equipment guide — surfaced as its own card so home
+              cooks can verify they have what they need before starting. */}
+          {recipe.equipment.length > 0 ? (
+            <div className="mt-6 rounded-2xl bg-gradient-to-br from-forest-50 to-cream-50 p-6 shadow-sm ring-1 ring-forest-200">
+              <div className="flex items-center gap-2">
+                <UtensilsCrossed className="h-5 w-5 text-forest-700" aria-hidden />
+                <h2 className="font-serif text-xl text-forest-700">Kitchen tools you&apos;ll need</h2>
+              </div>
+              <p className="mt-1 text-xs text-ink-muted">Tick each tool as you set up.</p>
+              <ul className="mt-4 grid grid-cols-1 gap-2 text-sm">
+                {recipe.equipment.map((tool, i) => (
+                  <li key={i} className="flex items-center gap-2 rounded-lg border border-forest-100 bg-white px-3 py-2 shadow-sm">
+                    <input
+                      type="checkbox"
+                      id={`tool-${i}`}
+                      className="h-4 w-4 rounded border-forest-300 text-forest-600 focus:ring-forest-400"
+                    />
+                    <label htmlFor={`tool-${i}`} className="flex-1 font-medium text-ink">
+                      {tool}
+                    </label>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-3 text-[11px] text-ink-subtle">
+                Missing one? Most recipes have a workable substitute — a heavy skillet
+                stands in for a Dutch oven, a sturdy bowl for a stand mixer, a sharp paring
+                knife for a chef knife.
+              </p>
+            </div>
+          ) : null}
         </aside>
 
         {/* Instructions */}
