@@ -18,6 +18,7 @@ import { AdSlot } from '@/components/site/AdSlot';
 import { getAllRecipes, getRecipeBySlug, getRelatedRecipes } from '@/lib/data/recipes';
 import { recipeJsonLd, faqJsonLd, breadcrumbJsonLd } from '@/lib/seo/structured-data';
 import { getFaqOrPaa } from '@/lib/seo/paa-generator';
+import { generatePairings } from '@/lib/pairing';
 import { formatMinutes, formatCurrency, absoluteUrl } from '@/lib/utils';
 
 export async function generateStaticParams() {
@@ -350,6 +351,32 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
               </p>
             </section>
           ) : null}
+
+          {/* Beverage pairing — wine, beer, non-alcoholic suggestions auto-generated
+              from cuisine + protein + spice profile. Anchors the "what should I drink
+              with this?" search vertical Food Network rarely covers well. */}
+          <section className="mt-10 rounded-2xl bg-gradient-to-br from-forest-50 to-cream-50 p-6 shadow-sm">
+            <h2 className="font-serif text-2xl">What to drink with this</h2>
+            <p className="mt-1 text-xs text-ink-muted">
+              Wine, beer, and non-alcoholic options matched to this recipe&apos;s cuisine + main protein + spice level.
+            </p>
+            <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+              {generatePairings(recipe).map((p, i) => (
+                <li key={i} className="rounded-xl bg-white p-4 shadow-sm">
+                  <div className="flex items-baseline gap-2">
+                    <span className="rounded-full bg-cream-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-ink-muted">
+                      {p.type === 'non-alcoholic' ? 'non-alc' : p.type}
+                    </span>
+                    <strong className="font-serif text-base text-ink">{p.name}</strong>
+                  </div>
+                  <p className="mt-1 text-xs text-ink-muted">{p.description}</p>
+                  <p className="mt-2 text-xs text-forest-700">
+                    <strong>Why:</strong> {p.why}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </section>
 
           {/* User-submitted variation form — drives UGC + internal link diversity */}
           <section className="mt-10">
