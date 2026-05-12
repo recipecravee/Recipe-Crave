@@ -116,9 +116,13 @@ export default async function HomePage() {
                 <feature.icon className="h-5 w-5 text-terracotta-500" aria-hidden />
               </div>
               <h3 className="mt-4 font-serif text-lg">{feature.title}</h3>
-              <p className="mt-2 text-sm text-ink-muted">{feature.body}</p>
-              <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-terracotta-500 transition-transform group-hover:translate-x-0.5">
-                {feature.cta} <ArrowRight className="h-4 w-4" aria-hidden />
+              <p className="mt-2 flex-1 text-sm text-ink-muted">{feature.body}</p>
+              {/* Pill-shaped button-styled CTA — circled padding, terracotta
+                  background, white text, arrow nudge on hover. Looks like a
+                  real button rather than a text link. */}
+              <span className="mt-5 inline-flex items-center gap-1.5 self-start rounded-full bg-terracotta-500 px-4 py-2 text-sm font-bold text-white shadow-sm transition-all group-hover:bg-terracotta-600 group-hover:shadow-md">
+                {feature.cta}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
               </span>
             </Link>
           ))}
