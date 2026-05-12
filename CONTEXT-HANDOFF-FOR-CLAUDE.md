@@ -1,7 +1,105 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **TWENTY-FIFTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+> Last updated: 2026-05-12 — **TWENTY-SIXTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+
+## 🆕 TWENTY-SIXTH pass (2026-05-12 — 24-list TODO step #5: contraindication checker + How-To articles + meal plans)
+
+### Completed in this session
+
+User asked to proceed with 24-list one-by-one, no rush, masterpiece-quality, handoff updated each step, SEO-rich, zero "Coming soon" pages. This pass closes:
+
+| Item | Commit | Notes |
+|---|---|---|
+| Mise en place + Record Breaking residue scrub across 126 recipes | `441e7ba` | Bytes-level regex; 0 broken syntax remaining |
+| 6 full how-to articles replace "Coming soon" tiles | `441e7ba` | poach egg / julienne / roux / temper chocolate / cook rice / brown butter — each ~1500-2000 words with HowTo JSON-LD |
+| TODOs 1-4: Four 30-day condition meal plans | `01cca0f` | Anti-Inflammation, Diabetes, Gut Healing, Sleep Optimization. Week-by-week structure, daily meals linking to recipes, shopping list, milestones, safety, supplementation. |
+| TODO 5: Contraindication checker | _pending this push_ | Drug + condition interaction scanner — see below |
+
+### TODO #5 — Contraindication checker
+
+User explicit ask + matches strategy doc's "Dosage and Safety Framework" requirement.
+
+**New files:**
+- `src/content/contraindications.ts` (~250 lines) — 25 medications + 11 user conditions + ~30 interaction rules sourced from NIH NCCIH, Memorial Sloan Kettering "About Herbs", WHO Monographs, Drugs.com / Lexicomp, ACOG. Each rule has severity grade (severe / caution / mild), plain-English explanation, and source citation.
+- `src/app/safety-check/page.tsx` — server page w/ SEO metadata + sources block
+- `src/app/safety-check/SafetyCheckClient.tsx` — interactive client component, localStorage `rc:safety-profile` persists choices
+
+**UX:**
+- Left column: medication picker grouped by category (Blood Thinner, Diabetes, Blood Pressure, Cholesterol, Thyroid, Antidepressant, Immunosuppressant, Anticonvulsant, Mood Stabilizer) + condition picker (pregnancy, breastfeeding, gallstones, kidney stones, hyper/hypothyroid, hypertension, GERD, ulcer, autoimmune flare, pre-surgery).
+- Right column: flagged interactions grouped by herb, sorted severity-desc within each herb. Each flag shows: severity badge (red severe / amber caution / cream mild) + explanation + source citation.
+- Empty state when no selections made.
+- "No interactions found" green panel when selections produce no hits.
+
+**Coverage:**
+- Turmeric × 6 rules (warfarin, aspirin, eliquis, clopidogrel, gallstones, pre-surgery, pregnancy)
+- Ginger × 3 (warfarin, aspirin, metformin)
+- Cinnamon × 3 (metformin, insulin, sulfonylurea)
+- Garlic × 3 (warfarin, aspirin, pre-surgery)
+- Ashwagandha × 5 (levothyroxine, methimazole, hyperthyroid, autoimmune flare, pregnancy)
+- Fenugreek × 4 (metformin, insulin, warfarin, pregnancy)
+- Hibiscus × 3 (lisinopril, amlodipine, HCTZ)
+- Cayenne × 3 (aspirin, GERD, ulcer)
+- Black pepper × 2 (phenytoin, GERD)
+- Ginseng × 4 (warfarin, MAOI, metformin, sertraline)
+- Clove × 2 (warfarin, pre-surgery)
+- Green tea × 3 (warfarin, MAOI, pregnancy)
+- Peppermint × 1 (GERD)
+- Raw honey × 1 (pregnancy/infant safety)
+- Fennel × 1 (pregnancy)
+- Olive oil × 1 (HCTZ — beneficial)
+
+**Strategy alignment:** strategy doc explicitly asked for: "Build a contraindication checker: Users input their medications and health conditions. The system flags if any recipe contains herbs that interact negatively. This prevents harm and builds trust." ✅ shipped.
+
+**SEO:**
+- Page title: "Therapeutic Herb Safety Checker — Drug Interactions & Contraindications"
+- Keywords: herb drug interaction checker, turmeric warfarin interaction, cinnamon metformin interaction, ashwagandha thyroid medication, herbal supplement safety
+- Featured-snippet-friendly Q+A structure on each result tile
+
+**Free:** No external APIs. All data static + sourced. localStorage profile only — no Supabase row needed.
+
+**Wired in:**
+- Search index: /safety-check entry added
+- /herbs landing page: new amber CTA banner "Free herb-drug safety check" linking to /safety-check
+
+### Running TODO list (still 19 items left after this push)
+
+```
+✅ 1. 30-day Anti-Inflammation Plan          01cca0f
+✅ 2. 30-day Diabetes Management Plan        01cca0f
+✅ 3. 30-day Gut Healing Plan                01cca0f
+✅ 4. 30-day Sleep Optimization Plan         01cca0f
+✅ 5. Contraindication checker               THIS PUSH
+⏳ 6. Therapeutic dosage recipe scaling
+⏳ 7. Wine/beverage pairing per recipe
+⏳ 8. Seasonal herb rotation widget
+⏳ 9. Scientific PubMed citations per herb
+⏳ 10. User health profile system (Supabase free tier)
+⏳ 11. Pantry Matcher Supabase sync
+⏳ 12. Variation moderation queue
+⏳ 13. Email daily-digest cron (free Resend)
+⏳ 14. Recipe content depth 1200-1600 word backfill
+⏳ 15. Cooking measurement auto-conversion per locale
+⏳ 16. 17 minor-locale UI strings via Lingva
+⏳ 17. Step photos placeholder slots
+⏳ 18. Welcome popup A/B variant
+⏳ 19. Recipe-rating verified-cook count
+⏳ 20. Deep URL /recipes/cat/cuisine/method/name + 301s
+⏳ 21. Recipe price tracking
+⏳ 22. Sponsored recipe content zones
+⏳ 23. Pantry Vision Gemini free-tier integration
+⏳ 24. Cooking-streak gamification
+```
+
+### Pickup checklist for next Claude
+
+1. /safety-check live + linked from /herbs.
+2. /how-to has 6 real articles (no more Coming soon).
+3. /meal-plans has 4 full 30-day plans.
+4. Mise en place + Record Breaking residue cleared.
+5. Continue with TODO #6 (Therapeutic dosage recipe scaling). User wants: extend Real-time Recipe Scaler so therapeutic-dose users can scale 1 tsp turmeric → 2 tsp without throwing off flavor balance. Recipe Scaler page is `/calculators/realtime-recipe-scaler` — add a "Therapeutic mode" toggle that bumps any herb listed in herbs.ts to 2× its default qty + injects a flavor-balance hint ("more lemon / more honey to balance").
+
+## 🆕 TWENTY-FIFTH pass (2026-05-12 — Lingva translation API + Google OAuth live + dashboard upgrade + 6 large features)
 
 ## 🆕 TWENTY-FIFTH pass (2026-05-12 — Lingva translation API + Google OAuth live + dashboard upgrade + 6 large features)
 

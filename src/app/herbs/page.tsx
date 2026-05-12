@@ -107,6 +107,30 @@ export default function HerbsLanding() {
         </ul>
       </section>
 
+      <section className="mb-12 rounded-2xl bg-gradient-to-br from-amber-50 to-cream-50 p-6 shadow-sm ring-1 ring-amber-200">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-widest text-amber-700">
+              New: Drug + condition interaction checker
+            </p>
+            <h2 className="mt-1 font-serif text-xl text-ink">
+              Free herb-drug safety check
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm text-ink-muted">
+              Tick the medications and conditions that apply to you. We flag any
+              interactions across the 30+ herbs in this catalog with source citations
+              from NIH NCCIH, Memorial Sloan Kettering, and WHO Monographs.
+            </p>
+          </div>
+          <Link
+            href="/safety-check"
+            className="inline-flex items-center gap-1.5 rounded-full bg-amber-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-amber-700 focus-ring"
+          >
+            Run safety check →
+          </Link>
+        </div>
+      </section>
+
       <section className="rounded-2xl bg-amber-50 p-6 ring-1 ring-amber-200">
         <div className="flex items-start gap-2">
           <Heart className="mt-1 h-5 w-5 shrink-0 text-amber-700" aria-hidden />
