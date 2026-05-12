@@ -7,6 +7,7 @@ import { ScrollToTop } from '@/components/site/ScrollToTop';
 import { FloatingLanguageSelector } from '@/components/site/FloatingLanguageSelector';
 import { WelcomePopup } from '@/components/site/WelcomePopup';
 import { CookieBanner } from '@/components/site/CookieBanner';
+import { GoogleAnalytics } from '@/components/site/GoogleAnalytics';
 import { StreakTracker } from '@/components/site/StreakTracker';
 import { I18nProvider } from '@/lib/i18n/I18nProvider';
 import { JsonLd } from '@/components/seo/JsonLd';
@@ -99,6 +100,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const umamiId = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
   const umamiSrc = process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL;
   const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
+  const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
   return (
     <html lang="en" className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable}`} suppressHydrationWarning>
@@ -146,6 +148,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {umamiId && umamiSrc ? (
           <Script src={umamiSrc} data-website-id={umamiId} strategy="lazyOnload" />
         ) : null}
+
+        {gaMeasurementId ? <GoogleAnalytics measurementId={gaMeasurementId} /> : null}
 
         {adsenseClient ? (
           <Script
