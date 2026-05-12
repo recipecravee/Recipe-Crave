@@ -9,7 +9,7 @@
 
 | Commit | What |
 |---|---|
-| _pending_ | **Tenth and FINAL LIVE calculator — Pantry Inventory + Recipe Matcher.** 150-item pantry catalog across 13 categories with category-collapse UI, search filter, select-all/clear-category bulk actions, custom-item free-text additions, photo-scan jump link (to existing Gemini Vision tool at `/pantry-match`). Matcher scores every recipe in `COMBINED_RECIPES` (200+) against owned pantry, ranks ≥60% matches (or 100% in strict "cook tonight" mode), shows missing-ingredient hints, links to recipe pages. localStorage persists pantry + custom items across sessions. **The full 10-calculator suite is now LIVE.** |
+| `d8031fe` | **Tenth and FINAL LIVE calculator — Pantry Inventory + Recipe Matcher.** 150-item pantry catalog across 13 categories with category-collapse UI, search filter, select-all/clear-category bulk actions, custom-item free-text additions, photo-scan jump link (to existing Gemini Vision tool at `/pantry-match`). Matcher scores every recipe in `COMBINED_RECIPES` (200+) against owned pantry, ranks ≥60% matches (or 100% in strict "cook tonight" mode), shows missing-ingredient hints, links to recipe pages. localStorage persists pantry + custom items across sessions. **The full 10-calculator suite is now LIVE.** |
 
 ### New file: `src/content/pantry-catalog.ts` (~280 lines)
 
