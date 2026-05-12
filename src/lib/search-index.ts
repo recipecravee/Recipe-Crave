@@ -27,6 +27,13 @@ const PAGES: SearchItem[] = [
   { kind: 'page', title: 'Nutrition Disclaimer', href: '/nutrition-disclaimer' },
   { kind: 'page', title: 'Privacy Policy', href: '/privacy' },
   { kind: 'page', title: 'Terms of Use', href: '/terms' },
+  { kind: 'page', title: 'My Saved Recipes', href: '/saved', hint: 'Local bookmarks', keywords: 'saved bookmarked favourites' },
+  { kind: 'page', title: 'Pasta Recipes (cluster)', href: '/pillars/pasta-recipes', hint: 'Topic cluster pillar', keywords: 'pasta spaghetti carbonara pesto' },
+  { kind: 'page', title: 'Chicken Recipes (cluster)', href: '/pillars/chicken-recipes', hint: 'Topic cluster pillar', keywords: 'chicken thigh breast wings' },
+  { kind: 'page', title: 'Budget Meals Under $5', href: '/pillars/budget-meals', hint: 'Topic cluster pillar', keywords: 'budget cheap affordable broke pantry' },
+  { kind: 'page', title: 'High-Protein Recipes', href: '/pillars/high-protein-recipes', hint: 'Topic cluster pillar', keywords: 'high protein macros muscle' },
+  { kind: 'page', title: 'Meal Prep Recipes', href: '/pillars/meal-prep-recipes', hint: 'Topic cluster pillar', keywords: 'meal prep make ahead batch cook' },
+  { kind: 'page', title: 'One-Pot Recipes', href: '/pillars/one-pot-recipes', hint: 'Topic cluster pillar', keywords: 'one pot one pan sheet pan' },
   { kind: 'page', title: 'My Account', href: '/account' },
   { kind: 'page', title: 'Log in', href: '/login' },
 ];

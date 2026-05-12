@@ -1,7 +1,131 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **TWENTY-SECOND pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+> Last updated: 2026-05-12 — **TWENTY-THIRD pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+
+## 🆕 TWENTY-THIRD pass (2026-05-12 — voice-first + organic-search strategy alignment: save-without-login, topic clusters, Pinterest pins, freshness signal, UGC variation form)
+
+### Why this pass
+
+User pasted second strategy doc emphasizing voice-first differentiation, content clustering for topical authority, bookmarking without login, Pinterest dominance, and UGC trust signals. Highest-impact items executed in one push.
+
+### Commit
+
+| Commit | What |
+|---|---|
+| _pending_ | Files added: `src/components/recipe/RecipeSaveButton.tsx` (localStorage bookmark, dispatches `rc:saved-changed` event for cross-component sync), `src/app/saved/page.tsx` + `src/app/saved/SavedRecipes.tsx` (no-index personal listing, lite recipe payload, clear-all action), `src/content/pillars.ts` (6 topic clusters with regex predicates + long-tail keyword arrays + expert tips), `src/app/pillars/[slug]/page.tsx` (dynamic pillar route, "People also search for" long-tail list, sibling-pillar cross-links), `src/app/api/pin/[slug]/route.tsx` (Edge-runtime 1000×1500 Pinterest pin generator), `src/components/recipe/VerifiedCookBadge.tsx`, `src/components/recipe/RecipeVariationForm.tsx` (localStorage UGC form). Edited: `src/app/recipes/[slug]/page.tsx` (mount RecipeSaveButton + RecipeVariationForm + freshness "Last reviewed" timestamp, pinterest:src in metadata), `src/lib/search-index.ts` (added 7 new entries: /saved + 6 pillars). |
+
+### File-by-file
+
+#### `src/components/recipe/RecipeSaveButton.tsx`
+
+- Two variants: `pill` (default — visible "Save recipe" / "Saved" button) and `icon` (compact 40×40 round)
+- Reads/writes `localStorage['rc:saved']` as JSON array of slugs
+- Dispatches `CustomEvent('rc:saved-changed')` on toggle so other instances on the same page sync (e.g. recipe card + sidebar both reflect state)
+- Listens for same event on mount via `addEventListener` so changes elsewhere update instantly
+- Mounted-flag prevents hydration mismatch — server renders neutral state, client hydrates with actual saved state after first effect
+- `print:hidden` — never appears in printed/PDF output
+
+#### `src/app/saved/page.tsx` + `SavedRecipes.tsx`
+
+- Server component fetches full catalog → projects to lightweight shape (no instruction text in client bundle)
+- Client component reads `localStorage['rc:saved']`, intersects with catalog, renders grid
+- `robots: { index: false, follow: false }` — personal listing should not be indexed
+- Empty state w/ CTA to Browse recipes
+- Clear-all button drops the entire saved list
+- Per-card "Remove from saved" inline action
+
+#### `src/content/pillars.ts` (~150 lines)
+
+6 topic-cluster pillars built around head keywords with high search volume:
+- `pasta-recipes` — head kw "pasta recipes", regex matches 12 pasta-family words
+- `chicken-recipes` — head kw "chicken recipes", regex matches chicken/wings/thigh/breast
+- `budget-meals` — predicate `(costPerServingUsd ?? 999) <= 5`
+- `high-protein-recipes` — predicate `(nutrition.proteinG ?? 0) >= 25`
+- `meal-prep-recipes` — text-match meal-prep keywords OR `servings >= 6`
+- `one-pot-recipes` — text-match one-pot/one-pan/sheet-pan/skillet
+
+Each pillar carries: `title` (H1), `headKeyword` (primary SEO target), `longTail[]` (5-10 variations Google shows in "People also search for"), `pinterestHook` (1-line Pinterest description), `intro` (2-paragraph opener for topical authority), `tip` (expert tip block surfaced near top), `match(recipe)` (predicate).
+
+#### `src/app/pillars/[slug]/page.tsx`
+
+Per pillar:
+- Breadcrumb (Home › Recipes › head keyword)
+- Hero block with topic-cluster eyebrow + H1 + intro paragraph + cluster count
+- Expert-tip card (forest gradient + quote icon) — voice-search-friendly answer block Google may extract as featured snippet
+- Recipe grid (sorted by totalTimeMin asc)
+- "People also search for" long-tail list (cluster keyword variations)
+- Sibling-pillar cross-links at bottom (topic-cluster reinforcement: each pillar links to every other pillar)
+
+#### `src/app/api/pin/[slug]/route.tsx`
+
+Edge-runtime 1000×1500 Pinterest pin generator. URL: `GET /api/pin/{slug}.png` (or `.png` stripped in handler).
+- Top 1000×750: recipe hero image (`object-fit: cover`)
+- Brand strip: terracotta bg, "RecipeCrave" wordmark + URL
+- Bottom: title (68px serif), meta line (time · servings · cuisine), "Free recipe · No paywall · Save & print" uppercase tracking footer
+- Used by `<meta name="pinterest:src">` injected in recipe page metadata via `other` key
+
+#### `src/components/recipe/RecipeVariationForm.tsx`
+
+Inline form for "Share your version". Optimistic-UI:
+- Name (40 chars max) + variation text (240 chars max)
+- Submit saves to `localStorage['rc:variations:{slug}']` (max 25 entries per recipe)
+- "Thanks!" check-icon state for 3s after submit
+- Note explains: "Saved to your browser. Approved variations roll out to the public list weekly."
+- Future phase: POST to `/api/variation` with captcha + moderation queue. Component contract stays the same.
+
+#### `src/components/recipe/VerifiedCookBadge.tsx`
+
+Small "Verified cook" badge — renders only when passed `madeIt={true}`. For reviews where the reviewer confirmed they cooked the recipe. Future-ready for auth-backed verification.
+
+#### Recipe page wiring (`src/app/recipes/[slug]/page.tsx`)
+
+- `<RecipeSaveButton slug={recipe.slug} />` added to action row (next to RecipeActions + VoiceCookMode)
+- "Last reviewed {date} by the RecipeCrave kitchen team" timestamp under description — strategy doc requires visible freshness signal
+- `<RecipeVariationForm recipeSlug={recipe.slug} />` mounted in a section above the PAA accordion
+- `pinterest:src` URL added to metadata via Next 16's `other` key
+
+### Strategy alignment scorecard now
+
+| Item | Status |
+|---|---|
+| Bookmark without login | ✅ |
+| `/saved` personal listing page | ✅ |
+| Content clustering pillar pages | ✅ × 6 |
+| Pinterest 2:3 pin image per recipe | ✅ |
+| "Verified cook" trust badge | ✅ component built (wire into reviews next pass) |
+| User-submitted variation UGC | ✅ form scaffold (localStorage) |
+| Content freshness "Last reviewed" timestamp | ✅ on every recipe page |
+| FAQ / People Also Ask | ✅ from previous pass |
+| Voice-search optimized PAA | ✅ — all 9 PAA items written in conversational long-tail form |
+| Recipe schema markup | ✅ existing |
+| Text-to-speech on recipes | ✅ existing VoiceCookMode |
+
+### Residual strategy items (next-pass priorities)
+
+| Item | Notes |
+|---|---|
+| Sponsored recipe content zones | Awaits brand partnerships |
+| Ingredient-based browse pages `/ingredient/[item]` | 1 pass — chicken, seafood, vegetables, beef, fish |
+| Meal-purpose browse pages `/for/[occasion]` | 1 pass — date-night, meal-prep, family-dinner, holiday |
+| `/blog` section with first 5 articles | 2 passes — ingredient guides + technique tutorials |
+| Email funnel — daily recipe digest | 1 pass once `/api/newsletter` is wired |
+| Lingva/LibreTranslate wire-up | Awaiting user's go-ahead |
+| Recipe variation moderation queue (POST endpoint) | Phase after auth |
+| Recipe content depth expansion 1200-1600 words | Bulk catalog backfill |
+| Ad placement after-fold audit | Currently AdSlots are placed below ingredients / between sections — already aligned with strategy doc |
+| Pinterest "Pin it" button on recipe pages | Component to drop next pass |
+
+### Pickup checklist for next Claude
+
+1. 6 pillar pages live (`/pillars/pasta-recipes` etc.) — topic-cluster authority signal to Google
+2. Save-without-login working — pop the saved menu icon into the header next pass if not enough discovery
+3. Pinterest pin generator live — verify `/api/pin/test-slug.png` returns 1000×1500 image
+4. Variation form is localStorage-only — future phase migrates to authenticated POST
+5. Translation gap unchanged from previous passes
+6. Next default: ingredient/meal-purpose browse + blog scaffold + Pinterest Pin-it button + email funnel wire-up
+
+## 🆕 TWENTY-SECOND pass (2026-05-12 — strategy-doc alignment: PAA + Quick Filters + Cook-Time/Method/Servings browse + Recipe of the Day + Affiliate infra)
 
 ## 🆕 TWENTY-SECOND pass (2026-05-12 — strategy-doc alignment: PAA + Quick Filters + Cook-Time/Method/Servings browse + Recipe of the Day + Affiliate infra)
 

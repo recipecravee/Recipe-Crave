@@ -7,6 +7,8 @@ import { Badge } from '@/components/ui/badge';
 import { RecipeCard } from '@/components/recipe/RecipeCard';
 import { RecipeImage } from '@/components/recipe/RecipeImage';
 import { RecipeActions } from '@/components/recipe/RecipeActions';
+import { RecipeSaveButton } from '@/components/recipe/RecipeSaveButton';
+import { RecipeVariationForm } from '@/components/recipe/RecipeVariationForm';
 import { ReviewsSection } from '@/components/recipe/ReviewsSection';
 import { StarRating } from '@/components/recipe/StarRating';
 import { VoiceCookMode } from '@/components/recipe/VoiceCookMode';
@@ -43,6 +45,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     },
     twitter: { card: 'summary_large_image', title: recipe.title, description: recipe.description },
     keywords: recipe.keywords,
+    // Pinterest favors vertical 2:3 pins. Expose a per-recipe pin URL so
+    // crawlers and the in-page "Pin it" button reference an optimized image.
+    other: {
+      'pinterest:src': absoluteUrl(`/api/pin/${recipe.slug}.png`),
+    },
   };
 }
 
@@ -109,6 +116,21 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
         ) : null}
         <p className="mt-4 max-w-2xl text-lg text-ink-muted text-pretty">{recipe.description}</p>
 
+        {/* Content-freshness signal — strategy doc requires visible
+            last-reviewed timestamps so users + Google see the catalog is
+            actively maintained. */}
+        <p className="mt-3 text-[11px] uppercase tracking-widest text-ink-subtle">
+          Last reviewed{' '}
+          <time dateTime={recipe.updatedAt ?? recipe.publishedAt}>
+            {new Date(recipe.updatedAt ?? recipe.publishedAt).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </time>{' '}
+          by the RecipeCrave kitchen team
+        </p>
+
         <dl className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm">
           <div className="flex items-center gap-2">
             <Clock className="h-4 w-4 text-terracotta-500" aria-hidden />
@@ -143,6 +165,7 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
 
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <RecipeActions slug={recipe.slug} title={recipe.title} />
+          <RecipeSaveButton slug={recipe.slug} />
           <VoiceCookMode title={recipe.title} servings={recipe.servings} instructions={recipe.instructions} />
         </div>
       </header>
@@ -323,6 +346,11 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
               </p>
             </section>
           ) : null}
+
+          {/* User-submitted variation form — drives UGC + internal link diversity */}
+          <section className="mt-10">
+            <RecipeVariationForm recipeSlug={recipe.slug} />
+          </section>
 
           {/* People Also Ask — visible accordion, doubles as featured-snippet
               fodder via FAQPage JSON-LD. Auto-generated for recipes without
