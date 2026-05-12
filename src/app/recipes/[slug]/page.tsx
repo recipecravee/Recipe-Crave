@@ -15,6 +15,7 @@ import { MeasurementBanner } from '@/components/recipe/MeasurementBanner';
 import { CookedCount } from '@/components/recipe/CookedCount';
 import { ReviewsSection } from '@/components/recipe/ReviewsSection';
 import { AboutThisDish } from '@/components/recipe/AboutThisDish';
+import { RecipeDeepDive } from '@/components/recipe/RecipeDeepDive';
 import { StarRating } from '@/components/recipe/StarRating';
 import { VoiceCookMode } from '@/components/recipe/VoiceCookMode';
 import { AdSlot } from '@/components/site/AdSlot';
@@ -404,6 +405,13 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
               context per page (cuisine origin, technique, serving guidance). Pure
               SEO content-depth play across all 126 recipes. */}
           <AboutThisDish recipe={recipe} />
+
+          {/* Auto-generated long-form deep dive — adds ~1,200-1,500 words of
+              metadata-driven content per recipe page across 7 sections (origin,
+              technique, difficulty notes, common mistakes, storage/make-ahead,
+              nutrition, variations). Pushes every recipe page comfortably past
+              the 1,500-word SEO floor for high-intent recipe queries. */}
+          <RecipeDeepDive recipe={recipe} />
 
           {/* User-submitted variation form — drives UGC + internal link diversity */}
           <section className="mt-10">
