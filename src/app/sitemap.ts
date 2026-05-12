@@ -28,6 +28,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: SITE.url, lastModified: now, changeFrequency: 'daily', priority: 1.0 },
     { url: `${SITE.url}/recipes`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${SITE.url}/cuisines`, lastModified: now, changeFrequency: 'weekly', priority: 0.85 },
+    { url: `${SITE.url}/diets`, lastModified: now, changeFrequency: 'weekly', priority: 0.85 },
     { url: `${SITE.url}/collections`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${SITE.url}/meal-planner`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${SITE.url}/meal-plans`, lastModified: now, changeFrequency: 'weekly', priority: 0.85 },

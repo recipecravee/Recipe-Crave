@@ -25,6 +25,19 @@ export default async function HomePage() {
     Math.floor((today.getTime() - Date.UTC(today.getUTCFullYear(), 0, 0)) / 86400000) % Math.max(1, all.length);
   const recipeOfDay = all[dayIdx] ?? all[0];
 
+  // Recipe counts per cuisine + diet — drives the count badges on the
+  // Explore-by-cuisine and Recipes-for-every-diet sections below.
+  const cuisineCounts = new Map<string, number>();
+  const dietCounts = new Map<string, number>();
+  for (const r of all) {
+    if (r.cuisine) {
+      cuisineCounts.set(r.cuisine, (cuisineCounts.get(r.cuisine) ?? 0) + 1);
+    }
+    for (const d of r.dietaryTags ?? []) {
+      dietCounts.set(d, (dietCounts.get(d) ?? 0) + 1);
+    }
+  }
+
   return (
     <>
       {/* Hero */}
@@ -130,21 +143,54 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Cuisines */}
+      {/* Cuisines — interactive card grid with emoji, name, and recipe count.
+          Visible-first redesign: big tap targets on mobile, balanced grid
+          on tablet/desktop. "See all 67" CTA bottom for taxonomy depth. */}
       <section className="bg-cream-200/40 py-16">
         <div className="container">
-          <h2 className="mb-8 font-serif text-3xl text-ink sm:text-4xl">Explore by cuisine</h2>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-            {CUISINES.slice(0, 12).map((c) => (
-              <Link
-                key={c.slug}
-                href={`/cuisine/${c.slug}`}
-                className="group flex items-center gap-3 rounded-xl bg-white px-4 py-3 shadow-sm transition-shadow hover:shadow-md focus-ring"
-              >
-                <span className="text-2xl" aria-hidden>{c.emoji}</span>
-                <span className="font-medium text-ink group-hover:text-terracotta-500">{c.name}</span>
-              </Link>
-            ))}
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-sm font-medium uppercase tracking-wider text-terracotta-500">By cuisine</p>
+              <h2 className="mt-1 font-serif text-3xl text-ink sm:text-4xl">Explore {CUISINES.length} world cuisines</h2>
+              <p className="mt-2 max-w-2xl text-sm text-ink-muted">
+                From West African jollof to Persian saffron pilaf — every regional tradition has its own landing page with recipes, technique guides, and pairing notes.
+              </p>
+            </div>
+            <Link
+              href="/cuisines"
+              className="hidden items-center gap-1 text-sm font-bold text-terracotta-500 hover:text-terracotta-600 sm:inline-flex"
+            >
+              See all {CUISINES.length} →
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 xl:grid-cols-6">
+            {CUISINES.slice(0, 12).map((c) => {
+              const n = cuisineCounts.get(c.slug) ?? 0;
+              return (
+                <Link
+                  key={c.slug}
+                  href={`/cuisine/${c.slug}`}
+                  className="group flex flex-col items-center justify-center gap-2 rounded-2xl bg-white px-4 py-5 text-center shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus-ring sm:py-6"
+                  aria-label={`${c.name} cuisine — ${n} recipes`}
+                >
+                  <span className="text-3xl sm:text-4xl" aria-hidden>{c.emoji}</span>
+                  <span className="font-serif text-base font-semibold text-ink group-hover:text-terracotta-500 sm:text-lg">
+                    {c.name}
+                  </span>
+                  <span className="text-xs font-medium text-ink-muted">
+                    {n > 0 ? `${n} ${n === 1 ? 'recipe' : 'recipes'}` : 'Coming soon'}
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+          <div className="mt-6 text-center sm:hidden">
+            <Link
+              href="/cuisines"
+              className="inline-flex items-center gap-1 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-terracotta-500 shadow-sm"
+            >
+              See all {CUISINES.length} cuisines →
+            </Link>
           </div>
         </div>
       </section>
@@ -263,20 +309,54 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Diets */}
+      {/* Diets — interactive card grid mirroring the cuisines section so the
+          two read as a pair. Each card shows the diet name + how many recipes
+          in the library qualify. Mobile = 2 cols; tablet = 3; desktop = 4. */}
       <section className="bg-cream-200/40 py-16">
         <div className="container">
-          <h2 className="mb-8 font-serif text-3xl text-ink sm:text-4xl">Recipes for every diet</h2>
-          <div className="flex flex-wrap gap-2">
-            {DIETS.map((d) => (
-              <Link
-                key={d.slug}
-                href={`/diet/${d.slug}`}
-                className="rounded-full border border-ink/10 bg-white px-5 py-2 text-sm font-medium text-ink transition-colors hover:border-terracotta-400 hover:text-terracotta-500 focus-ring"
-              >
-                {d.name}
-              </Link>
-            ))}
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-sm font-medium uppercase tracking-wider text-forest-700">By diet</p>
+              <h2 className="mt-1 font-serif text-3xl text-ink sm:text-4xl">Recipes for every diet</h2>
+              <p className="mt-2 max-w-2xl text-sm text-ink-muted">
+                Vegan, keto, gluten-free, low-FODMAP, Mediterranean — pick a pattern and the library narrows automatically. Each diet page explains the rules and shows nutrition-matched recipes.
+              </p>
+            </div>
+            <Link
+              href="/diets"
+              className="hidden items-center gap-1 text-sm font-bold text-forest-700 hover:text-forest-800 sm:inline-flex"
+            >
+              See all {DIETS.length} →
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+            {DIETS.map((d) => {
+              const n = dietCounts.get(d.slug) ?? 0;
+              return (
+                <Link
+                  key={d.slug}
+                  href={`/diet/${d.slug}`}
+                  className="group flex flex-col items-start justify-between gap-2 rounded-2xl border border-ink/5 bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-forest-400 hover:shadow-md focus-ring sm:p-5"
+                  aria-label={`${d.name} diet — ${n} recipes`}
+                >
+                  <span className="font-serif text-base font-semibold text-ink group-hover:text-forest-700 sm:text-lg">
+                    {d.name}
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-xs font-medium text-ink-muted">
+                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-forest-500" aria-hidden />
+                    {n > 0 ? `${n} ${n === 1 ? 'recipe' : 'recipes'}` : 'Coming soon'}
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+          <div className="mt-6 text-center sm:hidden">
+            <Link
+              href="/diets"
+              className="inline-flex items-center gap-1 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-forest-700 shadow-sm"
+            >
+              See all {DIETS.length} diets →
+            </Link>
           </div>
         </div>
       </section>
