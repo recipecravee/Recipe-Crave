@@ -123,6 +123,7 @@ export function RealtimeRecipeScaler() {
   const [savedList, setSavedList] = useState<SavedRecipe[]>([]);
   const [showSaved, setShowSaved] = useState(false);
   const [savedToast, setSavedToast] = useState(false);
+  const [therapeuticMode, setTherapeuticMode] = useState(false);
 
   // Load current state
   useEffect(() => {
@@ -239,16 +240,70 @@ export function RealtimeRecipeScaler() {
     }
   }
 
-  function scaledLine(ing: Ingredient): { qty: string; unitLabel: string; name: string; passthrough: boolean } {
+  // Detect therapeutic herbs (turmeric, ginger, cinnamon, etc.) so the
+  // "therapeutic mode" toggle can boost their dose 2x and surface a flavor-
+  // balance hint. Match against herb name and common cooking-name variants.
+  function detectTherapeuticHerb(name: string): string | null {
+    const text = name.toLowerCase();
+    const map: Array<[string, RegExp]> = [
+      ['turmeric', /\bturmeric\b/i],
+      ['ginger', /\bginger\b/i],
+      ['cinnamon', /\bcinnamon\b/i],
+      ['garlic', /\bgarlic\b/i],
+      ['black pepper', /\bblack pepper\b|\bpeppercorn\b/i],
+      ['cayenne', /\bcayenne\b/i],
+      ['fenugreek', /\bfenugreek\b/i],
+      ['ashwagandha', /\bashwagandha\b/i],
+      ['cumin', /\bcumin\b/i],
+      ['cardamom', /\bcardamom\b/i],
+      ['clove', /\bcloves?\b/i],
+      ['rosemary', /\brosemary\b/i],
+      ['thyme', /\bthyme\b/i],
+      ['sage', /\bsage\b/i],
+      ['oregano', /\boregano\b/i],
+      ['basil', /\bbasil\b/i],
+      ['fennel', /\bfennel\b/i],
+      ['hibiscus', /\bhibiscus\b/i],
+    ];
+    for (const [herbName, rx] of map) {
+      if (rx.test(text)) return herbName;
+    }
+    return null;
+  }
+
+  function scaledLine(ing: Ingredient): { qty: string; unitLabel: string; name: string; passthrough: boolean; therapeutic?: boolean } {
     const meta = UNITS.find((u) => u.value === ing.unit);
     const unitLabel = meta?.label ?? '';
     const passthrough = isToTaste(ing.name) || meta?.pass === true || !ing.qty;
     if (passthrough) return { qty: ing.qty || '', unitLabel, name: ing.name, passthrough: true };
     const q = parseQty(ing.qty);
     if (!isFinite(q)) return { qty: ing.qty, unitLabel, name: ing.name, passthrough: true };
-    const scaled = q * ratio;
-    return { qty: formatQty(scaled, meta?.whole === true), unitLabel, name: ing.name, passthrough: false };
+    // Therapeutic mode: matched herbs get 2× multiplier on top of the
+    // servings ratio. This pushes culinary doses (e.g. 1/2 tsp turmeric)
+    // into the therapeutic window (1-2 tsp).
+    const isTherapeuticHerb = therapeuticMode && detectTherapeuticHerb(ing.name) !== null;
+    const dose = isTherapeuticHerb ? q * 2 : q;
+    const scaled = dose * ratio;
+    return {
+      qty: formatQty(scaled, meta?.whole === true),
+      unitLabel,
+      name: ing.name,
+      passthrough: false,
+      therapeutic: isTherapeuticHerb,
+    };
   }
+
+  // Detect any therapeutic herbs in the current ingredient list so the
+  // flavor-balance hint at the bottom of the output knows what was scaled up.
+  const scaledHerbs = useMemo(
+    () =>
+      therapeuticMode
+        ? ingredients
+            .map((i) => detectTherapeuticHerb(i.name))
+            .filter((s): s is string => Boolean(s))
+        : [],
+    [ingredients, therapeuticMode],
+  );
 
   async function copyAll() {
     const lines = ingredients
@@ -529,6 +584,40 @@ export function RealtimeRecipeScaler() {
               </p>
             </div>
           ) : null}
+
+          {/* Therapeutic-dose mode toggle */}
+          <div className="mt-4 rounded-xl bg-forest-50 p-3 ring-1 ring-forest-200">
+            <label className="flex cursor-pointer items-start gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={therapeuticMode}
+                onChange={(e) => setTherapeuticMode(e.target.checked)}
+                className="mt-1 h-4 w-4 rounded border-forest-300 text-forest-600 focus:ring-forest-400"
+              />
+              <span>
+                <span className="block font-bold text-forest-800">Therapeutic-dose mode</span>
+                <span className="block text-xs text-ink-muted">
+                  Doubles the quantity of any therapeutic herb in this recipe
+                  (turmeric, ginger, cinnamon, etc.) to push culinary dose into
+                  the therapeutic window. Flag any scaled herbs in the result.
+                </span>
+              </span>
+            </label>
+            {therapeuticMode && scaledHerbs.length > 0 ? (
+              <p className="mt-2 rounded-lg bg-white px-3 py-2 text-xs text-ink">
+                Doubled herbs detected: <strong>{[...new Set(scaledHerbs)].join(', ')}</strong>.
+                <br />
+                <span className="text-ink-muted">
+                  Flavor balance: add an extra squeeze of lemon or 1/2 tsp honey
+                  to balance the more-earthy herb profile. See our{' '}
+                  <a href="/safety-check" className="font-bold text-amber-700 hover:underline">
+                    safety checker
+                  </a>{' '}
+                  before going therapeutic if you take medications.
+                </span>
+              </p>
+            ) : null}
+          </div>
         </div>
 
         <div className="rounded-2xl bg-white p-5 shadow-sm">
@@ -573,6 +662,11 @@ export function RealtimeRecipeScaler() {
                     <span className="text-ink-muted">{s.name}</span>
                     {s.passthrough && i.name.trim() ? (
                       <span className="text-[10px] uppercase text-ink-subtle">· as written</span>
+                    ) : null}
+                    {s.therapeutic ? (
+                      <span className="rounded-full bg-forest-100 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-forest-700">
+                        2× therapeutic
+                      </span>
                     ) : null}
                   </li>
                 );
