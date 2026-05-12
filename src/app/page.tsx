@@ -105,7 +105,7 @@ export default async function HomePage() {
 
       {/* Differentiators — each card is now a full link to the feature it
           describes. User flow: read pitch → click straight to the tool. */}
-      <section className="container py-16">
+      <section className="container-defer container py-16">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {[
             { icon: Sparkles, title: 'AI Meal Planner', body: 'Tell us your budget, diet, and schedule. Get a full week of meals + grocery list.', href: '/meal-planner', cta: 'Plan my week' },
@@ -138,7 +138,7 @@ export default async function HomePage() {
       </section>
 
       {/* Featured Recipes */}
-      <section className="container py-16">
+      <section className="container-defer container py-16">
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
             <p className="text-sm font-medium uppercase tracking-wider text-terracotta-500">Fresh from the kitchen</p>
@@ -158,7 +158,7 @@ export default async function HomePage() {
       {/* Cuisines — interactive card grid with emoji, name, and recipe count.
           Visible-first redesign: big tap targets on mobile, balanced grid
           on tablet/desktop. "See all 67" CTA bottom for taxonomy depth. */}
-      <section className="bg-cream-200/40 py-16">
+      <section className="container-defer bg-cream-200/40 py-16">
         <div className="container">
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
@@ -209,7 +209,7 @@ export default async function HomePage() {
       {/* Quick Filters + Recipe of the Day — strategy doc requires both
           surfaced on the homepage to capture broad-intent search traffic and
           give returning visitors a fresh anchor every day. */}
-      <section className="container py-12 lg:py-16">
+      <section className="container-defer container py-12 lg:py-16">
         <div className="grid gap-8 lg:grid-cols-[1.4fr,1fr]">
           <QuickFilters />
           {recipeOfDay ? <RecipeOfTheDay recipe={recipeOfDay} /> : null}
@@ -218,7 +218,7 @@ export default async function HomePage() {
 
       {/* Herbal Cooking Hub CTA — surfaces the food-as-medicine layer
           prominently for first-time visitors who would otherwise miss it. */}
-      <section className="container py-12">
+      <section className="container-defer container py-12">
         <Link
           href="/herbal-cooking"
           className="group block rounded-3xl bg-gradient-to-br from-forest-100 via-cream-50 to-terracotta-50 p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md sm:p-10"
@@ -245,7 +245,7 @@ export default async function HomePage() {
       </section>
 
       {/* Collections */}
-      <section className="container py-16">
+      <section className="container-defer container py-16">
         <h2 className="mb-8 font-serif text-3xl text-ink sm:text-4xl">Hand-picked collections</h2>
         <div className="grid gap-6 md:grid-cols-3">
           {collections.slice(0, 6).map((col) => {
@@ -323,7 +323,7 @@ export default async function HomePage() {
       {/* Diets — interactive card grid mirroring the cuisines section so the
           two read as a pair. Each card shows the diet name + how many recipes
           in the library qualify. Mobile = 2 cols; tablet = 3; desktop = 4. */}
-      <section className="bg-cream-200/40 py-16">
+      <section className="container-defer bg-cream-200/40 py-16">
         <div className="container">
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
@@ -372,7 +372,7 @@ export default async function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="container py-16">
+      <section className="container-defer container py-16">
         <div className="mb-10 text-center">
           <p className="text-sm font-medium uppercase tracking-wider text-terracotta-500">Early users speak</p>
           <h2 className="mt-2 font-serif text-3xl text-ink sm:text-4xl">Real cooks, real kitchens</h2>
@@ -403,7 +403,7 @@ export default async function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-forest-500 py-16 text-white">
+      <section className="container-defer bg-forest-500 py-16 text-white">
         <div className="container text-center">
           <h2 className="font-serif text-3xl sm:text-4xl">Stop saving recipes you&apos;ll never cook.</h2>
           <p className="mx-auto mt-3 max-w-xl text-cream-200">

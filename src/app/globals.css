@@ -45,6 +45,18 @@
     font-feature-settings: 'rlig' 1, 'calt' 1, 'ss01' 1;
   }
 
+  /* content-visibility: auto defers layout + paint work for off-screen
+     containers until they scroll into view. Big main-thread win on the
+     long homepage (67 cuisines + 24 diets + 6 features + collections +
+     featured recipes) without touching the DOM. The contain-intrinsic-
+     size provides a layout estimate so the scrollbar doesn't jitter as
+     sections paint in. Use a generous estimate — overshooting reserves
+     space; undershooting causes jank. */
+  .container-defer {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 800px;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-fraunces), Georgia, serif;
     font-weight: 600;
