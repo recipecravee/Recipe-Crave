@@ -11,6 +11,7 @@ import { RecipeSaveButton } from '@/components/recipe/RecipeSaveButton';
 import { RecipeVariationForm } from '@/components/recipe/RecipeVariationForm';
 import { PinItButton } from '@/components/recipe/PinItButton';
 import { TranslateRecipeButton } from '@/components/recipe/TranslateRecipeButton';
+import { MeasurementBanner } from '@/components/recipe/MeasurementBanner';
 import { ReviewsSection } from '@/components/recipe/ReviewsSection';
 import { StarRating } from '@/components/recipe/StarRating';
 import { VoiceCookMode } from '@/components/recipe/VoiceCookMode';
@@ -172,6 +173,10 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
           <PinItButton recipeSlug={recipe.slug} title={recipe.title} description={recipe.description} />
           <TranslateRecipeButton recipe={recipe} />
           <VoiceCookMode title={recipe.title} servings={recipe.servings} instructions={recipe.instructions} />
+        </div>
+
+        <div className="mt-4">
+          <MeasurementBanner />
         </div>
       </header>
 
