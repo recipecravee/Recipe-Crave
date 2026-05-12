@@ -54,13 +54,17 @@ export function AuthForm({ mode }: { mode: Mode }) {
     setStatus('loading');
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
+      options: { redirectTo: `${window.location.origin}/auth/callback` },
     });
     if (error) {
       setStatus('error');
-      setMessage(error.message);
+      // Supabase returns a raw "Unsupported provider: provider is not enabled"
+      // when Google OAuth has not been configured in the Supabase dashboard.
+      // Translate to plain-English guidance instead of leaking the raw error.
+      const friendly = /unsupported provider|not enabled/i.test(error.message ?? '')
+        ? 'Google sign-in is not yet enabled on this site. Use email + password to continue.'
+        : error.message;
+      setMessage(friendly);
     }
   }
 
