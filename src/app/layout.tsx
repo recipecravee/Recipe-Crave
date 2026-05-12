@@ -6,6 +6,7 @@ import { Footer } from '@/components/site/Footer';
 import { ScrollToTop } from '@/components/site/ScrollToTop';
 import { FloatingLanguageSelector } from '@/components/site/FloatingLanguageSelector';
 import { WelcomePopup } from '@/components/site/WelcomePopup';
+import { StreakTracker } from '@/components/site/StreakTracker';
 import { I18nProvider } from '@/lib/i18n/I18nProvider';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { organizationJsonLd, websiteJsonLd } from '@/lib/seo/structured-data';
@@ -137,6 +138,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ScrollToTop />
           <FloatingLanguageSelector />
           <WelcomePopup />
+          <StreakTracker />
         </I18nProvider>
 
         {umamiId && umamiSrc ? (
