@@ -1,7 +1,129 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **TWENTY-EIGHTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+> Last updated: 2026-05-12 — **TWENTY-NINTH pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+
+## 🚀 PRODUCTION STATE (as of 2026-05-12)
+
+**Domain:** `recipecrave.com` (apex 307→www) and `www.recipecrave.com` (canonical) — both live on Vercel, Cloudflare DNS, valid SSL.
+
+**Hosting:** Vercel project `bracknell-s-projects/recipe-crave` on the free Hobby tier.
+
+**Deployed integrations:**
+- ✅ Google Analytics 4 — Measurement ID `G-4MRCLCE10J` (cookie-consent gated, IP anonymized)
+- ✅ Google Search Console — TWO properties verified:
+  - `https://recipecrave.com/` (URL-prefix)
+  - `https://www.recipecrave.com/` (URL-prefix, **canonical**, sitemap submitted — 402 pages discovered)
+- ✅ Resend — domain `mail.recipecrave.com` verified (DKIM + SPF + MX), API key live, daily-digest cron at 09:00 UTC
+- ✅ Resend Audience for newsletter subscribers: `6c64fa21-a19c-4e42-8c33-f8f5e0fcb2f2`
+- ✅ Cloudflare — DNS authoritative for `recipecrave.com`, AI crawler control on
+- ✅ Umami analytics (pre-existing, separate from GA4)
+- ✅ Sentry (pre-existing, error monitoring)
+- ⏳ AdSense — owner applies when eligible (slot already gated via `NEXT_PUBLIC_ADSENSE_CLIENT`)
+- ⏳ Supabase — owner has not provisioned; migration `drizzle/0001_pantry_and_variations.sql` ready to apply
+
+**Vercel env vars in production (encrypted):**
+```
+NEXT_PUBLIC_GA_MEASUREMENT_ID    G-4MRCLCE10J
+NEXT_PUBLIC_POSTHOG_KEY          (pre-existing)
+NEXT_PUBLIC_POSTHOG_HOST         (pre-existing)
+NEXT_PUBLIC_SENTRY_DSN           (pre-existing)
+NEXT_PUBLIC_SITE_URL             (pre-existing)
+NEXT_PUBLIC_SITE_NAME            (pre-existing)
+NEXT_PUBLIC_SUPABASE_URL         (pre-existing, project not yet created)
+NEXT_PUBLIC_SUPABASE_ANON_KEY    (pre-existing)
+SUPABASE_SERVICE_ROLE_KEY        (pre-existing)
+RESEND_API_KEY                   re_DpXX...XXfpDQ (production, see Resend dash to rotate)
+RESEND_FROM_EMAIL                hello@mail.recipecrave.com
+RESEND_AUDIENCE_ID               6c64fa21-a19c-4e42-8c33-f8f5e0fcb2f2
+CRON_SECRET                      (64 hex, generated 2026-05-12)
+ADMIN_USERNAME                   recipecrave-admin
+ADMIN_PASSWORD                   (set in Vercel — rotate any time)
+ADMIN_COOKIE_SECRET              (64 hex)
+```
+
+## 🔐 OWNER ADMIN DASHBOARD
+
+Route: **https://www.recipecrave.com/admin/login**
+Username: **`recipecrave-admin`**
+Password is set via `ADMIN_PASSWORD` env var. Owner kept the initial password handed to them at provisioning time; rotate by bumping the env var + redeploying.
+
+Dashboard at `/admin/dashboard` (auto-redirect after login):
+- 8 KPI tiles (recipes, collections, herbs, blog, how-to, meal-plans, cuisines, diets)
+- 4 engagement counters (views, saves, cooks, avg rating)
+- 8 external dashboard links (GA4 Realtime, Search Console, Vercel Analytics, Resend Logs, Cloudflare, Vercel Deployments, GitHub repo, Privacy)
+- Top-10 recipes by view count
+- 30-second auto-revalidate
+
+Auth: HMAC-SHA256 signed cookie, 24-hour TTL, HttpOnly/Secure/SameSite=Strict, three-strike client lockout, 250ms server-side bruteforce delay.
+
+## 🆕 TWENTY-NINTH pass (2026-05-12 evening — production go-live + newsletter loop + a11y)
+
+### Commits in execution order
+
+| Commit | What |
+|---|---|
+| `83b8c24` | American-first cookie banner + CCPA/CPRA + state-level privacy rights |
+| `e75b2e4` | GoogleAnalytics component gated by cookie consent + GA Measurement ID wired |
+| `efe811f` | Search Console site-verification meta tag in Next.js metadata.verification.google |
+| `8fd9d52` | TODO #13 — daily-digest cron at /api/cron/daily-digest with Resend, vercel.json schedule 09:00 UTC |
+| `cff7417` | TODO #14 — RecipeDeepDive auto-generator adds ~1,200-1,500 words per recipe across 7 sections |
+| `c8f91df` | Owner-only admin dashboard at /admin/dashboard (login + cookie auth + KPI tiles + external dashboard links + top-10 table) |
+| `e8ed486` | Newsletter wired into Resend Audience; daily-digest reads from audience with free-tier 100/day rotation |
+| `ed35e0b` | Four Lighthouse mobile a11y fixes — listbox structure, heading hierarchy, aria-label cleanup |
+
+### What this pass accomplished
+
+1. **Deployed to production.** `recipecrave.com` and `www.recipecrave.com` both serve via Vercel + Cloudflare DNS. SSL + redirect from apex → www.
+2. **Google Analytics 4 fully wired.** Property "RecipeCrave Production", web stream live, Measurement ID `G-4MRCLCE10J` in Vercel env, GA4 fires page_view after cookie consent. Verified end-to-end via Network tab — gtag.js loaded, collect endpoint hit with `ep.anonymize_ip=true`.
+3. **Google Search Console fully wired.** Two URL-prefix properties verified via auto HTML-tag detection. Sitemap submitted to canonical www property — 402 pages discovered. Search results will appear within 48-72 hours.
+4. **Resend fully wired.** Domain `mail.recipecrave.com` verified (DKIM TXT + SPF TXT + MX records via Cloudflare auto-config). API key `re_DpXX...XXfpDQ` in Vercel. From-address `hello@mail.recipecrave.com`. Daily-digest cron scheduled.
+5. **Newsletter loop closed.** `/api/newsletter/subscribe` writes to Resend Audience `6c64fa21-a19c-4e42-8c33-f8f5e0fcb2f2`. Daily-digest cron reads `contacts.list({ audienceId })`, filters unsubscribed, sends per-contact with free-tier 100/day rotation. Empty-audience fallback to owner email.
+6. **Admin dashboard shipped.** `/admin/login` + `/admin/dashboard` with HMAC cookie auth, KPI tiles, engagement counters, external dashboard quick-links, top-10 recipes table. robots.txt blocks `/admin`; layout metadata sets noindex,nofollow.
+7. **Recipe content depth backfill.** Every recipe page now lands at ~2,500-3,000 words via existing recipe body (~400w) + AboutThisDish (~250w) + new RecipeDeepDive (~1,200-1,500w across 7 sections) + PAA accordion (~720w). Single biggest SEO content-depth lift remaining on the 24-list is now closed.
+8. **Lighthouse mobile audit + a11y fixes.** Best Practices 100, SEO 100, Performance 53 (LCP 7.4s — top remaining issue), Accessibility 82 (will reaudit after a11y fixes deploy). Fixed: FloatingLanguageSelector listbox malformed structure, homepage heading hierarchy (h3 → h2 for feature cards), redundant aria-labels on Cuisines/Diets cards that didn't match visible text.
+9. **CCPA/CPRA + state-level privacy rights added** to `/privacy#ccpa` section. Cookie banner shows "Do Not Sell or Share My Information" button required by California CPRA. Same opt-out mechanism covers Virginia, Colorado, Connecticut, Utah privacy laws. EU GDPR satisfied — opt-in for non-essential cookies, Reject path no harder than Accept.
+10. **Vercel webhook lag fix.** Three commits (c8f91df, e8ed486, ed35e0b) failed to auto-build. Manual `vercel --prod` triggered. New deployment `e5zgdftni` confirms `/admin/login` serves 200 with the sign-in form.
+
+### Running TODO list — after TWENTY-NINTH pass
+
+```
+✅ 1-10  All shipped
+⏳ 11. Pantry Matcher Supabase sync — migration drafted, owner runs `npx drizzle-kit push` after Supabase project create
+⏳ 12. Variation moderation queue   — schema in same migration; UI build queued
+✅ 13. Email daily-digest cron      8fd9d52 + e8ed486
+✅ 14. Recipe content depth         005b073 + cff7417 (auto-generators handle 1,500+ word floor)
+✅ 15. Cooking measurement auto-conversion
+✅ 16. 17 minor-locale UI strings   2167ea7
+✅ 17. Step photos placeholder slots
+✅ 18. Welcome popup A/B variant    5bc085c
+✅ 19. Recipe-rating verified-cook count
+⏳ 20. Deep URL /recipes/cat/cuisine/method/name + 301s  — defer until GSC traffic data informs
+⏳ 21. Recipe price tracking        — needs free ingredient-cost feed
+⏳ 22. Sponsored content zones      — owner dropped Stripe scope; awaits brand partnerships
+⏳ 23. Pantry Vision Gemini         — already integrated at /pantry-match
+✅ 24. Cooking-streak gamification
+```
+
+**Net: 18 done, 4 owner-blocked/deferred (#11, #12, #20, #21, #22), 1 owner-future (#22 sponsored — awaits brand deals).**
+
+### Owner-side action items (when ready)
+
+1. **AdSense application** — apply at https://www.google.com/adsense → when approved drop `NEXT_PUBLIC_ADSENSE_CLIENT=ca-pub-XXXX` in Vercel env. AdSlot component already gated.
+2. **Supabase project** — create at https://supabase.com (free tier). Copy DATABASE_URL into `.env.local`. Run `npx drizzle-kit push` (or paste migration file into Supabase SQL editor). Unlocks #11 + #12.
+3. **Performance pass** — Lighthouse perf 53 needs work. Top suspects: cold-start LCP 7.4s on hero, Sentry script blocking bf-cache. Will tackle in TWENTIETH+1 pass.
+4. **AdSense / sponsored zones (#22)** — when brand partnerships exist.
+
+### Pickup checklist for next Claude
+
+1. Production is **live**. Don't rebuild what works — extend what's there.
+2. Admin dashboard exists at `/admin/dashboard`. If owner reports 404, check Vercel deployment list — webhook can lag. Run `vercel --prod` from project root with linked CLI.
+3. Newsletter subscribers persist in Resend Audience (no Supabase needed today). Daily digest fires 09:00 UTC.
+4. Two Search Console properties — submit any new sitemap entries to BOTH.
+5. Owner credentials: username `recipecrave-admin`, password rotates via `ADMIN_PASSWORD` env var.
+6. Free-tier Resend caps at 100 emails/day. Cron handles rotation, but if subscriber list grows past ~500, owner should upgrade Resend or move to a broadcast-style sending service.
+
+---
 
 ## 🔮 FUTURE — Real-time traffic dashboard (owner ask 2026-05-12)
 
