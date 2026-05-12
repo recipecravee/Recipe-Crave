@@ -43,7 +43,7 @@ const r_butterfly_prawns: GuideRecipe = {
  { name: 'Salt', qty: 1, unit: 'as recipe' },
  { name: 'Black pepper �ketchup', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 77 As the name implies, the prawns are split opened at the back and deep fried a' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this snacks, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -84,7 +84,7 @@ const r_sloppy_joes: GuideRecipe = {
  id: 'sloppy-joes',
  slug: 'sloppy-joes',
  title: 'Sloppy Joes',
- description: 'A signature snacks recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature snacks recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['sloppyJoes'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -108,7 +108,7 @@ const r_sloppy_joes: GuideRecipe = {
  { name: 'Ham burger buns', qty: 1, unit: 'as recipe' },
  { name: 'tomato sauce', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature snacks recipe from RecipeCrave\\\'s Record Breaking Online Class. Detail' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this snacks, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -149,7 +149,7 @@ const r_shrimp_taco: GuideRecipe = {
  id: 'shrimp-taco',
  slug: 'shrimp-taco',
  title: 'Shrimp Taco',
- description: 'A signature snacks recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature snacks recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['shrimpTacos'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -171,7 +171,7 @@ const r_shrimp_taco: GuideRecipe = {
  { name: '1 tbsp olive oil', qty: 1, unit: 'as recipe' },
  { name: '1/4 tsp black pepper', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature snacks recipe from RecipeCrave\\\'s Record Breaking Online Class. Detail' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this snacks, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -233,7 +233,7 @@ const r_scotch_egg: GuideRecipe = {
  { name: '2 pounds bulk pork sausage', qty: 1, unit: 'as recipe' },
  { name: '4 cups dried bread crumbs', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 78 A scotch egg is a boiled egg is a boiled egg that has been breaded, deep-frie' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this snacks, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -290,7 +290,7 @@ const r_caramel_popcorn: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Caramelizing your popcorn just takes it from a street level to an excellent gour' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this snacks, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -353,7 +353,7 @@ const r_bao_bun: GuideRecipe = {
  { name: '1/3 cup water', qty: 1, unit: 'as recipe' },
  { name: '� tsp salt', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. The delectable small steamed buns known as bao (or baozi) have recently become e' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this snacks, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -394,7 +394,7 @@ const r_onion_rings: GuideRecipe = {
  id: 'onion-rings',
  slug: 'onion-rings',
  title: 'Onion Rings',
- description: 'A signature snacks recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature snacks recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['onionRings'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -415,7 +415,7 @@ const r_onion_rings: GuideRecipe = {
  { name: 'Corn flour', qty: 1, unit: 'as recipe' },
  { name: 'Onions', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature snacks recipe from RecipeCrave\\\'s Record Breaking Online Class. Detail' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this snacks, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -484,7 +484,7 @@ const r_popcorn_chicken: GuideRecipe = {
  { name: 'Vegetable oil', qty: 1, unit: 'as recipe' },
  { name: 'Seasoning cubes', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 82 Popcorn Chicken is made up of bite-sized, seasoned, breaded, and perfectly de' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this snacks, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -525,7 +525,7 @@ const r_fish_roll: GuideRecipe = {
  id: 'fish-roll',
  slug: 'fish-roll',
  title: 'Fish Roll',
- description: 'A signature snacks recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature snacks recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['meatPie'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -547,7 +547,7 @@ const r_fish_roll: GuideRecipe = {
  { name: '1/2 cup water', qty: 1, unit: 'as recipe' },
  { name: '1 teaspoon baking powder', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature snacks recipe from RecipeCrave\\\'s Record Breaking Online Class. Detail' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this snacks, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -588,7 +588,7 @@ const r_chicken_nuggets: GuideRecipe = {
  id: 'chicken-nuggets',
  slug: 'chicken-nuggets',
  title: 'Chicken Nuggets',
- description: 'A signature snacks recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature snacks recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['chickenNuggets'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -607,7 +607,7 @@ const r_chicken_nuggets: GuideRecipe = {
  { name: 'Butter', qty: 1, unit: 'as recipe' },
  { name: 'Seasoning Cubes', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature snacks recipe from RecipeCrave\\\'s Record Breaking Online Class. Detail' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this snacks, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -648,7 +648,7 @@ const r_apple_pie: GuideRecipe = {
  id: 'apple-pie',
  slug: 'apple-pie',
  title: 'Apple Pie',
- description: 'A signature snacks recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature snacks recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['applePie'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -664,7 +664,7 @@ const r_apple_pie: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature snacks recipe from RecipeCrave\\\'s Record Breaking Online Class. Detail' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this snacks, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -705,7 +705,7 @@ const r_plantain_chips: GuideRecipe = {
  id: 'plantain-chips',
  slug: 'plantain-chips',
  title: 'Plantain Chips',
- description: 'A signature snacks recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature snacks recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['plantain'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -721,7 +721,7 @@ const r_plantain_chips: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature snacks recipe from RecipeCrave\\\'s Record Breaking Online Class. Detail' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this snacks, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -784,7 +784,7 @@ const r_meat_pie: GuideRecipe = {
  { name: '� cups (60ml) water', qty: 1, unit: 'as recipe' },
  { name: 'Potato', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A meat pie is a pie with a filling of meat and often with other savory ingredien' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this snacks, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -825,7 +825,7 @@ const r_subway_sandwich: GuideRecipe = {
  id: 'subway-sandwich',
  slug: 'subway-sandwich',
  title: 'Subway Sandwich',
- description: 'A signature snacks recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature snacks recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['subwaySandwich'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -850,7 +850,7 @@ const r_subway_sandwich: GuideRecipe = {
  { name: '24 cucumber slices', qty: 1, unit: 'as recipe' },
  { name: 'Chilli mayo spread ( half cup of Mayo and 2tbs sweet chilli sauce )', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature snacks recipe from RecipeCrave\\\'s Record Breaking Online Class. Detail' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this snacks, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -915,7 +915,7 @@ const r_chicken_quesadilla: GuideRecipe = {
  { name: 'Tortilla', qty: 1, unit: 'as recipe' },
  { name: 'Any spread of choice', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Quesadillas are Mexican dish made with a wrap of tortills filled with chicken an' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this snacks, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -956,7 +956,7 @@ const r_crispy_calamari_and_tartar: GuideRecipe = {
  id: 'crispy-calamari-and-tartar',
  slug: 'crispy-calamari-and-tartar',
  title: 'Crispy Calamari And Tartar',
- description: 'A signature snacks recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature snacks recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['calamari'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -978,7 +978,7 @@ const r_crispy_calamari_and_tartar: GuideRecipe = {
  { name: 'Oil For Deep Frying', qty: 1, unit: 'as recipe' },
  { name: '2 Garlic Cloves', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature snacks recipe from RecipeCrave\\\'s Record Breaking Online Class. Detail' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this snacks, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -1043,7 +1043,7 @@ const r_lemon_cake: GuideRecipe = {
  { name: '1 tsp lemon extract', qty: 1, unit: 'as recipe' },
  { name: '185g cake flour or plain flour', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Nobody goes wrong with a lemon cake, it is perfect every time' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this snacks, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -1100,7 +1100,7 @@ const r_banana_bread: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Banana bread is banana cake baked in a loaf pan' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this snacks, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -1141,7 +1141,7 @@ const r_ginger_bread_cookies: GuideRecipe = {
  id: 'ginger-bread-cookies',
  slug: 'ginger-bread-cookies',
  title: 'Ginger Bread Cookies',
- description: 'A signature snacks recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature snacks recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['shortBreadCookies'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -1167,7 +1167,7 @@ const r_ginger_bread_cookies: GuideRecipe = {
  { name: '1 teaspoon pure vanilla extract', qty: 1, unit: 'as recipe' },
  { name: '1/2 teaspoon allspice', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature snacks recipe from RecipeCrave\\\'s Record Breaking Online Class. Detail' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this snacks, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -1208,7 +1208,7 @@ const r_samosa_and_spring_roll: GuideRecipe = {
  id: 'samosa-and-spring-roll',
  slug: 'samosa-and-spring-roll',
  title: 'Samosa And Spring Roll',
- description: 'A signature small chops recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature small chops recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['samosas'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -1224,7 +1224,7 @@ const r_samosa_and_spring_roll: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature small chops recipe from RecipeCrave\\\'s Record Breaking Online Class. D' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this small chops, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -1286,7 +1286,7 @@ const r_money_bag: GuideRecipe = {
  { name: 'Soy sauce', qty: 1, unit: 'as recipe' },
  { name: 'Chives', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Money bags are delicious finger food filled with any choice of protein and baked' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this small chops, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -1353,7 +1353,7 @@ const r_beer_batter_fish_burger: GuideRecipe = {
  { name: 'Tablespoon of sugar', qty: 1, unit: 'as recipe' },
  { name: 'Cheddar cheese slice Desst', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 63 I know it comes off as a surprise to see us pair beer with chicken, follow on' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this small chops, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -1428,7 +1428,7 @@ const r_beef_burger: GuideRecipe = {
  { name: 'Oyster sauce', qty: 1, unit: 'as recipe' },
  { name: 'Cream', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 56 A beef burger is a sandwich made with a cooked patty of ground or chopped bee' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this small chops, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -1491,7 +1491,7 @@ const r_puff_puff: GuideRecipe = {
  { name: '11/2 cup of warm water', qty: 1, unit: 'as recipe' },
  { name: 'Salt', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. You can use powder sugar, condensed milk and also your burger sauce as possible' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this small chops, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -1547,7 +1547,7 @@ const r_spaghetti_and_meat_balls: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Spaghetti and meatballs are another fantastic way to elevate your spaghetti dish' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this pasta, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -1617,7 +1617,7 @@ const r_mac_and_cheese: GuideRecipe = {
  { name: 'Onions', qty: 1, unit: 'as recipe' },
  { name: 'Fresh pepper (optional)', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Mac and cheese as you popularly see on TV growing up as a kid is an American dis' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this pasta, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -1658,7 +1658,7 @@ const r_spicy_beef_penne: GuideRecipe = {
  id: 'spicy-beef-penne',
  slug: 'spicy-beef-penne',
  title: 'Spicy Beef Penne',
- description: 'A signature pasta recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature pasta recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['spicyBeefPenne'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -1687,7 +1687,7 @@ const r_spicy_beef_penne: GuideRecipe = {
  { name: 'Chilli pepper', qty: 1, unit: 'as recipe' },
  { name: 'Corn flour', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature pasta recipe from RecipeCrave\\\'s Record Breaking Online Class. Detaile' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this pasta, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -1756,7 +1756,7 @@ const r_singapore_noodles: GuideRecipe = {
  { name: 'Carrots', qty: 1, unit: 'as recipe' },
  { name: 'Onions', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 50 Stir-fried cooked rice vermicelli, curry powder, veggies, scrambled eggs, and' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this pasta, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -1797,7 +1797,7 @@ const r_prawn_native_pasta: GuideRecipe = {
  id: 'prawn-native-pasta',
  slug: 'prawn-native-pasta',
  title: 'Prawn Native Pasta',
- description: 'A signature pasta recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature pasta recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['prawnNativePasta'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -1823,7 +1823,7 @@ const r_prawn_native_pasta: GuideRecipe = {
  { name: 'Seasoning Cube', qty: 1, unit: 'as recipe' },
  { name: 'Bawa', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature pasta recipe from RecipeCrave\\\'s Record Breaking Online Class. Detaile' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this pasta, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -1889,7 +1889,7 @@ const r_seafood_pasta: GuideRecipe = {
  { name: 'Butter', qty: 1, unit: 'as recipe' },
  { name: 'Tomatoes', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. This seafood pasta is a mix of shrimp, clams, mussels and scallops, all tossed t' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this pasta, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -1957,7 +1957,7 @@ const r_spicy_chili_garlic_noodles: GuideRecipe = {
  { name: 'Talf tea of sugar', qty: 1, unit: 'as recipe' },
  { name: 'Salt 51', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. These spicy noodles gets read in about fifteen minuets' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this pasta, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -2026,7 +2026,7 @@ const r_pink_pasta: GuideRecipe = {
  { name: 'Chilli pepper', qty: 1, unit: 'as recipe' },
  { name: 'tomato', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 52 Adding cooking cream to the base of your pasta sauce is a fantastic way of el' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this pasta, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -2093,7 +2093,7 @@ const r_alfredo_pasta: GuideRecipe = {
  { name: 'Garlic', qty: 1, unit: 'as recipe' },
  { name: 'Black pepper (optional)', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Alfredo sauce is a favorite, easy to make, very creamy and goes well with any pa' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this pasta, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -2167,7 +2167,7 @@ const r_special_seafood_fried_rice: GuideRecipe = {
  { name: 'Curry Powder', qty: 1, unit: 'as recipe' },
  { name: 'Shrimps', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Seafood is one of my favourite ingredients to add to fried rice.' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this rice, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -2237,7 +2237,7 @@ const r_signature_coconut_rice: GuideRecipe = {
  { name: 'Panla', qty: 1, unit: 'as recipe' },
  { name: 'Vegetable Oil', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Delicious and aromatic Nigerian Coconut Rice is a simple recipe to make. The fol' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this rice, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -2294,7 +2294,7 @@ const r_flavoured_herb_rice: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Herb Rice is a delicious and simple side dish, perfect for almost every recipe.' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this rice, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -2363,7 +2363,7 @@ const r_asun_rice: GuideRecipe = {
  { name: 'Panla Fish', qty: 1, unit: 'as recipe' },
  { name: 'Curry Leaf', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 32 Asun rice is enjoyed by all parts of Nigeria, Asun, or peppered goat flesh, i' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this rice, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -2430,7 +2430,7 @@ const r_carribean_rice_and_peas: GuideRecipe = {
  { name: 'Coconut oil (optional)', qty: 1, unit: 'as recipe' },
  { name: 'Oriental spices', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 33 Rice and peas is a Jamaican side dish made of red beans and coconut rice that' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this rice, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -2503,7 +2503,7 @@ const r_smokey_jollof_rice: GuideRecipe = {
  { name: 'Garlic', qty: 1, unit: 'as recipe' },
  { name: 'Rice', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. There isn\\\'t a West African meal that is more well-known than jollof rice. It is' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this rice, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -2574,7 +2574,7 @@ const r_native_rice: GuideRecipe = {
  { name: 'Seasoning Cube But you can use anything you want', qty: 1, unit: 'as recipe' },
  { name: 'Red oil', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Native Jollof rice originates from Nigeria, but it differs from the traditional' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this rice, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -2643,7 +2643,7 @@ const r_suya_rice: GuideRecipe = {
  { name: 'Chicken/fish/beef stock', qty: 1, unit: 'as recipe' },
  { name: 'Seasoning cube', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Suya is enjoyed by all part of Nigeria, and Yes we can incorporate it into our s' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this rice, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -2713,7 +2713,7 @@ const r_jambalaya_rice: GuideRecipe = {
  { name: 'Green Onions, Thinly Sliced', qty: 1, unit: 'as recipe' },
  { name: 'Boneless Skinless Chicken', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. The ingredients for the one-pot cuisine jambalaya are rice, meat or seafood, and' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this rice, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -2781,7 +2781,7 @@ const r_atama_banga: GuideRecipe = {
  { name: 'Atama leaves / beletete', qty: 1, unit: 'as recipe' },
  { name: 'You can also use seafood', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 30 There are 3 different regions I have explored that use palm kernels to make s' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this rice, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -2842,7 +2842,7 @@ const r_cream_cheese_bread: GuideRecipe = {
  { name: 'Cream cheese', qty: 1, unit: 'as recipe' },
  { name: 'Teaspoon slat', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. This cream cheese bread is a tried and proven recipe, it tastes so delicious' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this breakfast, this means aerating eggs and dry mix.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -2899,7 +2899,7 @@ const r_potato_balls: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 102 1.Irish potato INGREDIENTS 2.Flour 7.White pepper 3.Corn flour 8.Habanero pe' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this breakfast, this means aerating eggs and dry mix.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -2962,7 +2962,7 @@ const r_garlic_bread: GuideRecipe = {
  { name: 'White onions', qty: 1, unit: 'as recipe' },
  { name: 'Garlic', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Garlic bread is made to accompany most soups' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this breakfast, this means aerating eggs and dry mix.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -3003,7 +3003,7 @@ const r_shawarma: GuideRecipe = {
  id: 'shawarma',
  slug: 'shawarma',
  title: 'Shawarma',
- description: 'A signature breakfast recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature breakfast recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['shawarma'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -3019,7 +3019,7 @@ const r_shawarma: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature breakfast recipe from RecipeCrave\\\'s Record Breaking Online Class. Det' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this breakfast, this means aerating eggs and dry mix.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -3076,7 +3076,7 @@ const r_crispy_fried_chicken: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Garlic bread is made to accompany most soups' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this breakfast, this means aerating eggs and dry mix.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -3141,7 +3141,7 @@ const r_yamarita: GuideRecipe = {
  { name: 'Vegetable oil', qty: 1, unit: 'as recipe' },
  { name: 'Salt', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Yamarita is a very interesting way of elevating yam, even children 106 who would' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this breakfast, this means aerating eggs and dry mix.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -3182,7 +3182,7 @@ const r_waffles: GuideRecipe = {
  id: 'waffles',
  slug: 'waffles',
  title: 'Waffles',
- description: 'A signature breakfast recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature breakfast recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['waffles'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -3206,7 +3206,7 @@ const r_waffles: GuideRecipe = {
  { name: 'Ice Cream For Serving', qty: 1, unit: 'as recipe' },
  { name: '1 Tbsp White Sugar', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature breakfast recipe from RecipeCrave\\\'s Record Breaking Online Class. Det' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this breakfast, this means aerating eggs and dry mix.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -3263,7 +3263,7 @@ const r_grilled_cheese_sandwich: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. You can add chicken pieces, turkey, bacon as possible toppings' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this breakfast, this means aerating eggs and dry mix.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -3304,7 +3304,7 @@ const r_mashed_potatoes: GuideRecipe = {
  id: 'mashed-potatoes',
  slug: 'mashed-potatoes',
  title: 'Mashed Potatoes',
- description: 'A signature breakfast recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature breakfast recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['mashedPotatoes'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -3324,7 +3324,7 @@ const r_mashed_potatoes: GuideRecipe = {
  { name: 'Salt', qty: 1, unit: 'as recipe' },
  { name: 'White pepper', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature breakfast recipe from RecipeCrave\\\'s Record Breaking Online Class. Det' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this breakfast, this means aerating eggs and dry mix.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -3387,7 +3387,7 @@ const r_flavoured_pancakes: GuideRecipe = {
  { name: 'Flour', qty: 1, unit: 'as recipe' },
  { name: 'Sugar', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 107 A little as a quarter teaspoon of flavoring agents can change the entire fla' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this breakfast, this means aerating eggs and dry mix.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -3451,7 +3451,7 @@ const r_akara: GuideRecipe = {
  { name: 'Rodo', qty: 1, unit: 'as recipe' },
  { name: 'Palm Oil', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Akara for me has a lot to do with the quality of ingredients used. The Palm oil' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this breakfast, this means aerating eggs and dry mix.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -3512,7 +3512,7 @@ const r_buttered_potatoes: GuideRecipe = {
  { name: 'Parsley', qty: 1, unit: 'as recipe' },
  { name: 'You can also add garlic', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. This easy buttered potato recipe is a simple way to produce a potato side dish' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this breakfast, this means aerating eggs and dry mix.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -3569,7 +3569,7 @@ const r_owo: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Urhobo people from Delta State in Nigeria adore the soup known as "Urhobo Owo."' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this soup, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -3636,7 +3636,7 @@ const r_ogbono: GuideRecipe = {
  { name: 'Blended uziza leaves', qty: 1, unit: 'as recipe' },
  { name: 'Uziza', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Ogbono soup is a delicious and incredibly simple to make Nigerian concoction sou' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this soup, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -3702,7 +3702,7 @@ const r_efo_riro: GuideRecipe = {
  { name: 'Tatase', qty: 1, unit: 'as recipe' },
  { name: 'Crayfish', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 16 since Efo Riro is one of Nigeria\\\'s most well-known vegetable soups and a favo' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this soup, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -3767,7 +3767,7 @@ const r_waterleaf_soup: GuideRecipe = {
  { name: 'Uziza Optional', qty: 1, unit: 'as recipe' },
  { name: 'Fresh Pepper Yellow Pepper', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Waterleaf is a preferred soup by most Nigerians, it is easy to make and the leav' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this soup, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -3828,7 +3828,7 @@ const r_seafood_okra: GuideRecipe = {
  { name: '3-4 red or yellow', qty: 1, unit: 'as recipe' },
  { name: 'Crab, squids, Shrimps, mussels', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Seafood Okra soup is simply Okra soup made with seafood, such as fish, prawns, o' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this soup, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -3892,7 +3892,7 @@ const r_oha_soup: GuideRecipe = {
  { name: 'Stock Cubes', qty: 1, unit: 'as recipe' },
  { name: 'Local Chicken', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Ora (Oha) soup is native to the South Eastern Nigeria. It is a very traditional' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this soup, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -3970,7 +3970,7 @@ const r_ofe_owerri: GuideRecipe = {
  { name: 'Red Pepper', qty: 1, unit: 'as recipe' },
  { name: 'Seasoning Cubes', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 27 The Igbo people of Eastern Nigeria are known for their traditional vegetable' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this soup, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -4041,7 +4041,7 @@ const r_seafood_boil: GuideRecipe = {
  { name: 'Sausages and any', qty: 1, unit: 'as recipe' },
  { name: 'Ginger other seafood Rice', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 31 Fresh prawns, lobster, clams, crab, potatoes, corn and sausage are all combin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this soup, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -4111,7 +4111,7 @@ const r_fisherman_soup: GuideRecipe = {
  { name: 'Scotch Bonnet Pepper', qty: 1, unit: 'as recipe' },
  { name: 'Salt...to taste', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 29 Anywhere there is a body of water, such as a river, sea, ocean, or lake, the' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this soup, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -4173,7 +4173,7 @@ const r_buka_stew: GuideRecipe = {
  { name: '40% fresh tomatoes together to make the remaining 60%', qty: 1, unit: 'as recipe' },
  { name: 'Tatase', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 5 Nigerian buka stew, also known as "bukas," is a delectable palm oil stew creat' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this stew & sauce, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -4238,7 +4238,7 @@ const r_casserole_sauce: GuideRecipe = {
  { name: 'Seasoning Cubes Or Salt', qty: 1, unit: 'as recipe' },
  { name: 'Black Pepper', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Stewing is done on the top of a cooker with heat being applied directly to the u' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this stew & sauce, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -4302,7 +4302,7 @@ const r_vegetable_sauce: GuideRecipe = {
  { name: 'Spice For Meat Seasoning', qty: 1, unit: 'as recipe' },
  { name: 'Ugu', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. It takes less than 45 minutes to make this veggie sauce, and the best part is th' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this stew & sauce, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -4371,7 +4371,7 @@ const r_curry_goat: GuideRecipe = {
  { name: 'Onions (optional)', qty: 1, unit: 'as recipe' },
  { name: 'Garlic Onions', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Many will think this is the same as goat meat pepper soup, but, no! This is tota' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this stew & sauce, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -4435,7 +4435,7 @@ const r_turkey_stew: GuideRecipe = {
  { name: 'Garlic 14Jollof Mix', qty: 1, unit: 'as recipe' },
  { name: 'Curry Powder', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. This turkey sauce is so delicious and comes quickly together.' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this stew & sauce, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -4506,7 +4506,7 @@ const r_butter_chicken_curry: GuideRecipe = {
  { name: 'Bayleaf', qty: 1, unit: 'as recipe' },
  { name: 'Unsweetened Greek yoghurt', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. People tend to confuse butter chicken curry for curry, the difference is Compare' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this stew & sauce, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -4563,7 +4563,7 @@ const r_bolognese_sauce: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. If you get bored of your regular pasta sauces and dishes, Bolognese is an absolu' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this stew & sauce, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -4629,7 +4629,7 @@ const r_ofe_akwu: GuideRecipe = {
  { name: 'Tin Banga', qty: 1, unit: 'as recipe' },
  { name: 'Onions Porridges', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. I will call this the stew version of banga . just as banga is to the rivers peop' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this stew & sauce, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -4700,7 +4700,7 @@ const r_beef_goulash: GuideRecipe = {
  { name: 'Fresh Tomatoes', qty: 1, unit: 'as recipe' },
  { name: 'Parsley', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Goulash is a meat and vegetable soup or stew that is spiced with paprika and oth' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this stew & sauce, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -4766,7 +4766,7 @@ const r_ofada_sauce: GuideRecipe = {
  { name: 'Protein of Choice check class', qty: 1, unit: 'as recipe' },
  { name: 'Boiled Eggs', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 4 One of the many types of stew that we eat in Nigeria is called Ayamase stew, a' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this stew & sauce, this means blooming spices in fat.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -4829,7 +4829,7 @@ const r_charcuterie_board: GuideRecipe = {
  { name: 'Garnish and decoration: Add some visual appeal by garnishing the board with fresh experience.', qty: 1, unit: 'as recipe' },
  { name: 'Serve with wine or beverages: Complement the flavors by serving the charcuterie board homemade lemonade. Snas', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 76 A charcuterie board is a delicious and aesthetically pleasing arrangement of' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this dessert, this means creaming butter and sugar.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -4892,7 +4892,7 @@ const r_parfait: GuideRecipe = {
  { name: 'Half cup white sugar', qty: 1, unit: 'as recipe' },
  { name: 'Quarter cup brown sugar', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Nobody goes wrong with a lemon cake, it is perfect every time' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this dessert, this means creaming butter and sugar.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -4933,7 +4933,7 @@ const r_oreo_crumble: GuideRecipe = {
  id: 'oreo-crumble',
  slug: 'oreo-crumble',
  title: 'Oreo Crumble',
- description: 'A signature dessert recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature dessert recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['chocolateCake'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -4949,7 +4949,7 @@ const r_oreo_crumble: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature dessert recipe from RecipeCrave\\\'s Record Breaking Online Class. Detai' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this dessert, this means creaming butter and sugar.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -4990,7 +4990,7 @@ const r_single_skillet_chocolate_chips_cookies: GuideRecipe = {
  id: 'single-skillet-chocolate-chips-cookies',
  slug: 'single-skillet-chocolate-chips-cookies',
  title: 'Single Skillet Chocolate Chips Cookies',
- description: 'A signature dessert recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature dessert recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['cookies'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -5014,7 +5014,7 @@ const r_single_skillet_chocolate_chips_cookies: GuideRecipe = {
  { name: '1 teaspoon salt', qty: 1, unit: 'as recipe' },
  { name: '2 large eggs', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature dessert recipe from RecipeCrave\\\'s Record Breaking Online Class. Detai' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this dessert, this means creaming butter and sugar.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -5055,7 +5055,7 @@ const r_velvet: GuideRecipe = {
  id: 'velvet',
  slug: 'velvet',
  title: 'Velvet',
- description: 'A signature dessert recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature dessert recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['redVelvet'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -5077,7 +5077,7 @@ const r_velvet: GuideRecipe = {
  { name: '1 Teaspoon Vanilla Extract', qty: 1, unit: 'as recipe' },
  { name: 'Pinch Of Salt', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature dessert recipe from RecipeCrave\\\'s Record Breaking Online Class. Detai' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this dessert, this means creaming butter and sugar.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -5118,7 +5118,7 @@ const r_chocolate_muffin: GuideRecipe = {
  id: 'chocolate-muffin',
  slug: 'chocolate-muffin',
  title: 'Chocolate Muffin',
- description: 'A signature dessert recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature dessert recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['chocolateMuffins'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -5139,7 +5139,7 @@ const r_chocolate_muffin: GuideRecipe = {
  { name: '1 cup semi sweet', qty: 1, unit: 'as recipe' },
  { name: '1 teaspoon vanilla extract chocolate chips', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature dessert recipe from RecipeCrave\\\'s Record Breaking Online Class. Detai' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this dessert, this means creaming butter and sugar.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -5180,7 +5180,7 @@ const r_rotisserie_chicken: GuideRecipe = {
  id: 'rotisserie-chicken',
  slug: 'rotisserie-chicken',
  title: 'Rotisserie Chicken',
- description: 'A signature grills recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature grills recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['crispyFriedChicken'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -5203,7 +5203,7 @@ const r_rotisserie_chicken: GuideRecipe = {
  { name: 'Lemon peper', qty: 1, unit: 'as recipe' },
  { name: 'Oriental five spices', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature grills recipe from RecipeCrave\\\'s Record Breaking Online Class. Detail' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this grills, this means developing color on the protein.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -5244,7 +5244,7 @@ const r_grilled_prawns: GuideRecipe = {
  id: 'grilled-prawns',
  slug: 'grilled-prawns',
  title: 'Grilled Prawns',
- description: 'A signature grills recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature grills recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['shrimp'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -5268,7 +5268,7 @@ const r_grilled_prawns: GuideRecipe = {
  { name: 'Large prawns peeled and', qty: 1, unit: 'as recipe' },
  { name: '1/4 teaspoon garlic powder deveined', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature grills recipe from RecipeCrave\\\'s Record Breaking Online Class. Detail' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this grills, this means developing color on the protein.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -5309,7 +5309,7 @@ const r_t_bone_steak: GuideRecipe = {
  id: 't-bone-steak',
  slug: 't-bone-steak',
  title: 'T-Bone Steak',
- description: 'A signature grills recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature grills recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['steak'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -5329,7 +5329,7 @@ const r_t_bone_steak: GuideRecipe = {
  { name: 'Paprika', qty: 1, unit: 'as recipe' },
  { name: 'Butter', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature grills recipe from RecipeCrave\\\'s Record Breaking Online Class. Detail' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this grills, this means developing color on the protein.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -5370,7 +5370,7 @@ const r_honey_barbecue_wings: GuideRecipe = {
  id: 'honey-barbecue-wings',
  slug: 'honey-barbecue-wings',
  title: 'Honey Barbecue Wings',
- description: 'A signature grills recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature grills recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['buffaloWings'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -5386,7 +5386,7 @@ const r_honey_barbecue_wings: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature grills recipe from RecipeCrave\\\'s Record Breaking Online Class. Detail' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this grills, this means developing color on the protein.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -5454,7 +5454,7 @@ const r_grilled_fish: GuideRecipe = {
  { name: 'Red scotch. Bonnet pepper', qty: 1, unit: 'as recipe' },
  { name: 'Pepper soup spice', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 115 You can make your own spiced grilled fish in the comfort of your kitchen wit' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this grills, this means developing color on the protein.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -5511,7 +5511,7 @@ const r_grilled_fish_and_bole: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. The same marinade used for the grilled fish and grilled turkey recipes can be us' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this grills, this means developing color on the protein.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -5576,7 +5576,7 @@ const r_grilled_turkey: GuideRecipe = {
  { name: 'Seasoning Cube', qty: 1, unit: 'as recipe' },
  { name: 'Thyme', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. An excellent way to have your turkey is by grilling' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this grills, this means developing color on the protein.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -5638,7 +5638,7 @@ const r_naan_bread: GuideRecipe = {
  { name: 'Pinch of salt', qty: 1, unit: 'as recipe' },
  { name: '1 tablespoon active yeast', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 127 Naan is a leavened flatbread that is typically served in the cuisines of Ira' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this sides, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -5705,7 +5705,7 @@ const r_stuffed_masa: GuideRecipe = {
  { name: 'Pepper 89', qty: 1, unit: 'as recipe' },
  { name: 'Olive oil', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 128 Masa is commonly eaten by the northern Nigeria, it is made from rice and oft' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this sides, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -5762,7 +5762,7 @@ const r_butter_fly_fluffy_moi_moi: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Moi moi is a Nigerian delicacy made from beans' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this sides, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -5803,7 +5803,7 @@ const r_isi_ewu: GuideRecipe = {
  id: 'isi-ewu',
  slug: 'isi-ewu',
  title: 'Isi Ewu',
- description: 'A signature sides recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature sides recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['isiEwu'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -5819,7 +5819,7 @@ const r_isi_ewu: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature sides recipe from RecipeCrave\\\'s Record Breaking Online Class. Detaile' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this sides, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -5883,7 +5883,7 @@ const r_kelewele: GuideRecipe = {
  { name: '2 cloves garlic, minced', qty: 1, unit: 'as recipe' },
  { name: 'Vegetable oil, for frying', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 137 Kelewele is best served hot with a dipping sauce, such as hot sauce, ketchup' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this sides, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -5940,7 +5940,7 @@ const r_full_salad: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 138 This is a very Nigerian salad. Takes me back to when my mom used to make it' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this sides, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -5997,7 +5997,7 @@ const r_chicken_salad: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Chicken salad is a perfect side dish to a rice menu, they can be eaten wholesome' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this sides, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -6038,7 +6038,7 @@ const r_1_basmati_rice_7_goat_meat: GuideRecipe = {
  id: '1-basmati-rice-7-goat-meat',
  slug: '1-basmati-rice-7-goat-meat',
  title: '1. Basmati Rice 7. Goat Meat',
- description: 'A signature sides recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature sides recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['curryGoat'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -6054,7 +6054,7 @@ const r_1_basmati_rice_7_goat_meat: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature sides recipe from RecipeCrave\\\'s Record Breaking Online Class. Detaile' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this sides, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -6119,7 +6119,7 @@ const r_fresh_fish_pepper_soup: GuideRecipe = {
  { name: 'Crayfish (optional)', qty: 1, unit: 'as recipe' },
  { name: 'Garlic and ginger (optional)', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 131 Instead of going out to have your catfish pepper soup. You can enjoy this at' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this sides, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -6183,7 +6183,7 @@ const r_nkwobi: GuideRecipe = {
  { name: 'Onions', qty: 1, unit: 'as recipe' },
  { name: 'Crayfish', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Nkwobi is a special delicacy eaten by the eastern Nigerians, it is mostly enjoye' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this sides, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -6224,7 +6224,7 @@ const r_bush_meat_and_plantain: GuideRecipe = {
  id: 'bush-meat-and-plantain',
  slug: 'bush-meat-and-plantain',
  title: 'Bush Meat And Plantain',
- description: 'A signature sides recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature sides recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['plantain'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -6240,7 +6240,7 @@ const r_bush_meat_and_plantain: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature sides recipe from RecipeCrave\\\'s Record Breaking Online Class. Detaile' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this sides, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -6303,7 +6303,7 @@ const r_cowtail_and_plantain: GuideRecipe = {
  { name: 'Unripe Plantain or half', qty: 1, unit: 'as recipe' },
  { name: 'Stock Cube ripe plantain So', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 15 It is simple to create and requires only basic ingredients. The cowtail is mo' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this porridges, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -6366,7 +6366,7 @@ const r_fried_beans: GuideRecipe = {
  { name: 'Seasoning cubes', qty: 1, unit: 'as recipe' },
  { name: 'Tatase', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Nigerian Fried Beans is so delicious that even those who do not like beans enjoy' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this porridges, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -6431,7 +6431,7 @@ const r_yam_and_sweet_ptatoes: GuideRecipe = {
  { name: 'Titus Fish', qty: 1, unit: 'as recipe' },
  { name: 'Seasoning Cube', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Stewing is done on the top of a cooker with heat being applied directly to the u' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this porridges, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -6498,7 +6498,7 @@ const r_ekpang_nkukwo: GuideRecipe = {
  { name: 'Palm Oil', qty: 1, unit: 'as recipe' },
  { name: 'Seasoning Cubes', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. 14 The Efiks (Cross River) and the Ibibios (Akwa Ibom State) have a delectable d' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this porridges, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -6555,7 +6555,7 @@ const r_tropical_juice: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. This is a juice blend of fruits that are typically found in tropical regions of' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this porridges, this means achieving a stable batter.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -6623,7 +6623,7 @@ const r_zobo: GuideRecipe = {
  { name: 'Coconut', qty: 1, unit: 'as recipe' },
  { name: 'Water', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. Zobo is a very common drink or tea taken by apparently every part of Nigeria, it' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this drinks, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -6684,7 +6684,7 @@ const r_chocolate_chips_ice_cream: GuideRecipe = {
  { name: 'Sugar', qty: 1, unit: 'as recipe' },
  { name: 'Chocolate chips', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. All you need for this delicious recipes are just sugar, cream, chocolate milk an' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this iced treats, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -6744,7 +6744,7 @@ const r_berry_mix_popsicle: GuideRecipe = {
  { name: 'Mixed berries of choices ( I used blue berries and strawberries )', qty: 1, unit: 'as recipe' },
  { name: 'Sugar or honey Sides', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. An ice pop is a liquid-based frozen snack on a stick. They are fun snacks for ch' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this iced treats, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -6785,7 +6785,7 @@ const r_simple_oreo_milk_shake: GuideRecipe = {
  id: 'simple-oreo-milk-shake',
  slug: 'simple-oreo-milk-shake',
  title: 'Simple Oreo Milk Shake',
- description: 'A signature iced treats recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature iced treats recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['milkshake'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -6801,7 +6801,7 @@ const r_simple_oreo_milk_shake: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature iced treats recipe from RecipeCrave\\\'s Record Breaking Online Class. D' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this iced treats, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -6842,7 +6842,7 @@ const r_whiskey_sour_without_eggs: GuideRecipe = {
  id: 'whiskey-sour-without-eggs',
  slug: 'whiskey-sour-without-eggs',
  title: 'Whiskey Sour Without Eggs',
- description: 'A signature cocktails & mocktails recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature cocktails & mocktails recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['whiskeySour'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -6858,7 +6858,7 @@ const r_whiskey_sour_without_eggs: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature cocktails & mocktails recipe from RecipeCrave\\\'s Record Breaking Onlin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this cocktails & mocktails, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -6899,7 +6899,7 @@ const r_tequila_sunrise: GuideRecipe = {
  id: 'tequila-sunrise',
  slug: 'tequila-sunrise',
  title: 'Tequila Sunrise',
- description: 'A signature cocktails & mocktails recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature cocktails & mocktails recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['tequilaSunrise'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -6915,7 +6915,7 @@ const r_tequila_sunrise: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature cocktails & mocktails recipe from RecipeCrave\\\'s Record Breaking Onlin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this cocktails & mocktails, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -6956,7 +6956,7 @@ const r_flavor_mimosa: GuideRecipe = {
  id: 'flavor-mimosa',
  slug: 'flavor-mimosa',
  title: 'Flavor Mimosa',
- description: 'A signature cocktails & mocktails recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature cocktails & mocktails recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['mimosa'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -6972,7 +6972,7 @@ const r_flavor_mimosa: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature cocktails & mocktails recipe from RecipeCrave\\\'s Record Breaking Onlin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this cocktails & mocktails, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -7013,7 +7013,7 @@ const r_cosmopolitan: GuideRecipe = {
  id: 'cosmopolitan',
  slug: 'cosmopolitan',
  title: 'Cosmopolitan',
- description: 'A signature cocktails & mocktails recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature cocktails & mocktails recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['cosmopolitan'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -7029,7 +7029,7 @@ const r_cosmopolitan: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature cocktails & mocktails recipe from RecipeCrave\\\'s Record Breaking Onlin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this cocktails & mocktails, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -7070,7 +7070,7 @@ const r_rainbow_paradise: GuideRecipe = {
  id: 'rainbow-paradise',
  slug: 'rainbow-paradise',
  title: 'Rainbow Paradise',
- description: 'A signature cocktails & mocktails recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature cocktails & mocktails recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['cocktail'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -7086,7 +7086,7 @@ const r_rainbow_paradise: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature cocktails & mocktails recipe from RecipeCrave\\\'s Record Breaking Onlin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this cocktails & mocktails, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -7127,7 +7127,7 @@ const r_long_island_iced_tea: GuideRecipe = {
  id: 'long-island-iced-tea',
  slug: 'long-island-iced-tea',
  title: 'Long Island Iced Tea',
- description: 'A signature cocktails & mocktails recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature cocktails & mocktails recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['longIsland'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -7143,7 +7143,7 @@ const r_long_island_iced_tea: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature cocktails & mocktails recipe from RecipeCrave\\\'s Record Breaking Onlin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this cocktails & mocktails, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -7184,7 +7184,7 @@ const r_margarita: GuideRecipe = {
  id: 'margarita',
  slug: 'margarita',
  title: 'Margarita',
- description: 'A signature cocktails & mocktails recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature cocktails & mocktails recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['margarita'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -7205,7 +7205,7 @@ const r_margarita: GuideRecipe = {
  { name: 'Coarse salt, for rimming the glass (optional)', qty: 1, unit: 'as recipe' },
  { name: 'Lime wedge, for garnish', qty: 1, unit: 'as recipe' }],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature cocktails & mocktails recipe from RecipeCrave\\\'s Record Breaking Onlin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this cocktails & mocktails, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -7246,7 +7246,7 @@ const r_champagne_holiday: GuideRecipe = {
  id: 'champagne-holiday',
  slug: 'champagne-holiday',
  title: 'Champagne Holiday',
- description: 'A signature cocktails & mocktails recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature cocktails & mocktails recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['champagne'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -7262,7 +7262,7 @@ const r_champagne_holiday: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature cocktails & mocktails recipe from RecipeCrave\\\'s Record Breaking Onlin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this cocktails & mocktails, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -7303,7 +7303,7 @@ const r_classic_mojito: GuideRecipe = {
  id: 'classic-mojito',
  slug: 'classic-mojito',
  title: 'Classic Mojito',
- description: 'A signature cocktails & mocktails recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature cocktails & mocktails recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['mojito'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -7319,7 +7319,7 @@ const r_classic_mojito: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature cocktails & mocktails recipe from RecipeCrave\\\'s Record Breaking Onlin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this cocktails & mocktails, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -7360,7 +7360,7 @@ const r_passion_fruit_daiquiri: GuideRecipe = {
  id: 'passion-fruit-daiquiri',
  slug: 'passion-fruit-daiquiri',
  title: 'Passion Fruit Daiquiri',
- description: 'A signature cocktails & mocktails recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature cocktails & mocktails recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['daiquiri'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -7376,7 +7376,7 @@ const r_passion_fruit_daiquiri: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature cocktails & mocktails recipe from RecipeCrave\\\'s Record Breaking Onlin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this cocktails & mocktails, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -7417,7 +7417,7 @@ const r_wings_signature: GuideRecipe = {
  id: 'wings-signature',
  slug: 'wings-signature',
  title: 'Wings Signature',
- description: 'A signature cocktails & mocktails recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature cocktails & mocktails recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['cocktail'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -7433,7 +7433,7 @@ const r_wings_signature: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature cocktails & mocktails recipe from RecipeCrave\\\'s Record Breaking Onlin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this cocktails & mocktails, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -7474,7 +7474,7 @@ const r_classic_martini: GuideRecipe = {
  id: 'classic-martini',
  slug: 'classic-martini',
  title: 'Classic Martini',
- description: 'A signature cocktails & mocktails recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature cocktails & mocktails recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['martini'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -7490,7 +7490,7 @@ const r_classic_martini: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature cocktails & mocktails recipe from RecipeCrave\\\'s Record Breaking Onlin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this cocktails & mocktails, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -7531,7 +7531,7 @@ const r_moscow_mule: GuideRecipe = {
  id: 'moscow-mule',
  slug: 'moscow-mule',
  title: 'Moscow Mule',
- description: 'A signature cocktails & mocktails recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature cocktails & mocktails recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['moscowMule'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -7547,7 +7547,7 @@ const r_moscow_mule: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature cocktails & mocktails recipe from RecipeCrave\\\'s Record Breaking Onlin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this cocktails & mocktails, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -7588,7 +7588,7 @@ const r_kiwi_fizz: GuideRecipe = {
  id: 'kiwi-fizz',
  slug: 'kiwi-fizz',
  title: 'Kiwi Fizz',
- description: 'A signature cocktails & mocktails recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature cocktails & mocktails recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['cocktail'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -7604,7 +7604,7 @@ const r_kiwi_fizz: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature cocktails & mocktails recipe from RecipeCrave\\\'s Record Breaking Onlin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this cocktails & mocktails, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -7645,7 +7645,7 @@ const r_wavy: GuideRecipe = {
  id: 'wavy',
  slug: 'wavy',
  title: 'Wavy',
- description: 'A signature cocktails & mocktails recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature cocktails & mocktails recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['cocktail'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -7661,7 +7661,7 @@ const r_wavy: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature cocktails & mocktails recipe from RecipeCrave\\\'s Record Breaking Onlin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this cocktails & mocktails, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -7702,7 +7702,7 @@ const r_blue_colada: GuideRecipe = {
  id: 'blue-colada',
  slug: 'blue-colada',
  title: 'Blue Colada',
- description: 'A signature cocktails & mocktails recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature cocktails & mocktails recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['blueColada'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -7718,7 +7718,7 @@ const r_blue_colada: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature cocktails & mocktails recipe from RecipeCrave\\\'s Record Breaking Onlin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this cocktails & mocktails, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -7759,7 +7759,7 @@ const r_cinnamon_mimosa: GuideRecipe = {
  id: 'cinnamon-mimosa',
  slug: 'cinnamon-mimosa',
  title: 'Cinnamon Mimosa',
- description: 'A signature cocktails & mocktails recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature cocktails & mocktails recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['mimosa'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -7775,7 +7775,7 @@ const r_cinnamon_mimosa: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature cocktails & mocktails recipe from RecipeCrave\\\'s Record Breaking Onlin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this cocktails & mocktails, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -7816,7 +7816,7 @@ const r_bubble_signature: GuideRecipe = {
  id: 'bubble-signature',
  slug: 'bubble-signature',
  title: 'Bubble Signature',
- description: 'A signature cocktails & mocktails recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature cocktails & mocktails recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['cocktail'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -7832,7 +7832,7 @@ const r_bubble_signature: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature cocktails & mocktails recipe from RecipeCrave\\\'s Record Breaking Onlin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this cocktails & mocktails, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],
@@ -7873,7 +7873,7 @@ const r_whipped_cream_mimosa: GuideRecipe = {
  id: 'whipped-cream-mimosa',
  slug: 'whipped-cream-mimosa',
  title: 'Whipped Cream Mimosa',
- description: 'A signature cocktails & mocktails recipe from RecipeCrave\'s Record Breaking Online Class. Detailed prep, ingredient mapping, and finishing technique.',
+ description: 'A signature cocktails & mocktails recipe — detailed prep, ingredient mapping, and finishing technique by the RecipeCrave kitchen team.',
  heroImage: ((IMG as Record<string, string | undefined>)['mimosa'] ?? null) as string | null,
  galleryImages: [],
  videoUrl: null,
@@ -7889,7 +7889,7 @@ const r_whipped_cream_mimosa: GuideRecipe = {
  ingredients: [
  ],
  instructions: [
- { step: 1, text: 'Mise en place: prep all ingredients before heat. A signature cocktails & mocktails recipe from RecipeCrave\\\'s Record Breaking Onlin' },
+ { step: 1, text: 'Set up your station first — prep every ingredient before heat ever hits the pan.' },
  { step: 2, text: 'Build base flavor first. For this cocktails & mocktails, this means chilling the prep.' },
  { step: 3, text: 'Combine, balance salt and acid, taste at every stage. Adjust to your palate.' },
  { step: 4, text: 'Rest, plate per the plating guidance below, and serve immediately.' }],

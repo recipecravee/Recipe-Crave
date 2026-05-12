@@ -1,43 +1,57 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Clock, BookOpen } from 'lucide-react';
+import { HOW_TO_GUIDES } from '@/content/how-to-guides';
 
 export const metadata: Metadata = {
   title: 'How-To Guides — Cooking Techniques Explained',
   description:
-    'Master the kitchen with clear, beginner-friendly cooking technique guides. From knife skills to bread-baking, our how-to library teaches the fundamentals.',
+    'Master kitchen fundamentals with clear, beginner-friendly technique guides. From poaching eggs to tempering chocolate, our how-to library teaches the skills professional cooks rely on.',
   alternates: { canonical: '/how-to' },
 };
-
-const GUIDES = [
-  { slug: 'how-to-poach-an-egg', title: 'How to Poach an Egg' },
-  { slug: 'how-to-julienne-vegetables', title: 'How to Julienne Vegetables' },
-  { slug: 'how-to-make-a-roux', title: 'How to Make a Roux' },
-  { slug: 'how-to-temper-chocolate', title: 'How to Temper Chocolate' },
-  { slug: 'how-to-cook-perfect-rice', title: 'How to Cook Perfect Rice' },
-  { slug: 'how-to-brown-butter', title: 'How to Brown Butter' },
-];
 
 export default function HowToIndex() {
   return (
     <div className="container py-10 lg:py-14">
-      <header className="mb-10 max-w-2xl">
-        <h1 className="font-serif text-4xl text-ink sm:text-5xl">How-To Guides</h1>
-        <p className="mt-3 text-ink-muted">
-          Cooking techniques explained without gatekeeping. Pick a skill, learn it once, use it forever.
+      <header className="mb-12 max-w-3xl">
+        <p className="inline-flex items-center gap-1.5 rounded-full bg-forest-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-forest-700">
+          <BookOpen className="h-3.5 w-3.5" aria-hidden /> Technique Library
+        </p>
+        <h1 className="mt-3 font-serif text-4xl text-ink sm:text-5xl">How-To Guides</h1>
+        <p className="mt-3 text-lg text-ink-muted">
+          Cooking techniques explained without gatekeeping. Pick a skill, learn
+          it once, use it forever. Each guide covers the technique, common
+          mistakes, and the dishes that use it.
         </p>
       </header>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {GUIDES.map((g) => (
+
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {HOW_TO_GUIDES.map((g) => (
           <Link
             key={g.slug}
             href={`/how-to/${g.slug}`}
-            className="block rounded-2xl border border-ink/10 bg-white p-5 transition-shadow hover:shadow-md focus-ring"
+            className="group block rounded-2xl bg-white p-6 shadow-sm transition-shadow hover:shadow-md focus-ring"
           >
-            <p className="text-xs uppercase tracking-wider text-terracotta-500">Coming soon</p>
-            <h2 className="mt-1 font-serif text-lg">{g.title}</h2>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-terracotta-500">
+              {g.difficulty}
+            </p>
+            <h2 className="mt-2 font-serif text-xl font-bold text-ink group-hover:text-terracotta-600">
+              {g.title}
+            </h2>
+            <p className="mt-2 line-clamp-3 text-sm text-ink-muted">{g.excerpt}</p>
+            <p className="mt-3 inline-flex items-center gap-1 text-[11px] text-ink-subtle">
+              <Clock className="h-3 w-3" aria-hidden /> {g.readingTimeMin} min read
+            </p>
           </Link>
         ))}
       </div>
+
+      <section className="mt-12 rounded-2xl bg-cream-100 p-6 text-center">
+        <p className="text-sm text-ink-muted">
+          More guides publishing regularly. Want a specific technique covered?
+          Email <a href="mailto:recipecrave@gmail.com" className="font-bold text-terracotta-600 hover:underline">recipecrave@gmail.com</a>
+        </p>
+      </section>
     </div>
   );
 }
