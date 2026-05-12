@@ -77,6 +77,39 @@ export default function PrivacyPage() {
         </ul>
         <p>To exercise these rights, email <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
 
+        <h2 id="ccpa">Your California rights (CCPA / CPRA)</h2>
+        <p>
+          If you are a California resident, the California Consumer Privacy Act
+          (CCPA) and the California Privacy Rights Act (CPRA) give you specific
+          rights regarding your personal information:
+        </p>
+        <ul>
+          <li><strong>Right to know.</strong> You may request the categories of personal information we collect, the sources, the purposes of collection, and the categories of third parties with whom we share it.</li>
+          <li><strong>Right to delete.</strong> You may request deletion of the personal information we have collected from you, subject to legal exceptions.</li>
+          <li><strong>Right to correct.</strong> You may request that we correct inaccurate personal information.</li>
+          <li><strong>Right to opt out of sale or sharing.</strong> We do not sell your personal information for money. If we use cookies for cross-context behavioral advertising, that constitutes "sharing" under CPRA; you may opt out at any time using the <strong>"Do Not Sell or Share My Information"</strong> button in the cookie banner, or by emailing us.</li>
+          <li><strong>Right to limit use of sensitive personal information.</strong> We do not collect sensitive personal information beyond what is strictly necessary to provide the service.</li>
+          <li><strong>Right to non-discrimination.</strong> Exercising any of these rights will not result in different pricing, denial of service, or any other adverse treatment.</li>
+        </ul>
+        <p>
+          To submit a request, email <a href={`mailto:${SITE.email}`}>{SITE.email}</a> with
+          the subject line "California Privacy Request." We verify identity before disclosure or
+          deletion and respond within 45 days as required by law. You may also designate an
+          authorized agent to make requests on your behalf.
+        </p>
+        <p>
+          For Nevada residents: you may opt out of any future sale of personal information by
+          emailing the address above.
+        </p>
+
+        <h2>Your Virginia, Colorado, Connecticut, Utah, and other state rights</h2>
+        <p>
+          Residents of Virginia (VCDPA), Colorado (CPA), Connecticut (CTDPA), Utah (UCPA), and
+          other states with comprehensive consumer privacy laws have substantially the same
+          rights of access, correction, deletion, portability, and opt-out described above.
+          Use the same email address and we will route the request appropriately.
+        </p>
+
         <h2>Data retention</h2>
         <p>We keep your data only as long as needed to provide the service. Account data is deleted within 30 days of an account deletion request. Anonymized analytics may be retained longer.</p>
 

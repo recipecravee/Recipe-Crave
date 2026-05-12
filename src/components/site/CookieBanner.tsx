@@ -5,23 +5,30 @@ import Link from 'next/link';
 import { Cookie, X } from 'lucide-react';
 
 /**
- * GDPR-baseline cookie consent banner.
+ * Cookie consent banner — US-first wording, GDPR + CCPA compliant.
  *
- * RecipeCrave's choice: keep it lightweight. We collect minimal cookies
- * (next-auth session if logged in; localStorage for save/streak/profile).
- * No third-party analytics by default. If AdSense ever activates, this
- * banner will also gate ad personalization.
+ * Audience: primary US, secondary global. Copy reads conversationally
+ * (American English, second-person, no legalese in the headline) while
+ * still satisfying:
+ *   - EU GDPR: explicit opt-in for non-essential cookies, "Reject" path
+ *     never harder than "Accept", no pre-checked boxes.
+ *   - California CCPA / CPRA: clear "Do Not Sell or Share My Information"
+ *     link surfaced alongside the choice buttons.
+ *   - Virginia VCDPA / Colorado CPA / Connecticut CTDPA: same opt-out
+ *     mechanism covers these.
  *
  * Behavior:
- *   - Hidden by default until first paint (avoid SSR flash).
- *   - Shows on first visit; persists choice in localStorage.
- *   - "Accept" stores `rc:cookie-consent = accepted-{timestamp}`.
- *   - "Reject" stores `rc:cookie-consent = rejected-{timestamp}` and
- *     downstream code (AdSense bootstrap, GA4 init) should respect this
- *     by checking the consent value before initializing.
- *   - Dismissed cleanly with Escape or the close button.
+ *   - Hidden until 800ms after first paint (no SSR flash; doesn't compete
+ *     with hero / welcome popup).
+ *   - First visit only; persists in localStorage `rc:cookie-consent`.
+ *   - "Accept all" → analytics + future AdSense can initialize.
+ *   - "Essentials only" → only strictly-necessary cookies stored.
+ *   - "Do Not Sell or Share" → same as Essentials, plus sets the CCPA
+ *     opt-out flag downstream code reads before sharing data with any
+ *     third party.
  */
 const STORAGE_KEY = 'rc:cookie-consent';
+const CCPA_KEY = 'rc:ccpa-opt-out';
 
 export function CookieBanner() {
   const [open, setOpen] = useState(false);
@@ -30,14 +37,16 @@ export function CookieBanner() {
     if (typeof window === 'undefined') return;
     const stored = window.localStorage.getItem(STORAGE_KEY);
     if (stored) return;
-    // Delay 800ms so the banner doesn't compete with the hero/popup.
     const t = setTimeout(() => setOpen(true), 800);
     return () => clearTimeout(t);
   }, []);
 
-  function record(decision: 'accepted' | 'rejected') {
+  function record(decision: 'accepted' | 'essentials' | 'ccpa-opt-out') {
     try {
       window.localStorage.setItem(STORAGE_KEY, `${decision}-${Date.now()}`);
+      if (decision === 'ccpa-opt-out') {
+        window.localStorage.setItem(CCPA_KEY, '1');
+      }
     } catch {
       /* swallow */
     }
@@ -60,16 +69,20 @@ export function CookieBanner() {
           </div>
           <div className="flex-1">
             <p id="cookie-banner-title" className="font-serif text-base font-bold text-ink sm:text-lg">
-              We use a small number of cookies
+              Your privacy, your choice
             </p>
             <p className="mt-1 text-sm text-ink-muted">
-              Strictly-necessary cookies keep RecipeCrave working (saved recipes, your cooking streak, your language).
-              Optional cookies — if you opt in — let us measure traffic. No personal data is sold.
+              We use cookies to keep RecipeCrave working — your saved recipes, cooking streak,
+              and language preference live in your browser. If you opt in, we also use cookies
+              to count visits so we can improve the site. We do not sell your personal information.
               {' '}
               <Link href="/privacy" className="font-semibold text-terracotta-500 hover:underline">
-                Read the policy
+                Privacy Policy
               </Link>
-              .
+              {' · '}
+              <Link href="/privacy#ccpa" className="font-semibold text-terracotta-500 hover:underline">
+                Your California Rights
+              </Link>
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               <button
@@ -81,16 +94,23 @@ export function CookieBanner() {
               </button>
               <button
                 type="button"
-                onClick={() => record('rejected')}
+                onClick={() => record('essentials')}
                 className="rounded-full border-2 border-ink/15 bg-white px-5 py-2 text-sm font-bold text-ink transition-colors hover:border-ink/30 focus-ring"
               >
-                Strictly necessary only
+                Essentials only
+              </button>
+              <button
+                type="button"
+                onClick={() => record('ccpa-opt-out')}
+                className="rounded-full px-3 py-2 text-xs font-semibold text-ink-muted underline-offset-4 hover:text-ink hover:underline focus-ring"
+              >
+                Do Not Sell or Share My Information
               </button>
             </div>
           </div>
           <button
             type="button"
-            onClick={() => record('rejected')}
+            onClick={() => record('essentials')}
             aria-label="Dismiss banner"
             className="rounded-md p-1.5 text-ink-subtle hover:bg-cream-100 hover:text-ink"
           >
