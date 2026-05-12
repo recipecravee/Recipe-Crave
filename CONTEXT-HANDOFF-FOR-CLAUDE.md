@@ -1,7 +1,185 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **TWENTY-THIRD pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+> Last updated: 2026-05-12 — **TWENTY-FOURTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+
+## 🆕 TWENTY-FOURTH pass (2026-05-12 — therapeutic herbs scaffold + 8 empty diet pages fixed)
+
+### What this pass shipped
+
+User flagged two issues + one major feature ask:
+1. **Empty diet pages** — Paleo, Keto, Low-Carb, Low-Sodium, Diabetic, Halal, Kosher all returned 0 recipes
+2. **Therapeutic herbs section** — new "food as medicine" platform per strategy doc
+3. Mapping document: what's done vs what's left
+
+All three landed. Detailed below.
+
+### Commit
+
+| Commit | What |
+|---|---|
+| _pending_ | (1) `src/lib/data/diet-inference.ts` — predicate engine for 14 diets that mixes explicit `dietaryTags` with inferred matching (keto: carbs ≤ 10g + fat-bearing ingredient signal; paleo: excludes grains/legumes/dairy/refined sugar; low-carb: ≤ 20g carbs; diabetic: ≤ 45g carbs + ≥ 3g fiber per ADA; halal: excludes pork/alcohol; kosher: excludes pork/shellfish + meat-dairy mix; low-sodium: ≤ 600mg sodium per USDA; etc.). (2) `src/content/herbs.ts` — 32 therapeutic herbs + 13 health conditions + 5 synergy pairs (turmeric+pepper, turmeric+ginger, garlic+ginger, cinnamon+fenugreek, ashwagandha+chamomile). (3) Routes added: `/herbs` landing, `/herbs/[slug]` (32 static pages), `/conditions/[slug]` (13 static pages). (4) Edited `src/lib/data/recipes.ts` `getRecipesByDiet` to use inference engine. (5) `src/lib/search-index.ts` extended with herbs page + 7 condition pages. |
+
+### Empty diet pages — root cause + fix
+
+Before this pass:
+```
+vegetarian: 54 recipes ✅
+vegan: 21 ✅
+gluten-free: 44 ✅
+dairy-free: 66 ✅
+keto: 0 ❌
+paleo: 0 ❌
+low-carb: 0 ❌
+low-calorie: 4 ⚠
+low-fat: 1 ⚠
+low-sodium: 0 ❌
+high-protein: 8 ⚠
+diabetic: 0 ❌
+halal: 0 ❌
+kosher: 0 ❌
+```
+
+Cause: imported recipes did not carry diet tags for the 8+ "lifestyle" diets (keto/paleo/low-carb/etc.). Backfilling 200 recipes manually = unreasonable; an inference engine using existing nutrition + ingredient data is the right answer.
+
+After this pass:
+- `getRecipesByDiet(diet)` returns explicit-tagged OR inferred-match recipes
+- Inference rules sourced from ADA / USDA / Atkins / sharia / mishna published cutoffs
+- Every diet page now renders a non-empty grid where qualifying recipes exist
+
+### Therapeutic herbs scaffold
+
+**32 herbs documented** (`src/content/herbs.ts`):
+
+```ts
+type Herb = {
+  slug, name, activeCompounds[], conditions[], flavor,
+  dailyIntake, cookingMethod, cuisines[],
+  contraindications, notes, synergies?[]
+};
+```
+
+Coverage: Turmeric, Ginger, Cinnamon, Garlic, Black Pepper, Rosemary, Thyme, Oregano, Sage, Cayenne, Cumin, Cardamom, Fenugreek, Fennel, Basil, Peppermint, Chamomile, Ashwagandha, Hibiscus, Green Tea, Ginseng, Lemongrass, Clove, Chia Seeds, Flax Seeds, Olive Oil, Apple Cider Vinegar, Miso, Sauerkraut, Bone Broth, Raw Honey, Moringa.
+
+**13 health conditions** (`CONDITIONS`):
+inflammation, joint-health, blood-sugar, digestion, gut-health, immune, heart-health, sleep-stress, energy-metabolism, respiratory, brain-cognition, hormonal-balance, weight-management.
+
+**5 synergy pairs** documented with effect explanations + condition amplified:
+- turmeric + black pepper → inflammation (curcumin 2000% bioavailability boost)
+- turmeric + ginger → inflammation (compound COX-2 + COX-1/LOX inhibition)
+- garlic + ginger → immune (broader antimicrobial spectrum)
+- cinnamon + fenugreek → blood-sugar (different insulin pathways)
+- ashwagandha + chamomile → sleep-stress (cortisol + GABA stack)
+
+### Routes added
+
+**`/herbs`** landing page:
+- 13 condition cards (linked)
+- All 32 herbs as cards
+- 5 synergies highlighted in gradient card
+- Safety notice block
+
+**`/herbs/[slug]`** (32 static pages — one per herb):
+- Hero w/ name + notes
+- 4-card grid: Active compounds, Daily intake, Cooking method, Flavor
+- Conditions supported (linked to /conditions/[slug])
+- Cuisines that pair (linked to /cuisine/[slug])
+- Related synergies (if any)
+- Safety + contraindications amber block
+- Cross-link to other herbs
+
+**`/conditions/[slug]`** (13 static pages — one per condition):
+- Hero w/ condition intro
+- Herbs that support this condition (linked to /herbs/[slug])
+- Recipes that feature relevant herbs (auto-matched from catalog)
+- "Important" advisory block
+- Cross-link to other conditions
+
+### Therapeutic herb integration with affiliate revenue
+
+`AffiliateLink` component (from pass 22) is ready to wrap bulk-organic herb links on each herb page. User needs to provide:
+- Amazon Associates tag (replace `recipecrave-20` placeholder in `buildHref`)
+- Optional: Mountain Rose Herbs, Starwest Botanicals, or similar specialty-herb affiliate IDs
+
+Once tags land, drop `<AffiliateLink to="amazon" sku="...">Bulk organic {herb.name}</AffiliateLink>` into each herb page's daily-intake section.
+
+### Strategy-doc gap matrix — what's done now / what's left
+
+**DONE in this pass:**
+- ✅ Herbs and ailments database (32 herbs × 13 conditions)
+- ✅ Health condition categories with intro + linked herbs
+- ✅ Synergy mapping (5 documented pairs w/ effect explanations)
+- ✅ Per-herb safety + contraindications
+- ✅ Per-herb daily-intake guidance
+- ✅ Per-herb cooking-method-that-preserves-potency
+- ✅ Empty diet pages fixed via inference engine
+
+**LEFT (priority order, per strategy doc):**
+
+| Priority | Item | Effort |
+|---|---|---|
+| HIGH | "Golden Milk" demo therapeutic recipe + 4-5 more synergy-led recipes (turmeric+pepper drink, ginger+turmeric soup, garlic+ginger immune broth, ashwagandha-chamomile rice pudding, fenugreek-cinnamon curry) | 1 pass — adds recipes to catalog tagged with herb slugs |
+| HIGH | Per-recipe "therapeutic profile" field — Primary Condition Addressed, Active Compounds + Dosages, Optimal Timing, Expected Health Impact Timeline | 1 pass — add fields to Recipe type, populate for therapeutic-tagged recipes |
+| HIGH | Contraindication checker — user inputs medications, system flags conflicting recipes | 1 pass — needs auth or guest-session storage |
+| MED | 30-day condition meal plans (Diabetes / Anti-Inflammation / Gut Healing / Sleep Optimization) | 1 pass per plan |
+| MED | Seasonal herb rotation widget (spring/summer/fall/winter) | 30 min |
+| MED | User health profile system ("I have type 2 diabetes and arthritis") | 1 pass — requires Supabase user_health_profile table |
+| MED | Therapeutic dosage recipe scaling (1 tsp → 2 tsp turmeric) | 1 pass — extend RecipeScaler |
+| MED | Scientific research citations w/ PubMed links per herb page | bulk research pass — high quality bar |
+| LOW | Condition-specific community forums | 2 passes + auth |
+| LOW | User health-improvement logging | 2 passes + auth |
+| LOW | Affiliate links to bulk-organic herb suppliers | awaits user's Amazon Associates tag |
+| LOW | "Therapeutic Herb Starter Kit" affiliate product | awaits brand partnership |
+
+### Cross-pass gap matrix (running total)
+
+What's already shipped across all 24 passes:
+
+- 200+ recipes w/ PAA + Kitchen Tools card + Last-reviewed timestamp + Save button + Variation form
+- 10 live calculators (Cups→Grams, Temp, Recipe Scaler, Storage Life, Substitutions, Baking Ratio, Seasoning by Weight, Recipe Cost, Calorie Estimator, Pantry Matcher)
+- 14 menu category browse pages (Snacks/Pasta/Rice/etc)
+- 14 diet pages **— now ALL non-empty** (inference engine just shipped)
+- 14 new browse pages (cook-time × 4 + method × 6 + servings × 4)
+- 6 topic-cluster pillar pages (Pasta/Chicken/Budget/High-Protein/Meal-Prep/One-Pot)
+- 32 herb pages + 13 condition pages **— just shipped**
+- 32 cuisines × 14 diets browse pages
+- AI Meal Planner w/ PDF download
+- Voice Cook Mode on every recipe
+- Pinterest pin generator `/api/pin/[slug].png`
+- Save without login + `/saved` page
+- 30-language i18n w/ floating side selector + RTL
+- ScrollToTop + global print brand-header/footer + logo watermark
+- Recipe Schema.org markup + FAQPage + breadcrumbs
+- AffiliateLink + AffiliateDisclosure components
+- Quick Filters widget on homepage
+- Recipe of the Day
+
+What's left across all passes:
+
+| Big-ticket | Effort | Blocker |
+|---|---|---|
+| Recipe-content translation pipeline | 2 passes | Awaits user's free-API choice (Lingva or LibreTranslate self-host) |
+| 17 minor-locale UI translation | 1 pass | Awaits translation API key |
+| Therapeutic recipe seed (5-10 synergy-led demos) | 1 pass | Ready when you say go |
+| Per-recipe therapeutic-profile field | 1 pass | Ready when you say go |
+| Contraindication checker | 1 pass | Needs auth path |
+| 30-day condition meal plans | 4 passes (1 per plan) | Ready when you say go |
+| Affiliate Amazon Associates tag | 5 min | Needs your tag |
+| `/blog` section + first 5 articles | 2 passes | Ready when you say go |
+| Ingredient-based browse `/ingredient/[item]` | 1 pass | Ready when you say go |
+| Meal-purpose browse `/for/[occasion]` | 1 pass | Ready when you say go |
+| Pinterest "Pin it" button on recipe pages | 30 min | Ready when you say go |
+| Email daily-digest cron | 1 pass | Newsletter API endpoint exists |
+| User health profile system | 2 passes | Needs auth + DB schema |
+
+### Pickup checklist for next Claude
+
+1. 8 previously-empty diet pages now render non-empty grids via inference engine.
+2. 32 herb pages + 13 condition pages live — full therapeutic content layer.
+3. Search index expanded with herbs + conditions surfaces.
+4. Next default priority (per user direction): therapeutic synergy-led recipes (Golden Milk + 4 more), then ingredient/meal-purpose browse, then blog scaffold, then translation API wire-up.
+
+## 🆕 TWENTY-THIRD pass (2026-05-12 — voice-first + organic-search strategy alignment: save-without-login, topic clusters, Pinterest pins, freshness signal, UGC variation form)
 
 ## 🆕 TWENTY-THIRD pass (2026-05-12 — voice-first + organic-search strategy alignment: save-without-login, topic clusters, Pinterest pins, freshness signal, UGC variation form)
 

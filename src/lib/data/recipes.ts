@@ -37,7 +37,11 @@ export async function getRecipesByCuisine(cuisine: string): Promise<Recipe[]> {
 }
 
 export async function getRecipesByDiet(diet: string): Promise<Recipe[]> {
-  return COMBINED_RECIPES.filter((r) => r.dietaryTags.includes(diet));
+  // Mix explicit dietaryTags with inferred predicates so every diet page
+  // has a non-empty result whenever the catalog contains qualifying recipes.
+  // Inference engine in `./diet-inference.ts` documents per-diet rules.
+  const { filterByDiet } = await import('./diet-inference');
+  return filterByDiet(COMBINED_RECIPES, diet);
 }
 
 export async function getRecipesByCourse(course: string): Promise<Recipe[]> {
