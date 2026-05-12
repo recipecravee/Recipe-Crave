@@ -28,14 +28,16 @@ export const IMG = {
 
   // === Seafood ===
   salmon: `https://images.unsplash.com/photo-1523218689796-d4c2ef4f3d72?${W}`,
-  shrimp: `https://images.unsplash.com/photo-1683824870303-ae378f721084?${W}`,
-  fish: `https://images.unsplash.com/photo-1523218689796-d4c2ef4f3d72?${W}`,
+  // Standalone shrimp dish (skewered / sauteed), distinct from shrimpPasta and salmon
+  shrimp: `https://images.unsplash.com/photo-1559737558-2f5a35f4523b?${W}`,
+  fish: `https://images.unsplash.com/photo-1535007813616-79dc02ba4021?${W}`,
 
   // === Rice / grains ===
   friedRice: `https://images.unsplash.com/photo-1603133872878-684f208fb84b?${W}`,
   jollofRice: `https://images.unsplash.com/photo-1665332195309-9d75071138f0?${W}`,
   ghanaianJollof: `https://images.unsplash.com/photo-1604329756574-bda1f2cada6f?${W}`,
-  riceBowl: `https://images.unsplash.com/photo-1665332195309-9d75071138f0?${W}`,
+  // Generic Asian-style rice-and-toppings bowl, distinct from jollof
+  riceBowl: `https://images.unsplash.com/photo-1546069901-ba9599a7e63c?${W}`,
   ricePeas: `https://images.unsplash.com/photo-1632852576480-c10a8e19496a?${W}`,
 
   // === Curries / stews ===
@@ -81,7 +83,8 @@ export const IMG = {
   zobo: `https://images.unsplash.com/photo-1602856124289-0331a6eff6fe?${W}`,
   chai: `https://images.unsplash.com/photo-1698619952010-3bc850cbcb3b?${W}`,
   latte: `https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?${W}`,
-  cocktail: `https://images.unsplash.com/photo-1678185201839-6de2bd49b714?${W}`,
+  // Classic cocktail glass — distinct from Chapman (red-pink Nigerian punch)
+  cocktail: `https://images.unsplash.com/photo-1551024709-8f23befc6f87?${W}`,
 
   // === Smoothies ===
   mangoSmoothie: `https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?${W}`,
@@ -207,7 +210,8 @@ export const IMG = {
   martini: `https://images.unsplash.com/photo-1773188243511-2eb85126f08b?${W}`,
   milkBread: `https://images.unsplash.com/photo-1620921568790-c1cf8984624c?${W}`,
   milkshake: `https://images.unsplash.com/photo-1662192511709-e75d67367638?${W}`,
-  mimosa: `https://images.unsplash.com/photo-1556063230-aa38680c8142?${W}`,
+  // Orange-juice mimosa in flute — distinct from tigerNut milk
+  mimosa: `https://images.unsplash.com/photo-1604908815803-0395cf3f7c4e?${W}`,
   mojito: `https://images.unsplash.com/photo-1696957024712-f478b2aa53a9?${W}`,
   moscowMule: `https://images.unsplash.com/photo-1655917080507-dc3ee47580a3?${W}`,
   naan: `https://images.unsplash.com/photo-1697155406014-04dc649b0953?${W}`,
@@ -245,7 +249,9 @@ export const IMG = {
   // Fallbacks for keys not found in Unsplash search — point to closest dish
   alfredo: `https://images.unsplash.com/photo-1608894289162-37f52487f62a?${W}`,
   mashedPotatoes: `https://images.unsplash.com/photo-1577906096429-f73c2c312435?${W}`,
-  ofada: `https://images.unsplash.com/photo-1729825488397-90ac5b03300c?${W}`,
+  // Ofada — distinct local-rice stew image, not the coconutJollof dupe
+  ofada: `https://images.unsplash.com/photo-1633945274309-2c16c96e7e75?${W}`,
   subwaySandwich: `https://images.unsplash.com/photo-1554433607-66b5efe9d304?${W}`,
-  tigerNut: `https://images.unsplash.com/photo-1556063230-aa38680c8142?${W}`,
+  // Tiger nut milk — distinct from mimosa
+  tigerNut: `https://images.unsplash.com/photo-1572490122747-3968b75cc699?${W}`,
 } as const;
