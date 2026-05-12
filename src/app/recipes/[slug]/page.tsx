@@ -14,6 +14,7 @@ import { TranslateRecipeButton } from '@/components/recipe/TranslateRecipeButton
 import { MeasurementBanner } from '@/components/recipe/MeasurementBanner';
 import { CookedCount } from '@/components/recipe/CookedCount';
 import { ReviewsSection } from '@/components/recipe/ReviewsSection';
+import { AboutThisDish } from '@/components/recipe/AboutThisDish';
 import { StarRating } from '@/components/recipe/StarRating';
 import { VoiceCookMode } from '@/components/recipe/VoiceCookMode';
 import { AdSlot } from '@/components/site/AdSlot';
@@ -398,6 +399,11 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
               ))}
             </ul>
           </section>
+
+          {/* Auto-generated "About this dish" — adds ~250 words of metadata-driven
+              context per page (cuisine origin, technique, serving guidance). Pure
+              SEO content-depth play across all 126 recipes. */}
+          <AboutThisDish recipe={recipe} />
 
           {/* User-submitted variation form — drives UGC + internal link diversity */}
           <section className="mt-10">
