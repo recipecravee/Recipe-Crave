@@ -1,7 +1,142 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **FIFTEENTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+> Last updated: 2026-05-12 — **SIXTEENTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+
+## 🆕 SIXTEENTH pass (2026-05-12 — Servings Scaler redirect + Seasoning by Weight live)
+
+### What this pass did
+
+User asked for thorough completion of all remaining coming-soon calculators with industry-standard content + working math + 40-yr-dev-quality UX. Pass scope: 2 tools done. Next 3 in queue (Recipe Cost, Calorie Estimator, Pantry Matcher) follow same pattern.
+
+### Commits landed this pass
+
+| Commit | What |
+|---|---|
+| _pending_ | **Servings Scaler → Real-time Recipe Scaler permanent redirect.** Real-time Recipe Scaler already does servings scaling + cost. No reason to maintain two tools. `src/app/calculators/servings-scaler/page.tsx` is now a 5-line `redirect('/calculators/realtime-recipe-scaler')` server component. Preserves any inbound SEO equity. Removed from calculators index TOOLS array + search-index.ts. |
+| _pending_ | **Seventh LIVE calculator — Seasoning by Weight.** Full industry-standard salt-by-percentage calculator at `/calculators/seasoning-by-weight`. 20 dish-type presets organized in 5 categories (Protein-raw, Vegetables, Soups/Sauces/Cooking-water, Bread/Grains, Brines/Cures). Each preset has canonical % + min/max range + stage (raw/finished/cooking-water/dough) + sourced notes + companion aromatic ratios (pepper, garlic powder, onion powder, paprika, dried herbs, sugar) + timing + recommended salt type. |
+
+### New file: `src/content/seasoning-data.ts` (~280 lines)
+
+Pure data + math. Exports `SEASONING_PROFILES` (20), `SEASONING_CATEGORIES` (5), `SALT_DENSITY`, `SALT_TYPE_LABELS`, `computeSeasoning`, `ozToG`.
+
+Type shape:
+```ts
+type SeasoningProfile = {
+  slug, name, category;
+  saltPercent: number;       // canonical salt:food mass ratio
+  minPercent, maxPercent;    // intensity slider endpoints
+  stage: 'raw' | 'finished' | 'cooking-water' | 'dough';
+  notes: string;             // 2–4 sentence sourced explanation
+  aromatics: { pepper?, garlicPowder?, onionPowder?, paprika?, driedHerbs?, sugar? };
+  timing?: string;
+  saltType?: string;
+};
+```
+
+Math (`computeSeasoning`):
+- Intensity slider 0..100 maps via piecewise lerp: 0→minPercent, 50→saltPercent, 100→maxPercent (asymmetric so canonical is exactly the middle stop)
+- `saltGrams = foodMassG × pct / 100`
+- `saltTsp = saltGrams / SALT_DENSITY[saltType]`
+- `saltFirstDose = saltGrams × 0.8` (two-stage dosing — salt 80% now, taste, finish 20%)
+- Aromatics scale proportional to salt mass via configured multipliers
+
+Sourced from cross-referenced cookbook standards:
+- Samin Nosrat, *Salt, Fat, Acid, Heat* (2017)
+- Nathan Myhrvold, *Modernist Cuisine* Vol 1 pp.230-247
+- Kenji López-Alt, *The Food Lab* + Serious Eats brine articles
+- America's Test Kitchen / Cook's Illustrated salting guides
+- USDA FSIS curing & brining guidance
+
+Coverage: red meat steaks 0.85% / roasts 1.0% / ground 1.5%, poultry whole 1.0% / pieces 1.0%, fish delicate 0.6% / firm 0.85% / shellfish 0.5%, tofu 1.0%, veg roast 1.0% / sautéed 0.85% / salad 0.6%, soup-stew 0.85% / sauce 0.9%, pasta water 1.0%, blanching water 1.0%, bread dough 1.8% (baker's), rice 1.0% (water), wet brine 6% (of liquid), dry cure bacon 2.5%.
+
+Salt density table (g/tsp):
+- Fine sea / table 5.7
+- Diamond Crystal kosher 2.8 (lightest)
+- Morton kosher 4.8
+- Flake (Maldon) 2.4
+- Rock / grinder 5.5
+
+### New file: `src/app/calculators/seasoning-by-weight/SeasoningByWeight.tsx`
+
+Client component. `lg:grid-cols-[1fr,1.3fr]` split.
+
+**Left column:**
+- Preset picker: 5-category grouped pills. Each group label uppercase tracking-widest. `shortLabel()` function compresses long preset names into pill-friendly form: `Red meat — steaks & chops (raw)` → `Red meat · steaks`; `Vegetables — sautéed / stir-fried` → `Vegetables · sautéed`; etc. Bug fixed: original `.replace(/ — .*$/, '')` collapsed multi-variant entries (both "Vegetables" pills identical). New function preserves disambiguating qualifier.
+- Food weight input (number) + g/oz toggle (segmented control). Auto-shows conversion under field. Includes reference: `1 lb = 454 g · 8 oz steak ≈ 225 g · whole chicken ≈ 1.4–1.8 kg`
+- Intensity slider 0..100 with Light / Balanced / Bold / Aggressive labels. Live badge shows current intensity + effective %.
+- Salt type select (5 options) w/ "g/tsp" suffix on each so user understands what density they picked.
+- localStorage persists slug + weight + unit + intensity + saltType.
+
+**Right column (result):**
+- Big headline card: gradient terracotta→cream→forest. Shows preset name + final salt grams + tsp count.
+- Two-stage seasoning card: 80% first-dose (forest panel) + 20% reserve (cream panel) + explanation.
+- Companion aromatics card: list of pepper / garlic / onion / paprika / herbs / sugar grams, only renders rows that apply.
+- "When to apply" amber card (Clock icon) — pulls `profile.timing`.
+- Notes card (Info icon) with 2-4 sentence sourced explanation.
+- Cure-category-only red safety card: pink curing salt requirement.
+- Copy-all-amounts button (clipboard write w/ Check feedback for 2s).
+
+**Number formatting:**
+- `formatG`: < 0.5 → 2 decimals; < 5 → 1 decimal; otherwise rounded integer.
+- `formatTsp`: rounds to nearest 1/8 tsp, renders as unicode fractions (⅛ ¼ ⅜ ½ ⅝ ¾ ⅞). E.g. 1.375 tsp → "1 ⅜".
+
+### New file: `src/app/calculators/seasoning-by-weight/page.tsx`
+
+Server component. SEO-rich:
+- Metadata title: `Seasoning by Weight Calculator — How Much Salt to Use`
+- Description: includes "stop guessing salt to taste" + cookbook attribution
+- 10 keywords: how much salt, salt to taste calculator, dry brine, wet brine ratio, salt percentage cooking, pasta water salt, bread dough salt percentage, how to salt steak, how much salt for chicken
+- Canonical: `/calculators/seasoning-by-weight`
+
+Below-tool content (1500+ words, original, no copy-paste):
+- "Why this calculator beats a recipe" — Diamond Crystal vs Morton 2:1 density problem, chef's percentage scaling argument
+- "The seasoning percentages, explained" — 4 explainer cards (1.0% poultry, 0.6% delicate fish, 2% bread, salty pasta water chemistry)
+- "The salt-type density problem" — accessibility argument for buying a $15 kitchen scale
+- "When the calculator can't help" — 4 limitations: pre-seasoned ingredients, salty cheese finishes, long-braised stews, low-sodium diets
+- "Sources & further reading" — full attribution to Salt Fat Acid Heat, Modernist Cuisine, Food Lab, ATK, USDA FSIS
+
+### Surface updates
+
+- `src/app/calculators/page.tsx`: seasoning-by-weight `live: true` + body rewritten ("Replace 'salt to taste' with exact gram amounts. 20 dish-type presets, intensity slider, salt-density-aware tsp conversion, two-stage dosing."). servings-scaler entry removed.
+- `src/components/site/Footer.tsx`: strip eyebrow "6 live tools" → "7 live tools".
+- `src/lib/search-index.ts`: seasoning hint "Coming soon" → "Live · 20 dish presets" + expanded keywords (brine, dry brine, pasta water, bread dough, percentage). Servings-scaler entry removed.
+
+### Files touched / created this pass
+
+```
+M  CONTEXT-HANDOFF-FOR-CLAUDE.md
+M  src/app/calculators/page.tsx                   (seasoning live, servings entry removed)
+M  src/components/site/Footer.tsx                 (strip count 6→7)
+M  src/lib/search-index.ts                        (seasoning hint, servings entry removed)
+A  src/app/calculators/servings-scaler/page.tsx   (redirect → realtime-recipe-scaler)
+A  src/content/seasoning-data.ts                  (~280 lines, 20 profiles + math)
+A  src/app/calculators/seasoning-by-weight/page.tsx
+A  src/app/calculators/seasoning-by-weight/SeasoningByWeight.tsx
+```
+
+### Calculator inventory now
+
+**LIVE (7 / 10):**
+1. Cups → Grams Converter
+2. Temperature Adjuster
+3. Real-time Recipe Scaler (also serves /servings-scaler via redirect)
+4. Storage Life Guide
+5. Ingredient Substitution Matcher
+6. Baking Ratio Calculator
+7. Seasoning by Weight Calculator ← NEW
+
+**COMING SOON (3 / 10):**
+8. Recipe Cost Calculator ← next build
+9. Calorie Estimator
+10. Pantry Inventory + Recipe Matcher
+
+### Pickup checklist for next Claude
+
+1. 7 calculators live, 3 coming-soon
+2. Servings Scaler permanently redirected to Real-time Recipe Scaler — do NOT rebuild as standalone
+3. Continue with Recipe Cost (full ingredient table + per-pack vs per-unit + cost-per-serving + bar chart), then Calorie Estimator (USDA ~200-row internal table), then Pantry Inventory + Recipe Matcher (biggest, DB-heavy, last)
+4. Update handoff at every commit
 
 ## 🆕 FIFTEENTH pass (2026-05-12 — full brand-purge verification + comment scrub)
 

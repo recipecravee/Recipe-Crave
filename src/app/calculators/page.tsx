@@ -20,12 +20,11 @@ const TOOLS: Tool[] = [
   { slug: 'unit-converter', title: 'Cups → Grams Converter', body: 'Convert any cooking ingredient between US, metric, and UK measurements. 60+ ingredients with density-accurate ratios.', live: true },
   { slug: 'recipe-cost', title: 'Recipe Cost Calculator', body: 'Estimate the cost per serving for any recipe.' },
   { slug: 'calorie-estimator', title: 'Calorie Estimator', body: 'Get approximate calorie counts from your ingredient list.' },
-  { slug: 'servings-scaler', title: 'Servings Scaler', body: 'Scale any recipe up or down with adjusted cook times.', featured: true },
   { slug: 'temperature-adjuster', title: 'Temperature Adjuster', body: 'Convert oven temps across °F, °C, gas marks, and air fryer equivalents. Adjusts for fan-forced vs conventional too.', featured: true, live: true },
   { slug: 'storage-life-guide', title: 'Storage Life Guide', body: 'Searchable database. "How long is opened mayo safe?" "Do eggs go bad?" Simple lookup, saves decisions.', live: true },
   { slug: 'ingredient-substitutions', title: 'Ingredient Substitution Matcher', body: 'Searchable swaps. Buttermilk to yogurt, Greek yogurt to sour cream. 1:1 conversions with ratios where they differ. Allergen + use-case filters.', live: true },
   { slug: 'baking-ratio', title: 'Baking Ratio Calculator', body: 'Baker\'s percentages. Input flour weight, get exact grams for water, salt, yeast. Consistency across recipes.', live: true },
-  { slug: 'seasoning-by-weight', title: 'Seasoning by Weight Calculator', body: 'Most recipes say "salt to taste." Input dish weight and protein type, suggest starting salt amount. Reduces over-salting.' },
+  { slug: 'seasoning-by-weight', title: 'Seasoning by Weight Calculator', body: 'Replace "salt to taste" with exact gram amounts. 20 dish-type presets, intensity slider, salt-density-aware tsp conversion, two-stage dosing.', live: true },
   { slug: 'realtime-recipe-scaler', title: 'Real-time Recipe Scaler', body: 'Load any recipe, drag a servings slider. Ingredients, total cost, and cost per serving update instantly. Saves locally.', featured: true, live: true },
   { slug: 'pantry-inventory-matcher', title: 'Pantry Inventory + Recipe Matcher', body: 'Log what you have at home. App suggests recipes you can make right now from your inventory. Saves grocery runs and food waste.' },
 ];

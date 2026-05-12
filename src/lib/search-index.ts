@@ -37,11 +37,10 @@ const CALCULATORS: SearchItem[] = [
   { kind: 'calculator', title: 'Real-time Recipe Scaler', href: '/calculators/realtime-recipe-scaler', hint: 'Live · Most valuable', keywords: 'scale recipe servings cost per serving slider' },
   { kind: 'calculator', title: 'Recipe Cost Calculator', href: '/calculators/recipe-cost', hint: 'Coming soon', keywords: 'cost per serving budget cheap meal' },
   { kind: 'calculator', title: 'Calorie Estimator', href: '/calculators/calorie-estimator', hint: 'Coming soon', keywords: 'calories macros nutrition' },
-  { kind: 'calculator', title: 'Servings Scaler', href: '/calculators/servings-scaler', hint: 'Coming soon', keywords: 'scale recipe servings portions' },
   { kind: 'calculator', title: 'Storage Life Guide', href: '/calculators/storage-life-guide', hint: 'Live · 75+ foods', keywords: 'food safety how long fridge freezer expired pantry spoil mayo eggs' },
   { kind: 'calculator', title: 'Ingredient Substitution Matcher', href: '/calculators/ingredient-substitutions', hint: 'Live · 60+ ingredients', keywords: 'substitute replacement swap buttermilk yogurt egg flour butter dairy free gluten free vegan' },
   { kind: 'calculator', title: 'Baking Ratio Calculator', href: '/calculators/baking-ratio', hint: 'Live · 10 presets', keywords: 'baker percentage flour hydration bread dough sourdough pizza brioche focaccia bagel pie crust' },
-  { kind: 'calculator', title: 'Seasoning by Weight Calculator', href: '/calculators/seasoning-by-weight', hint: 'Coming soon', keywords: 'salt to taste protein weight seasoning' },
+  { kind: 'calculator', title: 'Seasoning by Weight Calculator', href: '/calculators/seasoning-by-weight', hint: 'Live · 20 dish presets', keywords: 'salt to taste protein weight seasoning brine dry brine pasta water bread dough percentage' },
   { kind: 'calculator', title: 'Pantry Inventory + Recipe Matcher', href: '/calculators/pantry-inventory-matcher', hint: 'Coming soon', keywords: 'pantry inventory what to cook' },
 ];
 
