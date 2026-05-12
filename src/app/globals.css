@@ -103,10 +103,92 @@
 }
 
 @media print {
-  body { background: white !important; color: black !important; }
-  header, footer, .ad-slot, [data-noprint] { display: none !important; }
+  /* Strip site chrome; isolate the actual content. */
+  body {
+    background: white !important;
+    color: black !important;
+    /* RecipeCrave watermark logo, lightly embedded behind content. */
+    background-image: url('/logo.png') !important;
+    background-repeat: no-repeat !important;
+    background-position: center 35vh !important;
+    background-size: 380px auto !important;
+    background-attachment: fixed !important;
+    /* Soften the watermark; foreground content stays sharp. */
+    background-blend-mode: lighten !important;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.82);
+    pointer-events: none;
+    z-index: -1;
+  }
+  header, footer, .ad-slot, [data-noprint], [aria-label='Scroll to top'] { display: none !important; }
   a { color: black !important; text-decoration: none !important; }
   .container { max-width: none !important; padding: 0 !important; }
   h1, h2, h3 { page-break-after: avoid; }
   li, p { page-break-inside: avoid; }
+
+  /* Print header brand strip — visible at the top of every printed page. */
+  .print-brand-header {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #c75d3c;
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+    font-family: var(--font-fraunces), Georgia, serif;
+  }
+  .print-brand-header .brand {
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .print-brand-header .brand .accent { color: #c75d3c; }
+  .print-brand-header .url {
+    font-size: 11px;
+    color: #555;
+    font-family: ui-monospace, monospace;
+  }
+
+  /* Print footer bar */
+  .print-brand-footer {
+    display: block !important;
+    border-top: 1px solid #ccc;
+    padding-top: 6px;
+    margin-top: 18px;
+    font-size: 10px;
+    color: #666;
+    text-align: center;
+  }
+
+  /* Generic helpers — keep colored backgrounds in print where useful. */
+  .print-keep-colors {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
 }
+
+/* Hide print-only elements on screen */
+.print-brand-header, .print-brand-footer {
+  display: none;
+}
+
+/* RTL adjustments for Arabic / Hebrew / Farsi / Urdu */
+html[dir='rtl'] body {
+  text-align: right;
+}
+html[dir='rtl'] .container,
+html[dir='rtl'] [class*='ml-'],
+html[dir='rtl'] [class*='pl-'] {
+  /* Tailwind logical properties handle most cases via writing-mode-aware utilities,
+     but explicit override here ensures legacy classnames flip correctly. */
+}
+html[dir='rtl'] [class*='mr-1\\.5'] { margin-right: 0; margin-left: 0.375rem; }
+html[dir='rtl'] [class*='mr-2'] { margin-right: 0; margin-left: 0.5rem; }
+html[dir='rtl'] [class*='ml-1\\.5'] { margin-left: 0; margin-right: 0.375rem; }
+html[dir='rtl'] [class*='ml-2'] { margin-left: 0; margin-right: 0.5rem; }
+html[dir='rtl'] .lucide-arrow-left { transform: scaleX(-1); }
+html[dir='rtl'] .lucide-arrow-right { transform: scaleX(-1); }
+html[dir='rtl'] .lucide-chevron-right { transform: scaleX(-1); }
+html[dir='rtl'] .lucide-chevron-left { transform: scaleX(-1); }

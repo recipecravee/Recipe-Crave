@@ -13,6 +13,7 @@ import {
 import { CUISINES, DIETS } from '@/lib/constants';
 import { IMG } from '@/content/image-bank';
 import { SiteSearch } from './SiteSearch';
+import { LanguageSelector } from './LanguageSelector';
 
 // ============================================================================
 // Mega-panel data — three dropdowns: Recipes / Cuisines / Tips & Techniques
@@ -344,8 +345,14 @@ export function MegaMenu({ userEmail }: { userEmail?: string }) {
         ) : null}
       </nav>
 
-      {/* Mobile: search icon + hamburger */}
+      {/* Desktop language selector lives right of the desktop nav (lg+). */}
+      <div className="hidden lg:flex items-center">
+        <LanguageSelector variant="header" />
+      </div>
+
+      {/* Mobile: language + search + hamburger */}
       <div className="flex items-center gap-2 lg:hidden">
+        <LanguageSelector variant="compact" />
         <SiteSearch variant="icon" />
         <button
           type="button"

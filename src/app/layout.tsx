@@ -3,6 +3,8 @@ import { Inter, Fraunces, JetBrains_Mono } from 'next/font/google';
 import Script from 'next/script';
 import { Header } from '@/components/site/Header';
 import { Footer } from '@/components/site/Footer';
+import { ScrollToTop } from '@/components/site/ScrollToTop';
+import { I18nProvider } from '@/lib/i18n/I18nProvider';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { organizationJsonLd, websiteJsonLd } from '@/lib/seo/structured-data';
 import { SITE } from '@/lib/constants';
@@ -108,11 +110,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        <Header />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <Footer />
+        <I18nProvider>
+          <Header />
+          <main id="main" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+          <ScrollToTop />
+        </I18nProvider>
 
         {umamiId && umamiSrc ? (
           <Script src={umamiSrc} data-website-id={umamiId} strategy="lazyOnload" />
