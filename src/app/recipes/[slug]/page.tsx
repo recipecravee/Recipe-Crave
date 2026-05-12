@@ -9,6 +9,8 @@ import { RecipeImage } from '@/components/recipe/RecipeImage';
 import { RecipeActions } from '@/components/recipe/RecipeActions';
 import { RecipeSaveButton } from '@/components/recipe/RecipeSaveButton';
 import { RecipeVariationForm } from '@/components/recipe/RecipeVariationForm';
+import { PinItButton } from '@/components/recipe/PinItButton';
+import { TranslateRecipeButton } from '@/components/recipe/TranslateRecipeButton';
 import { ReviewsSection } from '@/components/recipe/ReviewsSection';
 import { StarRating } from '@/components/recipe/StarRating';
 import { VoiceCookMode } from '@/components/recipe/VoiceCookMode';
@@ -166,6 +168,8 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <RecipeActions slug={recipe.slug} title={recipe.title} />
           <RecipeSaveButton slug={recipe.slug} />
+          <PinItButton recipeSlug={recipe.slug} title={recipe.title} description={recipe.description} />
+          <TranslateRecipeButton recipe={recipe} />
           <VoiceCookMode title={recipe.title} servings={recipe.servings} instructions={recipe.instructions} />
         </div>
       </header>

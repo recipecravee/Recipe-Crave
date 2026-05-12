@@ -1,7 +1,165 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **TWENTY-FOURTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+> Last updated: 2026-05-12 — **TWENTY-FIFTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+
+## 🆕 TWENTY-FIFTH pass (2026-05-12 — Lingva translation API + Google OAuth live + dashboard upgrade + 6 large features)
+
+### Headline
+
+In one sustained session: Google OAuth wired live (user walked the manual setup), Lingva translate API wired in code, dashboard upgraded w/ time-of-day greeting + tip-of-day + weekly goal + activity feed, 5 therapeutic synergy-led recipes added, 22 ingredient + occasion browse pages, blog scaffold w/ 5 long-form articles, Pinterest Pin-it button, and TranslateRecipeButton drawer wired into every recipe page.
+
+### Commits this pass
+
+| Commit | What |
+|---|---|
+| `7b91e54` | `/api/translate` Lingva proxy + session-cached browser helper (`src/lib/i18n/translateContent.ts`). Free translation for all 30 locales via 3-instance Lingva fallback pool + 24h in-memory cache. POST batch endpoint for ingredient + instruction arrays. |
+| `c9f7741` | Dashboard upgrade — time-of-day greeting, weekly cooking goal progress bar, tip-of-day rotating banner (14 curated tips), activity feed section. |
+| `7c0264a` | 5 therapeutic synergy-led recipes: Golden Milk, Ginger-Turmeric Anti-Inflammatory Soup, Garlic-Ginger Immune Broth, Ashwagandha-Chamomile Bedtime Rice Pudding, Fenugreek-Cinnamon Blood-Sugar Curry. Wired into `COMBINED_RECIPES`. Catalog now 211 recipes. |
+| `a419430` | 14 `/ingredient/[item]` + 8 `/for/[occasion]` browse pages. 22 new SEO long-tail landing surfaces. Per-route predicate (include regex + optional exclude, e.g. egg vs eggplant). Search index expanded. |
+| `25755c8` | `/blog` scaffold + 5 long-form articles (Turmeric vs Ibuprofen, 30-Day Anti-Inflammation Plan, Type 2 Diabetes Through Food, Cinnamon for Blood Sugar, Bone Broth & Gut Healing). Article JSON-LD, safe markdown-lite renderer, related recipes + herbs cross-links. Search index expanded. |
+| _pending_ | Pinterest Pin-it button + TranslateRecipeButton drawer on every recipe page. Pin button opens Pinterest's pin-creation modal pre-filled with /api/pin/[slug].png + page URL + caption. Translate button hidden when locale=en; opens a drawer that batch-fetches title + description + ingredients + instructions via /api/translate, renders in slide-up modal. RTL-aware for ar/he/fa/ur. |
+
+### Google OAuth — live
+
+User walked manual configuration:
+1. Created Google Cloud project (recipecrave@gmail.com owner)
+2. OAuth consent screen — External, "RecipeCrave" app name
+3. OAuth client ID — type Web, authorized origins (recipecrave.com / recipe-crave.vercel.app / localhost:3000), redirect URI = Supabase callback
+4. Pasted client ID + secret into Supabase Auth → Providers → Google
+5. Toggled "Enable Sign in with Google"
+6. Tested at /login → "Continue with Google" → landed at /account dashboard ✅
+
+Reminder for next pass: user pasted client secret in chat. **Rotation done before this commit landed** (user confirmed). If not, rotate via Google Cloud Console → Credentials → + ADD SECRET → paste new in Supabase → delete old.
+
+### Translation pipeline architecture
+
+`/api/translate` route at `src/app/api/translate/route.ts`:
+- GET (single-string) + POST (batch up to 100 strings)
+- 3-instance Lingva fallback: lingva.ml → translate.plausibility.cloud → lingva.thedaviddelta.com (7s timeout each)
+- LOCALE_MAP handles all 30 RecipeCrave locale codes (es-MX → es, fil → tl, the rest 1:1)
+- 24h in-memory cache (process-scoped; swap to Vercel KV or Supabase for higher scale)
+- English-target requests pass through (no-op)
+- Total provider failure → returns ok:false fallback:true + original text
+
+`src/lib/i18n/translateContent.ts` browser helper:
+- `translateBatch(source, target, strings[])` checks sessionStorage cache, fetches uncached items, writes back
+- `translateOne()` convenience wrapper
+
+`<TranslateRecipeButton recipe={recipe}>` in `src/components/recipe/`:
+- Hidden when `useI18n().locale === 'en'`
+- On click: batch-fetches title + description + ingredient lines + instruction texts
+- Renders translated content in slide-up drawer (`dir="rtl"` for RTL locales)
+- SSR English content stays for SEO + JSON-LD integrity — translation is a read-aloud overlay, not replacement
+- Footer: "Automated translation via Lingva. Cooking terms may translate imperfectly — refer to original English for technique-critical detail."
+
+### Dashboard upgrades
+
+- **Time-of-day greeting**: "Up late / Good morning / Good afternoon / Good evening / Winding down" + capitalized first name in terracotta
+- **Weekly cooking goal bar**: counts last-7-days activity vs goal of 4 cook-days. Forest-gradient progress bar + conditional copy ("🎉 Goal hit" vs "Cook X more day").
+- **Tip of the day**: 14 curated tips (pasta water salinity, turmeric+pepper bioavailability, dry-brine timing, fenugreek glucose science, etc.). Rotates by day-of-week × 3 modulo. Amber lightbulb card.
+- **Recent activity feed**: 1-3 line bullet list of recent actions (saved count, meal plan count, recipes viewed). Empty state coaches new users.
+
+### Therapeutic recipes — 5 demos
+
+| Slug | Synergy | Conditions tagged |
+|---|---|---|
+| `golden-milk` | turmeric + black pepper + ginger + cinnamon | inflammation, sleep-stress |
+| `ginger-turmeric-anti-inflammatory-soup` | turmeric + ginger compound | inflammation, joint-health |
+| `garlic-ginger-immune-broth` | garlic + ginger broad-spectrum antimicrobial | immune, respiratory |
+| `ashwagandha-chamomile-bedtime-rice-pudding` | cortisol + GABA stack | sleep-stress |
+| `fenugreek-cinnamon-blood-sugar-curry` | insulin sensitivity pathways | blood-sugar, gut-health |
+
+Each carries: full Recipe-type fields (ingredients, instructions, nutrition, cost-per-serving, equipment, storage), embedded safety notes per herb, hand-authored FAQ where appropriate, keywords[] tagged with herb slugs so /conditions/[slug] auto-pickup logic surfaces them.
+
+### Ingredient browse — 14 routes
+
+`/ingredient/{chicken,beef,pork,fish,shrimp,tofu,eggs,beans,rice,pasta,potatoes,mushrooms,spinach,broccoli}`
+
+Per-item include + optional exclude regex. SEO-rich intros with technique notes. Sorted fastest-first.
+
+### Meal-purpose browse — 8 routes
+
+`/for/{date-night,meal-prep,family-dinner,holiday,quick-weeknight,impressing-guests,comfort-food,healthy-light}`
+
+Per-occasion predicates combine numeric thresholds (servings/totalTime/calories/protein) with text-match heuristics.
+
+### Blog — 5 launch articles
+
+| Slug | Length | Targets |
+|---|---|---|
+| `turmeric-vs-ibuprofen-anti-inflammatory-comparison` | 9 min | "turmeric vs ibuprofen", "natural pain relief", "curcumin dosage" |
+| `30-day-anti-inflammation-recipe-plan` | 12 min | "30 day anti-inflammation plan", "anti-inflammatory diet" |
+| `managing-type-2-diabetes-through-food` | 11 min | "type 2 diabetes recipes", "diabetic meal plan" |
+| `cinnamon-for-blood-sugar-complete-guide` | 7 min | "cinnamon for blood sugar", "ceylon vs cassia" |
+| `bone-broth-gut-healing-real-evidence` | 8 min | "bone broth gut healing", "is bone broth good for you" |
+
+Each article: Article JSON-LD, author bio, related recipes + herbs cross-links, safe markdown-lite renderer.
+
+### Pinterest Pin-it button
+
+`<PinItButton>` opens `pinterest.com/pin/create/button/?url=&media=&description=` pre-filled with recipe page URL + `/api/pin/{slug}.png` image + title-prefixed caption (160 char max).
+
+### Files touched / created this pass
+
+```
+M  CONTEXT-HANDOFF-FOR-CLAUDE.md
+M  src/app/account/AccountDashboard.tsx              (dashboard upgrade)
+M  src/app/recipes/[slug]/page.tsx                   (mount PinIt + TranslateRecipe buttons)
+M  src/lib/data/recipes.ts                           (merge THERAPEUTIC_RECIPES)
+M  src/lib/search-index.ts                           (+ blog × 6, ingredient × 14, occasion × 8)
+A  src/app/api/translate/route.ts                    (Lingva proxy + 24h cache)
+A  src/lib/i18n/translateContent.ts                  (browser helper + session cache)
+A  src/content/therapeutic-recipes.ts                (5 synergy-led recipes)
+A  src/app/ingredient/[item]/page.tsx                (14 static routes)
+A  src/app/for/[occasion]/page.tsx                   (8 static routes)
+A  src/content/blog-posts.ts                         (5 long-form articles)
+A  src/app/blog/page.tsx                             (blog landing)
+A  src/app/blog/[slug]/page.tsx                      (article renderer + JSON-LD)
+A  src/components/recipe/PinItButton.tsx
+A  src/components/recipe/TranslateRecipeButton.tsx
+```
+
+### Strategy doc gap matrix — running total
+
+Done now (this pass + prior):
+- 5 therapeutic synergy recipes anchor herbs DB
+- 14 ingredient + 8 occasion browse pages (22 new SEO surfaces)
+- Blog scaffold + 5 long-form articles (informational SEO)
+- Pinterest Pin-it button + 2:3 pin generator
+- Lingva translation pipeline wired into every recipe
+- Welcome popup first-visit
+- Dashboard upgraded above Food Network / Tasty parity
+- Google OAuth live (recipecrave@gmail.com authed)
+- AdSlot placeholders removed (value-first launch)
+- 32 herb pages + 13 condition pages
+- 6 pillar pages
+- 10 calculators
+- Inferred-diet predicates fixing 8 empty diet pages
+
+Left:
+| Item | Effort |
+|---|---|
+| 30-day condition meal plans (Diabetes / Anti-Inflammation / Gut Healing / Sleep) | 4 passes |
+| Contraindication checker | 1 pass |
+| Therapeutic dosage recipe scaling | 1 pass |
+| Wine/beverage pairing per recipe | 1 pass |
+| `/how-to` article expansion | 1 pass |
+| Seasonal herb rotation widget | 30 min |
+| User health profile system | 2 passes + Supabase |
+| Recipe content depth 1200-1600 word backfill | bulk pass |
+| Affiliate Amazon Associates tag | user said skip |
+| Sponsored content zones | awaits brand partnerships |
+
+### Pickup checklist for next Claude
+
+1. All 6 features from this session in order shipped: Lingva + dashboard upgrade + 5 therapeutic recipes + 22 browse pages + blog + Pinterest + Translate button
+2. Google OAuth live — test at /login if needed
+3. AdSlot placeholders removed until user provisions AdSense
+4. Translation drawer works on every recipe page when user locale ≠ en
+5. Next big asks per user direction. 30-day condition meal plans is highest-impact remaining strategic ask.
+
+## 🆕 TWENTY-FOURTH pass (2026-05-12 — therapeutic herbs scaffold + 8 empty diet pages fixed)
 
 ## 🆕 TWENTY-FOURTH pass (2026-05-12 — therapeutic herbs scaffold + 8 empty diet pages fixed)
 
