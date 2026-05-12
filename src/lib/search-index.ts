@@ -1,5 +1,5 @@
 import { SEED_RECIPES } from '@/content/seed-recipes';
-import { HILDA_RECIPES } from '@/content/hilda-baci-recipes';
+import { RECIPECRAVE_RECIPES } from '@/content/recipecrave-recipes';
 import { CUISINES, DIETS } from '@/lib/constants';
 
 export type SearchItem = {
@@ -45,7 +45,7 @@ const CALCULATORS: SearchItem[] = [
   { kind: 'calculator', title: 'Pantry Inventory + Recipe Matcher', href: '/calculators/pantry-inventory-matcher', hint: 'Coming soon', keywords: 'pantry inventory what to cook' },
 ];
 
-const ALL_INDEXED = [...SEED_RECIPES, ...HILDA_RECIPES].filter(
+const ALL_INDEXED = [...SEED_RECIPES, ...RECIPECRAVE_RECIPES].filter(
   (r, i, arr) => arr.findIndex((x) => x.slug === r.slug) === i,
 );
 

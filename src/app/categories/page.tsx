@@ -8,7 +8,7 @@ import { getAllRecipes } from '@/lib/data/recipes';
 export const metadata: Metadata = {
   title: 'All Recipe Categories — Snacks, Pasta, Rice, Soups, Drinks & More',
   description:
-    'Browse RecipeCrave by category — 14 menu sections from Hilda Baci Recipe Manual + RecipeCrave: snacks, small chops, pasta, rice, breakfast, soups, stews, desserts, grills, sides, porridges, drinks, iced treats, cocktails & mocktails. Plus by cuisine and diet.',
+    'Browse RecipeCrave by category — 14 menu sections: snacks, small chops, pasta, rice, breakfast, soups, stews, desserts, grills, sides, porridges, drinks, iced treats, cocktails & mocktails. Plus by cuisine and diet.',
   alternates: { canonical: '/categories' },
 };
 

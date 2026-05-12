@@ -1,13 +1,13 @@
 import 'server-only';
 import { SEED_RECIPES, SEED_COLLECTIONS } from '@/content/seed-recipes';
-import { HILDA_RECIPES } from '@/content/hilda-baci-recipes';
+import { RECIPECRAVE_RECIPES } from '@/content/recipecrave-recipes';
 import type { Recipe } from '@/types/recipe';
 
 // Data access layer.
 // Reads from seed data at launch. Swap to Drizzle/Supabase queries once
 // the migration is applied and the seed is loaded into the database.
 
-// Combine seed-recipes (79) + Hilda Baci PDF recipes (126), deduped by slug.
+// Combine seed-recipes (79) + RecipeCrave master set (126), deduped by slug.
 const COMBINED_RECIPES: Recipe[] = (() => {
   const seen = new Set<string>();
   const out: Recipe[] = [];
@@ -16,7 +16,7 @@ const COMBINED_RECIPES: Recipe[] = (() => {
     seen.add(r.slug);
     out.push(r);
   }
-  for (const r of HILDA_RECIPES) {
+  for (const r of RECIPECRAVE_RECIPES) {
     if (seen.has(r.slug)) continue;
     seen.add(r.slug);
     out.push(r);

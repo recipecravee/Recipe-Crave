@@ -178,7 +178,7 @@ export const IMG = {
   aussieMeatPie: `https://images.unsplash.com/photo-1756137948749-84e73141137b?${W}`,
   pavlova: `https://images.unsplash.com/photo-1602563388174-b3803da472d4?${W}`,
 
-  // === Hilda Baci Recipe Manual — 62 new keys (auto-fetched from Unsplash search) ===
+  // === RecipeCrave master set — 62 new keys (auto-fetched from Unsplash search) ===
   applePie: `https://images.unsplash.com/photo-1635381471874-2b8999ca6a20?${W}`,
   bananaBread: `https://images.unsplash.com/photo-1599743271551-da8b8faacc5b?${W}`,
   baoBun: `https://images.unsplash.com/photo-1653045582825-7b99c83aa888?${W}`,

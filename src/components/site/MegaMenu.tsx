@@ -48,7 +48,7 @@ const PANEL_RECIPES: MegaPanel = {
   trigger: 'Recipes',
   featured: {
     eyebrow: 'New this week',
-    title: 'Hilda Baci Recipe Manual',
+    title: 'RecipeCrave Master Index',
     blurb: '126 dishes across 14 categories. Snacks, pasta, rice, soups, stews, grills, cocktails — every one with a plating and pro-mistake guide.',
     href: '/recipes/a-z',
     image: IMG.jollofRice,
@@ -105,7 +105,7 @@ const PANEL_CUISINES: MegaPanel = {
   featured: {
     eyebrow: 'Cuisine spotlight',
     title: 'West African — Nigeria, Ghana, Senegal',
-    blurb: 'Jollof rice, egusi soup, suya, kelewele, ofada, akara, banga, edikang ikong. The recipes Hilda Baci built her record around.',
+    blurb: 'Jollof rice, egusi soup, suya, kelewele, ofada, akara, banga, edikang ikong. West African cuisine at its full depth.',
     href: '/cuisine/nigerian',
     image: IMG.efoRiro,
     cta: 'Open Nigerian cuisine',

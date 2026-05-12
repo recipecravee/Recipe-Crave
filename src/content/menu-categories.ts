@@ -1,4 +1,4 @@
-// 14 menu categories from Hilda Baci Recipe Manual + RecipeCrave canonical
+// 14 menu categories — RecipeCrave canonical
 // taxonomy. Each maps to (course, occasion) filter pair that resolves recipes
 // in `getAllRecipes()`. Used by /categories/[slug] dynamic pages and the
 // /categories landing.
@@ -56,7 +56,7 @@ export const MENU_CATEGORIES: MenuCategory[] = [
   {
     slug: 'rice',
     name: 'Rice',
-    blurb: "Coconut jollof, Hilda's signature coconut rice, Suya rice, Jambalaya, Caribbean rice & peas, Pineapple fried rice.",
+    blurb: "Coconut jollof, signature coconut rice, Suya rice, Jambalaya, Caribbean rice & peas, Pineapple fried rice.",
     emoji: '🍚',
     image: IMG.coconutJollof ?? IMG.jollofRice,
     course: 'dinner',

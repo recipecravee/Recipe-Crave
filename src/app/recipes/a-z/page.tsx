@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     'recipes a to z',
     'cooking index',
     'food network style index',
-    'hilda baci recipes',
+    'recipecrave master index',
   ],
   openGraph: {
     title: 'All Recipes A to Z',
