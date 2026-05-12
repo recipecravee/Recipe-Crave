@@ -4,15 +4,20 @@
 // Coverage notes:
 //   - All 30 locales have an entry (no broken language picks).
 //   - 13 priority locales (en, es, es-MX, fr, de, it, pt, ru, ja, zh, ko, ar, hi)
-//     carry full string-by-string translations of the core UI chrome.
-//   - Remaining 17 locales currently inherit English for the bulk of strings,
-//     with the language name shown natively in the picker. Translation expansion
-//     is tracked in the handoff doc; users see the picker work + the site dir/
-//     RTL settings apply correctly even when copy is English.
+//     carry hand-written string-by-string translations of the core UI chrome
+//     so the highest-traffic locales read idiomatically.
+//   - Remaining 17 locales (tr/nl/pl/vi/th/id/fil/sv/no/da/fi/el/he/fa/ur/bn/sw)
+//     now ship full UI translations sourced from Lingva Translate (free Google
+//     Translate proxy) at build time via scripts/pretranslate-i18n.mjs. Output
+//     lives in dict.generated.ts and is merged into DICT below.
+//
+// To refresh machine translations:  node scripts/pretranslate-i18n.mjs
 //
 // Recipe content (titles, ingredient lines, cooking instructions) is NOT
 // translated in this build. A banner on non-English locales explains this and
 // promises auto-translation in a future pass.
+
+import { GENERATED_LOCALE_PARTIALS } from './dict.generated';
 
 export type Dict = Record<string, string>;
 
@@ -417,9 +422,14 @@ const hi = withFallback({
   'mealPlan.generate': 'योजना बनाएं',
 });
 
-// Remaining 17 locales inherit English. They appear in the picker, the dir/RTL
-// attribute applies, language preference persists. Translation expansion of
-// the full UI string set for these locales is a tracked TODO — see handoff.
+// Remaining 17 locales now ship Lingva-translated UI strings (dict.generated.ts).
+// withFallback merges any missed key onto English so the UI never shows a
+// missing-key marker. Re-run the pre-translate script to refresh.
+
+const MINOR_LOCALES = [
+  'tr', 'nl', 'pl', 'vi', 'th', 'id', 'fil', 'sv', 'no', 'da',
+  'fi', 'el', 'he', 'fa', 'ur', 'bn', 'sw',
+] as const;
 
 const DICT: Record<string, Dict> = {
   en,
@@ -435,24 +445,12 @@ const DICT: Record<string, Dict> = {
   ko,
   ar,
   hi,
-  // Locales using English fallback for now (still display correctly):
-  tr: withFallback({ 'lang.label': 'Dil' }),
-  nl: withFallback({ 'lang.label': 'Taal' }),
-  pl: withFallback({ 'lang.label': 'Język' }),
-  vi: withFallback({ 'lang.label': 'Ngôn ngữ' }),
-  th: withFallback({ 'lang.label': 'ภาษา' }),
-  id: withFallback({ 'lang.label': 'Bahasa' }),
-  fil: withFallback({ 'lang.label': 'Wika' }),
-  sv: withFallback({ 'lang.label': 'Språk' }),
-  no: withFallback({ 'lang.label': 'Språk' }),
-  da: withFallback({ 'lang.label': 'Sprog' }),
-  fi: withFallback({ 'lang.label': 'Kieli' }),
-  el: withFallback({ 'lang.label': 'Γλώσσα' }),
-  he: withFallback({ 'lang.label': 'שפה' }),
-  fa: withFallback({ 'lang.label': 'زبان' }),
-  ur: withFallback({ 'lang.label': 'زبان' }),
-  bn: withFallback({ 'lang.label': 'ভাষা' }),
-  sw: withFallback({ 'lang.label': 'Lugha' }),
+  ...Object.fromEntries(
+    MINOR_LOCALES.map((code) => [
+      code,
+      withFallback((GENERATED_LOCALE_PARTIALS[code] ?? {}) as Dict),
+    ]),
+  ),
 };
 
 export function getDict(locale: string): Dict {
