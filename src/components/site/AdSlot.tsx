@@ -27,12 +27,12 @@ export function AdSlot({ slot, format = 'auto', layout, className }: Props) {
     }
   }, [client]);
 
+  // Render nothing when AdSense client ID is absent. Placeholder boxes were
+  // showing on a value-first launch — user has not applied for ads yet.
+  // The slot becomes a real <ins> element only after NEXT_PUBLIC_ADSENSE_CLIENT
+  // is provisioned.
   if (!client) {
-    return (
-      <div className={`ad-slot text-xs text-ink-subtle ${className ?? ''}`} aria-hidden>
-        Ad placement (AdSense not configured)
-      </div>
-    );
+    return null;
   }
 
   return (
