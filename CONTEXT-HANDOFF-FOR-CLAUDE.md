@@ -1,7 +1,158 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **SEVENTEENTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+> Last updated: 2026-05-12 — **EIGHTEENTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+
+## 🆕 EIGHTEENTH pass (2026-05-12 — Calorie Estimator live)
+
+### Commit landed
+
+| Commit | What |
+|---|---|
+| _pending_ | **Ninth LIVE calculator — Calorie Estimator.** USDA-derived 150-food database with kcal + protein/carb/fat/fiber per 100 g. Density-aware unit conversion (cups, tbsp, tsp, ml, l, fl-oz, whole, slice, each — using per-ingredient `gramsPerCup` or piece-default lookup table). Autocomplete search picker per ingredient row. Manual override for unmatched ingredients (4 fields per 100 g). Per-serving + total view. Macro-split bar chart computed by kcal contribution (4 P / 4 C / 9 F). |
+
+### New file: `src/content/calorie-data.ts` (~370 lines)
+
+Pure data + math. Exports `CALORIE_TABLE` (150 foods), `CALORIE_CATEGORIES` (14), `UNIT_OPTIONS`, `toGrams`, `searchFoods`, `computeLine`.
+
+**FoodNutrition shape:**
+```ts
+{
+  slug, name, category, aliases?;
+  kcalPer100g, proteinG, carbG, fatG, fiberG;   // per 100 g edible
+  gramsPerCup?;                                 // density (defaults 240)
+}
+```
+
+**Coverage (150 foods across 14 categories):**
+- Meat & Poultry: 19 (chicken breast/thigh/wings, ground beef 80/90, steak ribeye/sirloin, pork chop/tenderloin, bacon, ham, turkey, lamb, sausage, hot dog, deli meats)
+- Seafood: 10 (salmon Atlantic/canned, tuna canned/fresh, cod, tilapia, shrimp, scallops, crab, lobster)
+- Eggs & Dairy: 22 (egg whole/white, milk whole/skim/2%/almond/oat/soy/coconut, yogurt plain/Greek nonfat/2%, butter, heavy cream, sour cream, cream cheese, cottage cheese, cheddar, mozzarella low-moisture/fresh, parmesan, feta)
+- Grains & Bread: 22 (rice white/brown cooked & raw, quinoa, couscous, bulgur, barley, oats, pasta cooked/dry, flour AP/whole wheat, bread white/wholewheat/sourdough, bagel, tortilla flour/corn, pancake, cornflakes, granola)
+- Legumes & Beans: 11 (lentils cooked/dry, chickpeas cooked/canned, black/kidney/pinto beans, edamame, tofu firm, tempeh, peanut butter)
+- Vegetables: 24 (broccoli, spinach, kale, lettuce, tomato/canned/paste, onion, garlic, carrot, potato/mashed/sweet, bell pepper, cucumber, zucchini, mushrooms, cauliflower, cabbage, asparagus, corn, peas, celery, avocado)
+- Fruits: 22 (banana, apple, orange, lemon, lime, grape, strawberry, blueberry, raspberry, blackberry, pineapple, mango, watermelon, cantaloupe, peach, pear, plum, cherry, pomegranate, kiwi, dates, raisins)
+- Nuts & Seeds: 11 (almonds, peanuts, walnuts, cashews, pistachios, pecans, sunflower, pumpkin, chia, flax, sesame)
+- Fats & Oils: 6 (olive, vegetable/canola, coconut, sesame, ghee, lard)
+- Sweeteners: 7 (white/brown/powdered sugar, honey, maple syrup, agave, molasses)
+- Sauces & Condiments: 13 (soy sauce, ketchup, mayo, mustard yellow/Dijon, hot sauce, BBQ, salsa, pesto, hummus, jam, salt, pepper)
+- Beverages: 8 (water, coffee, tea, OJ, apple juice, red/white wine, beer)
+- Snacks & Sweets: 11 (chocolate dark/milk, cocoa powder, cookie, cake, ice cream, donut, croissant, chips, pretzels, popcorn)
+- Prepared & Misc: 8 (pizza, fries, burger patty, mac & cheese, tomato soup, chicken noodle soup, pad Thai, sushi roll, burrito)
+
+**Unit conversion (`toGrams`):**
+- Mass units (g/kg/oz/lb): direct
+- Volume units (ml/l/fl-oz/cup/tbsp/tsp): density-aware via `gramsPerCup`. Defaults 240 g/cup if unspecified. Tbsp/tsp/ml derived: 1 cup = 16 tbsp = 48 tsp = 240 ml.
+- Pieces (whole/slice/each): `PIECE_DEFAULTS[slug]` lookup. Egg whole 50g, banana 118g, apple 182g, garlic clove 3g, slice white bread 25g, slice bacon 8g, tortilla flour 49g, etc. Falls back to 100g if no entry.
+
+**Math (`computeLine`):**
+```ts
+grams = toGrams(qty, unit, food)
+multiplier = grams / 100
+kcal = food.kcalPer100g × multiplier   // or manual override
+protein = food.proteinG × multiplier
+carb = food.carbG × multiplier
+fat = food.fatG × multiplier
+fiber = food.fiberG × multiplier
+```
+
+### New file: `src/app/calculators/calorie-estimator/CalorieEstimator.tsx`
+
+`lg:grid-cols-[1.4fr,1fr]` split — input-heavy.
+
+**IngredientRow component:**
+- Search input (Search icon + auto-complete dropdown). Dropdown opens on focus/typing, closes on outside click. Shows up to 8 matches with name + `kcal/100g` suffix per row.
+- "Matched" green pill when food picked.
+- Qty + unit (13 unit options).
+- Manual-entry block (amber) when query has text but no match — 4 fields per 100 g (kcal / P / C / F).
+- Live readout below: "≈ {grams} g · {kcal} kcal" + "Change match" button.
+
+**Output panel:**
+- Per-serving hero card (gradient terracotta→cream→forest): huge kcal number + 3 macro bars (green protein, amber carb, terracotta fat) with grams + kcal + %, plus fiber/total weight tiles.
+- Total card (forest): 4-tile grid (kcal, P g, C g, F g) × all servings.
+- Amber unmatched warning if any rows lack data.
+- Copy / Print / Save (full-width).
+
+**Macro split math (% by kcal contribution):**
+```ts
+pKcal = protein × 4
+cKcal = carb × 4
+fKcal = fat × 9
+pPct = pKcal / (pKcal + cKcal + fKcal) × 100
+```
+Always sums to 100% (or 0% when no data).
+
+**Persistence:**
+- `rc:calorie:current` autosave on every keystroke
+- `rc:calorie:saved` named-save list (max 30)
+
+### New file: `src/app/calculators/calorie-estimator/page.tsx`
+
+Server component. Metadata:
+- Title: `Calorie Estimator — Recipe Calorie & Macro Calculator`
+- Description references live food-count from `CALORIE_TABLE.length` so it stays correct as data grows
+- 9 keywords: recipe calorie calculator, calorie estimator, macro calculator recipe, USDA calorie database, protein carbs fat calculator, meal prep calories
+
+SEO content sections (~1400 words original):
+- "How the math works" — 3-step explainer (qty→g, per-100g multiplier, sum + macro %)
+- "Why density matters for cup-based recipes" — comparison table (cornflakes 100 kcal/cup vs honey 1030 kcal/cup vs olive oil 1910 kcal/cup) showing why one-cup-equals-one-weight assumption fails by 1500%
+- "How accurate is USDA-derived?" — ±10-15% range explanation, kitchen scale recommendation for medical-grade use
+- "What the macro split tells you" — 4 dietary-pattern targets (high-protein >30%P, balanced 20-30P/40-55C/20-35F, keto <10C/>65F, endurance >60C)
+- Cross-links to Recipe Scaler / Unit Converter / Recipe Cost
+
+### Math verification (default EXAMPLE recipe in screenshot)
+
+4-serving "Chicken & rice dinner":
+- 400 g chicken breast cooked → 660 kcal, 124 g P, 0 C, 14.4 g F
+- 2 cup rice white cooked (316 g) → 411 kcal, 8.5 g P, 88.5 C, 0.9 g F
+- 200 g broccoli raw → 68 kcal, 5.6 g P, 14 C, 0.8 g F
+- 2 tbsp olive oil (27 g) → 239 kcal, 0 P, 0 C, 27 g F
+- 3 whole garlic cloves (9 g) → 13 kcal, 0.6 g P, 3 C, 0 g F
+- **Total: 1391 kcal · 138.7 g P · 105.5 g C · 43 g F** ✓ matches UI output exactly
+- **Per serving: 348 kcal · 34.7 P · 26.4 C · 10.8 F** ✓
+- Macro split by kcal: P 41% · C 31% · F 28% ✓
+
+### Surface updates
+
+- `src/app/calculators/page.tsx`: calorie-estimator `live: true` + new body
+- `src/lib/search-index.ts`: hint "Coming soon" → "Live · 150+ USDA foods" + expanded keywords
+- `src/components/site/Footer.tsx`: strip eyebrow "8 live tools" → "9 live tools"
+
+### Files touched / created this pass
+
+```
+M  CONTEXT-HANDOFF-FOR-CLAUDE.md
+M  src/app/calculators/page.tsx                                (calorie-estimator live)
+M  src/components/site/Footer.tsx                              (strip 8→9 live)
+M  src/lib/search-index.ts                                     (calorie hint)
+A  src/content/calorie-data.ts                                 (~370 lines, 150 foods + math)
+A  src/app/calculators/calorie-estimator/page.tsx              (~140 lines)
+A  src/app/calculators/calorie-estimator/CalorieEstimator.tsx  (~450 lines)
+```
+
+### Calculator inventory now
+
+**LIVE (9 / 10):**
+1. Cups → Grams Converter
+2. Temperature Adjuster
+3. Real-time Recipe Scaler (also serves /servings-scaler via redirect)
+4. Storage Life Guide
+5. Ingredient Substitution Matcher
+6. Baking Ratio Calculator
+7. Seasoning by Weight Calculator
+8. Recipe Cost Calculator
+9. Calorie Estimator ← NEW
+
+**COMING SOON (1 / 10):**
+10. Pantry Inventory + Recipe Matcher ← FINAL build
+
+### Pickup checklist for next Claude
+
+1. 9 calculators live, 1 coming-soon
+2. Final build: Pantry Inventory + Recipe Matcher — biggest scope. Inputs: checkbox grid of ~150 common pantry items + free-text additions. Optional integration w/ existing Gemini Vision photo scan at `/pantry-match`. Processing: match user pantry against `COMBINED_RECIPES` ingredient names. Score = % of recipe ingredients owned. Show recipes ≥80% match. Hint missing ingredients. Optional Supabase user_pantry table for logged-in users, localStorage fallback for guests.
+3. After PIRM lands, all 10 tools live. Move to /how-to article expansion + /account feature gates.
+
+## 🆕 SEVENTEENTH pass (2026-05-12 — Recipe Cost Calculator live)
 
 ## 🆕 SEVENTEENTH pass (2026-05-12 — Recipe Cost Calculator live)
 
@@ -9,7 +160,7 @@
 
 | Commit | What |
 |---|---|
-| _pending_ | **Eighth LIVE calculator — Recipe Cost.** Per-pack OR per-unit pricing toggle, automatic cost-per-serving, pantry-staple exclusion (billable cost excludes staples; total includes them), ranked bar-chart breakdown of where money goes, 10-currency picker, save/load (max 30), copy + print. Pre-loaded EXAMPLE recipe = "Family-style chicken & rice" (9 ingredients incl. 3 pantry staples). |
+| `1b08c6a` | **Eighth LIVE calculator — Recipe Cost.** Per-pack OR per-unit pricing toggle, automatic cost-per-serving, pantry-staple exclusion (billable cost excludes staples; total includes them), ranked bar-chart breakdown of where money goes, 10-currency picker, save/load (max 30), copy + print. Pre-loaded EXAMPLE recipe = "Family-style chicken & rice" (9 ingredients incl. 3 pantry staples). |
 
 ### New file: `src/app/calculators/recipe-cost/RecipeCost.tsx`
 

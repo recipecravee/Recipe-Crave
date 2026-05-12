@@ -36,7 +36,7 @@ const CALCULATORS: SearchItem[] = [
   { kind: 'calculator', title: 'Temperature Adjuster', href: '/calculators/temperature-adjuster', hint: 'Live · °C / °F / gas mark / air fryer', keywords: 'oven temperature celsius fahrenheit gas mark fan forced convection air fryer' },
   { kind: 'calculator', title: 'Real-time Recipe Scaler', href: '/calculators/realtime-recipe-scaler', hint: 'Live · Most valuable', keywords: 'scale recipe servings cost per serving slider' },
   { kind: 'calculator', title: 'Recipe Cost Calculator', href: '/calculators/recipe-cost', hint: 'Live · multi-currency', keywords: 'cost per serving budget cheap meal food cost percentage restaurant pop-up pricing pack price' },
-  { kind: 'calculator', title: 'Calorie Estimator', href: '/calculators/calorie-estimator', hint: 'Coming soon', keywords: 'calories macros nutrition' },
+  { kind: 'calculator', title: 'Calorie Estimator', href: '/calculators/calorie-estimator', hint: 'Live · 150+ USDA foods', keywords: 'calories macros nutrition protein carbs fat fiber recipe calorie macro split' },
   { kind: 'calculator', title: 'Storage Life Guide', href: '/calculators/storage-life-guide', hint: 'Live · 75+ foods', keywords: 'food safety how long fridge freezer expired pantry spoil mayo eggs' },
   { kind: 'calculator', title: 'Ingredient Substitution Matcher', href: '/calculators/ingredient-substitutions', hint: 'Live · 60+ ingredients', keywords: 'substitute replacement swap buttermilk yogurt egg flour butter dairy free gluten free vegan' },
   { kind: 'calculator', title: 'Baking Ratio Calculator', href: '/calculators/baking-ratio', hint: 'Live · 10 presets', keywords: 'baker percentage flour hydration bread dough sourdough pizza brioche focaccia bagel pie crust' },
