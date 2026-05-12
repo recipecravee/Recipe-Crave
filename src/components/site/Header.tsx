@@ -28,9 +28,9 @@ export async function Header() {
             alt=""
             width={48}
             height={48}
+            sizes="48px"
             className="h-12 w-12"
             priority
-            unoptimized
           />
           {/* Wordmark scales with viewport. Hidden on ultra-narrow (<360px) so the
               logo + search + hamburger fit without clipping. */}

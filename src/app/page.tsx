@@ -83,9 +83,10 @@ export default async function HomePage() {
                 alt={SITE.name}
                 width={400}
                 height={400}
+                sizes="(max-width: 1024px) 80vw, 400px"
                 className="h-full w-full object-contain"
                 priority
-                unoptimized
+                fetchPriority="high"
               />
             </div>
             <div className="absolute -bottom-4 -left-4 max-w-[200px] rounded-2xl bg-white p-4 shadow-lg">
