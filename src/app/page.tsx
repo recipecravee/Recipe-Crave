@@ -115,7 +115,7 @@ export default async function HomePage() {
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-terracotta-100">
                 <feature.icon className="h-5 w-5 text-terracotta-500" aria-hidden />
               </div>
-              <h3 className="mt-4 font-serif text-lg">{feature.title}</h3>
+              <h2 className="mt-4 font-serif text-lg">{feature.title}</h2>
               <p className="mt-2 flex-1 text-sm text-ink-muted">{feature.body}</p>
               {/* Pill-shaped button-styled CTA — circled padding, terracotta
                   background, white text, arrow nudge on hover. Looks like a
@@ -175,7 +175,6 @@ export default async function HomePage() {
                   key={c.slug}
                   href={`/cuisine/${c.slug}`}
                   className="group flex flex-col items-center justify-center gap-2 rounded-2xl bg-white px-4 py-5 text-center shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus-ring sm:py-6"
-                  aria-label={`${c.name} cuisine — ${n} recipes`}
                 >
                   <span className="text-3xl sm:text-4xl" aria-hidden>{c.emoji}</span>
                   <span className="font-serif text-base font-semibold text-ink group-hover:text-terracotta-500 sm:text-lg">
@@ -341,7 +340,6 @@ export default async function HomePage() {
                   key={d.slug}
                   href={`/diet/${d.slug}`}
                   className="group flex flex-col items-start justify-between gap-2 rounded-2xl border border-ink/5 bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-forest-400 hover:shadow-md focus-ring sm:p-5"
-                  aria-label={`${d.name} diet — ${n} recipes`}
                 >
                   <span className="font-serif text-base font-semibold text-ink group-hover:text-forest-700 sm:text-lg">
                     {d.name}

@@ -105,12 +105,15 @@ export function FloatingLanguageSelector() {
           </button>
         </div>
 
-        <ul role="listbox" className="flex-1 overflow-y-auto py-1">
+        {/* Listbox structure flattened — option buttons are direct children
+            of the listbox so the WAI-ARIA parent/child relationship is
+            satisfied without intervening <li> wrappers. */}
+        <div role="listbox" aria-label="Select site language" className="flex-1 overflow-y-auto py-1">
           {LOCALES.map((l) => {
             const active = l.code === locale;
             return (
-              <li key={l.code}>
                 <button
+                  key={l.code}
                   type="button"
                   role="option"
                   aria-selected={active}
@@ -136,10 +139,9 @@ export function FloatingLanguageSelector() {
                     <Check className="h-4 w-4 shrink-0 text-terracotta-500" aria-hidden />
                   ) : null}
                 </button>
-              </li>
             );
           })}
-        </ul>
+        </div>
 
         <p className="border-t border-ink/10 bg-cream-50 px-4 py-3 text-[11px] text-ink-subtle">
           {t(

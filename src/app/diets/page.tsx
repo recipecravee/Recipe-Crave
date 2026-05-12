@@ -63,7 +63,6 @@ export default async function DietsIndexPage() {
               key={d.slug}
               href={`/diet/${d.slug}`}
               className="group flex flex-col items-start justify-between gap-2 rounded-2xl border border-ink/5 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-forest-400 hover:shadow-md focus-ring sm:p-6"
-              aria-label={`${d.name} diet — ${n} recipes`}
             >
               <span className="font-serif text-base font-semibold text-ink group-hover:text-forest-700 sm:text-lg">
                 {d.name}

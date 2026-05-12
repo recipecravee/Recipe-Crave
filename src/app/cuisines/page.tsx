@@ -64,7 +64,6 @@ export default async function CuisinesIndexPage() {
               key={c.slug}
               href={`/cuisine/${c.slug}`}
               className="group flex flex-col items-center justify-center gap-2 rounded-2xl bg-white p-5 text-center shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus-ring sm:p-6"
-              aria-label={`${c.name} cuisine — ${n} recipes`}
             >
               <span className="text-3xl sm:text-4xl" aria-hidden>{c.emoji}</span>
               <span className="font-serif text-base font-semibold text-ink group-hover:text-terracotta-500 sm:text-lg">
