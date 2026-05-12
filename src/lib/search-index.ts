@@ -41,7 +41,7 @@ const CALCULATORS: SearchItem[] = [
   { kind: 'calculator', title: 'Ingredient Substitution Matcher', href: '/calculators/ingredient-substitutions', hint: 'Live · 60+ ingredients', keywords: 'substitute replacement swap buttermilk yogurt egg flour butter dairy free gluten free vegan' },
   { kind: 'calculator', title: 'Baking Ratio Calculator', href: '/calculators/baking-ratio', hint: 'Live · 10 presets', keywords: 'baker percentage flour hydration bread dough sourdough pizza brioche focaccia bagel pie crust' },
   { kind: 'calculator', title: 'Seasoning by Weight Calculator', href: '/calculators/seasoning-by-weight', hint: 'Live · 20 dish presets', keywords: 'salt to taste protein weight seasoning brine dry brine pasta water bread dough percentage' },
-  { kind: 'calculator', title: 'Pantry Inventory + Recipe Matcher', href: '/calculators/pantry-inventory-matcher', hint: 'Coming soon', keywords: 'pantry inventory what to cook' },
+  { kind: 'calculator', title: 'Pantry Inventory + Recipe Matcher', href: '/calculators/pantry-inventory-matcher', hint: 'Live · 200+ recipes', keywords: 'pantry inventory what to cook what can I cook tonight fridge ingredients use up food waste' },
 ];
 
 const ALL_INDEXED = [...SEED_RECIPES, ...RECIPECRAVE_RECIPES].filter(

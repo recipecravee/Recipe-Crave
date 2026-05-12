@@ -1,7 +1,161 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **EIGHTEENTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+> Last updated: 2026-05-12 — **NINETEENTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+
+## 🆕 NINETEENTH pass (2026-05-12 — Pantry Inventory + Recipe Matcher live · ALL 10 TOOLS NOW LIVE)
+
+### Commit landed
+
+| Commit | What |
+|---|---|
+| _pending_ | **Tenth and FINAL LIVE calculator — Pantry Inventory + Recipe Matcher.** 150-item pantry catalog across 13 categories with category-collapse UI, search filter, select-all/clear-category bulk actions, custom-item free-text additions, photo-scan jump link (to existing Gemini Vision tool at `/pantry-match`). Matcher scores every recipe in `COMBINED_RECIPES` (200+) against owned pantry, ranks ≥60% matches (or 100% in strict "cook tonight" mode), shows missing-ingredient hints, links to recipe pages. localStorage persists pantry + custom items across sessions. **The full 10-calculator suite is now LIVE.** |
+
+### New file: `src/content/pantry-catalog.ts` (~280 lines)
+
+Pure data + matcher logic. Exports `PANTRY_ITEMS` (150), `PANTRY_CATEGORIES` (13), `detectPantrySlug`, `scoreRecipe`, `defaultOwnedSet`.
+
+**PantryItem shape:**
+```ts
+{
+  slug, name, category, aliases?;
+  defaultOn?: boolean;   // staples assumed available
+}
+```
+
+**Coverage (150 items across 13 categories):**
+- Protein 14 (chicken breast/thigh, ground beef, steak, pork, bacon, sausage, turkey, salmon, tuna, shrimp, white fish, tofu, tempeh)
+- Dairy & Eggs 11 (eggs, milk, butter, cream, sour cream, yogurt, cream cheese, cheddar, mozzarella, parmesan, feta)
+- Grains & Pasta 10 (rice white/brown, pasta, oats, flour AP, bread, tortilla, quinoa, couscous, breadcrumbs)
+- Legumes & Beans 5 (chickpeas, black/kidney beans, lentils, cannellini)
+- Vegetables 27 (onion, garlic, tomato fresh/canned, carrot, celery, potato, sweet potato, bell pepper, chili, broccoli, cauliflower, spinach, kale, lettuce, cucumber, zucchini, mushroom, cabbage, corn, peas, green bean, avocado, ginger, leek, asparagus, eggplant)
+- Fruits 8 (lemon, lime, apple, banana, orange, berries, pineapple, mango)
+- Herbs & Spices 22 (basil, parsley, cilantro, rosemary, thyme, oregano, bay leaf, cumin, paprika, cinnamon, nutmeg, turmeric, curry powder, chili powder, cayenne, red pepper flakes, ginger ground, allspice, garlic/onion powder, salt*, black pepper*)
+- Oils & Vinegars 9 (olive oil*, vegetable oil*, sesame oil, coconut oil, white vinegar, ACV, balsamic, red wine vinegar, rice vinegar)
+- Sauces & Condiments 15 (soy sauce, fish sauce, Worcestershire, hot sauce, ketchup, mustard, mayo, honey, pesto, hummus, salsa, coconut milk, stocks ×3)
+- Baking 7 (baking powder, baking soda, yeast, cocoa, vanilla, cornstarch, chocolate chips)
+- Sweeteners 6 (white sugar*, brown sugar, powdered, honey, maple, agave)
+- Nuts & Seeds 6 (almonds, walnuts, cashews, peanuts, sesame, sunflower seeds)
+- Other 5 (water*, olives, capers, pickles, anchovies)
+
+`*` = `defaultOn: true` — 6 staples assumed always present.
+
+Each item carries `aliases[]` for matcher tolerance. E.g. `pasta` aliases: `[spaghetti, penne, linguine, rigatoni, fettuccine, macaroni, tagliatelle]`. `garlic` aliases: `[minced garlic, garlic clove]`. `tortilla` aliases: `[flour tortilla, corn tortilla]`. Cross-locale: zucchini ↔ courgette, cilantro ↔ coriander, eggplant ↔ aubergine, cornstarch ↔ cornflour, bicarbonate of soda ↔ baking soda.
+
+**Matcher logic (`detectPantrySlug`, `scoreRecipe`):**
+
+`NEEDLE_INDEX` is built once at module load. Every pantry item contributes (1) its name, (2) every alias, and (3) its slug (with hyphens converted to spaces) as a "needle" with a back-pointer to the slug. The full list is sorted longest-needle-first so multi-word patterns win — "tomato paste" matches `tomato-canned` before single-word "tomato" matches fresh tomato.
+
+`detectPantrySlug(text)` runs each needle as a word-boundary regex (`\b{needle}\b`) against the lowercased ingredient text. First hit returns. Word-boundary prevents `egg` matching `eggplant`, etc.
+
+`scoreRecipe(recipe, ownedSet)`:
+```ts
+for each ingredient:
+  slug = detectPantrySlug(ingredient.name)
+  if slug && ownedSet.has(slug) -> matched
+  else                          -> missing
+matchPct = matched.count / total * 100
+```
+
+### New file: `src/app/calculators/pantry-inventory-matcher/PantryMatcher.tsx`
+
+Client component. `lg:grid-cols-[1fr,1.3fr]` split.
+
+**Left panel — pantry input:**
+- Header: owned-item count badge + photo-scan link (jumps to `/pantry-match` Gemini Vision tool) + clear button.
+- Search filter (text input) — instantly filters visible pantry items across all categories.
+- 13 collapsible category cards. Open state controlled by `openCats: Set<string>`. Default opens Protein + Vegetables + Dairy & Eggs. When `searchFilter` is set, all categories force-open to show filter results.
+- Per-category: "Select all" / "Clear category" links + flexbox-wrapping pill grid. Pills: forest-600 when on, cream-100 when off, amber when default staple (signals "assumed yours, but you can untoggle").
+- Custom-items section: free-text input + Enter-to-add. Custom items render as green pills, click to remove.
+
+**Right panel — recipe matches:**
+- Header card: "You can make N recipes" count + strict-mode toggle ("Cook tonight only (100%)"). When strict, MIN_MATCH_PCT raises from 60% to 100%.
+- Match list: top 24 results, sorted by matchPct desc, ties broken by fewer missing items.
+- Per-match card:
+  - Round green badge w/ percentage
+  - Recipe title (linked to `/recipes/{slug}`)
+  - Meta row: cuisine + total time + servings
+  - "Ready to cook" sparkles pill when 100%
+  - Missing-items hint:
+    - 1-3 missing → "Need: a · b · c"
+    - 4+ missing → "Need N items: a · b + N-2 more"
+- Empty state: ChefHat icon + dynamic copy based on current state (pick more items / toggle off strict / etc.).
+- Truncation footer if >24 matches: "+ N more matches — narrow your pantry to focus the list".
+
+**Custom-items bonus matching:**
+After `scoreRecipe`, the matcher additionally walks each recipe's *missing* lines and checks if any custom-item string appears as a substring. Hits add to `extraMatched`. Match% is then recomputed including the bonus. "Leftover roast chicken" thus matches any recipe whose ingredient text contains those words.
+
+**Persistence:**
+- `rc:pantry:owned` → array of slug strings, restored to `Set<string>`
+- `rc:pantry:custom` → array of custom item strings
+
+### New file: `src/app/calculators/pantry-inventory-matcher/page.tsx`
+
+Server component. Fetches recipes via `getAllRecipes()` and passes to client component.
+
+Metadata:
+- Title: `Pantry Inventory + Recipe Matcher — What Can I Cook Tonight?`
+- 9 keywords: pantry recipe finder, what can I cook with, what to cook with ingredients I have, pantry inventory tracker, recipes from what I have, use up ingredients, reduce food waste
+
+SEO content sections (~1200 words original):
+- "How the match score works" — longest-needle-first matching, score formula, custom-item bonus
+- "Pair with the Photo Scan" — cross-link to `/pantry-match` Gemini Vision tool
+- "Use cases" — 4 scenarios: tonight's dinner, tomorrow's shop, use-it-up week, travel/Airbnb cooking
+- "Food waste — the real value here" — UK £730/year stat + reverse-question discipline
+- "Privacy" — localStorage-only, no upload, Supabase sync on roadmap
+
+### Surface updates
+
+- `src/app/calculators/page.tsx`: pantry-inventory-matcher `live: true` + new body
+- `src/lib/search-index.ts`: hint "Coming soon" → "Live · 200+ recipes" + expanded keywords (what can I cook tonight, fridge ingredients, food waste)
+- `src/components/site/Footer.tsx`: strip eyebrow "9 live tools" → "10 live tools"
+
+### Files touched / created this pass
+
+```
+M  CONTEXT-HANDOFF-FOR-CLAUDE.md
+M  src/app/calculators/page.tsx                                              (pantry-matcher live)
+M  src/components/site/Footer.tsx                                            (strip 9→10 live)
+M  src/lib/search-index.ts                                                   (pantry-matcher hint)
+A  src/content/pantry-catalog.ts                                             (~280 lines, 150 items + matcher)
+A  src/app/calculators/pantry-inventory-matcher/page.tsx                     (~140 lines)
+A  src/app/calculators/pantry-inventory-matcher/PantryMatcher.tsx            (~340 lines)
+```
+
+### Calculator inventory — FINAL STATE
+
+**ALL 10 / 10 LIVE:**
+1. Cups → Grams Converter (60+ ingredients, density-accurate)
+2. Temperature Adjuster (°C / °F / Gas Mark / fan / air fryer)
+3. Real-time Recipe Scaler (also serves /servings-scaler via redirect — slider 1-48, currency-aware, autosave)
+4. Storage Life Guide (75+ foods, USDA FoodKeeper)
+5. Ingredient Substitution Matcher (60+ ingredients, ~185 swaps, allergen + use-case filters)
+6. Baking Ratio Calculator (10 presets, hydration slider, custom save)
+7. Seasoning by Weight Calculator (20 dish-type presets, intensity slider, salt-density-aware tsp)
+8. Recipe Cost Calculator (pack-or-unit pricing, pantry-staple exclusion, bar-chart breakdown)
+9. Calorie Estimator (150-food USDA database, density-aware units, macro bars)
+10. Pantry Inventory + Recipe Matcher (150-item catalog, 13 categories, custom items, photo-scan integration)
+
+### Live deploy chain status (current)
+
+| Surface | Status | URL |
+|---|---|---|
+| GitHub `main` | ✅ pushed | https://github.com/recipecravee/Recipe-Crave |
+| Vercel auto-deploy | ✅ Ready ~1m post-push | https://vercel.com/bracknell-s-projects/recipe-crave |
+| `recipe-crave.vercel.app` | ✅ Live | https://recipe-crave.vercel.app |
+| `recipecrave.com` | ✅ LIVE (CNAME confirmed working) | https://recipecrave.com |
+| `www.recipecrave.com` | ✅ CNAME resolves | https://www.recipecrave.com |
+
+### Pickup checklist for next Claude
+
+1. **All 10 calculators are LIVE.** No coming-soon entries left.
+2. Next priorities (no urgency, pick by user direction):
+   - `/how-to` real article expansion — currently several "Coming soon" guide-article cards. Pick 3-5 priority guides (Knife skills 101, How to dry-brine, Make pan sauce, Save a broken sauce, Stock from scratch).
+   - `/account` feature gates — Saved-recipes / Meal-plan history tiles need auth + DB schema.
+   - Pantry Matcher Supabase sync (cross-device persistence) for logged-in users.
+   - Continue handoff updates per commit.
+
+## 🆕 EIGHTEENTH pass (2026-05-12 — Calorie Estimator live)
 
 ## 🆕 EIGHTEENTH pass (2026-05-12 — Calorie Estimator live)
 
@@ -9,7 +163,7 @@
 
 | Commit | What |
 |---|---|
-| _pending_ | **Ninth LIVE calculator — Calorie Estimator.** USDA-derived 150-food database with kcal + protein/carb/fat/fiber per 100 g. Density-aware unit conversion (cups, tbsp, tsp, ml, l, fl-oz, whole, slice, each — using per-ingredient `gramsPerCup` or piece-default lookup table). Autocomplete search picker per ingredient row. Manual override for unmatched ingredients (4 fields per 100 g). Per-serving + total view. Macro-split bar chart computed by kcal contribution (4 P / 4 C / 9 F). |
+| `9757c92` | **Ninth LIVE calculator — Calorie Estimator.** USDA-derived 150-food database with kcal + protein/carb/fat/fiber per 100 g. Density-aware unit conversion (cups, tbsp, tsp, ml, l, fl-oz, whole, slice, each — using per-ingredient `gramsPerCup` or piece-default lookup table). Autocomplete search picker per ingredient row. Manual override for unmatched ingredients (4 fields per 100 g). Per-serving + total view. Macro-split bar chart computed by kcal contribution (4 P / 4 C / 9 F). |
 
 ### New file: `src/content/calorie-data.ts` (~370 lines)
 

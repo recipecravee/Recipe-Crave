@@ -26,7 +26,7 @@ const TOOLS: Tool[] = [
   { slug: 'baking-ratio', title: 'Baking Ratio Calculator', body: 'Baker\'s percentages. Input flour weight, get exact grams for water, salt, yeast. Consistency across recipes.', live: true },
   { slug: 'seasoning-by-weight', title: 'Seasoning by Weight Calculator', body: 'Replace "salt to taste" with exact gram amounts. 20 dish-type presets, intensity slider, salt-density-aware tsp conversion, two-stage dosing.', live: true },
   { slug: 'realtime-recipe-scaler', title: 'Real-time Recipe Scaler', body: 'Load any recipe, drag a servings slider. Ingredients, total cost, and cost per serving update instantly. Saves locally.', featured: true, live: true },
-  { slug: 'pantry-inventory-matcher', title: 'Pantry Inventory + Recipe Matcher', body: 'Log what you have at home. App suggests recipes you can make right now from your inventory. Saves grocery runs and food waste.' },
+  { slug: 'pantry-inventory-matcher', title: 'Pantry Inventory + Recipe Matcher', body: 'Tick what you have. Get a ranked list of recipes you can make right now from 200+ in the catalog. Photo-scan integration + custom items + strict-mode 100% match.', live: true },
 ];
 
 export default function CalculatorsIndex() {
