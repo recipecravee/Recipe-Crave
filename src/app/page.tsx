@@ -82,24 +82,32 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Differentiators */}
+      {/* Differentiators — each card is now a full link to the feature it
+          describes. User flow: read pitch → click straight to the tool. */}
       <section className="container py-16">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {[
-            { icon: Sparkles, title: 'AI Meal Planner', body: 'Tell us your budget, diet, and schedule. Get a full week of meals + grocery list.' },
-            { icon: Camera, title: 'Pantry Photo Scan', body: 'Snap your fridge. We identify ingredients and suggest recipes you can make right now.' },
-            { icon: Calendar, title: 'Cost + Calories on every recipe', body: 'No more guessing. Every recipe shows per-serving cost and full nutrition.' },
-            { icon: Mic, title: 'Voice Cook Mode', body: '"Next." "Repeat." "Set timer 8 minutes." Hands-free cooking from start to finish.' },
-            { icon: ShoppingCart, title: 'Smart Grocery Lists', body: 'Combine multiple recipes into one shopping list. Export to your favorite store.' },
-            { icon: Wallet, title: '100% Free. No paywall.', body: 'Every feature, free. AdSense supports the lights. You get cooking.' },
+            { icon: Sparkles, title: 'AI Meal Planner', body: 'Tell us your budget, diet, and schedule. Get a full week of meals + grocery list.', href: '/meal-planner', cta: 'Plan my week' },
+            { icon: Camera, title: 'Pantry Photo Scan', body: 'Snap your fridge. We identify ingredients and suggest recipes you can make right now.', href: '/pantry-match', cta: 'Scan my pantry' },
+            { icon: Calendar, title: 'Cost + Calories on every recipe', body: 'No more guessing. Every recipe shows per-serving cost and full nutrition.', href: '/recipes', cta: 'Browse recipes' },
+            { icon: Mic, title: 'Voice Cook Mode', body: '"Next." "Repeat." "Set timer 8 minutes." Hands-free cooking from start to finish.', href: '/recipes', cta: 'Pick a recipe to cook' },
+            { icon: ShoppingCart, title: 'Smart Grocery Lists', body: 'Combine multiple recipes into one shopping list. Export to your favorite store.', href: '/meal-planner', cta: 'Build my list' },
+            { icon: Wallet, title: '100% Free. No paywall.', body: 'Every feature, free. AdSense supports the lights. You get cooking.', href: '/recipes', cta: 'Start cooking' },
           ].map((feature) => (
-            <div key={feature.title} className="rounded-2xl border border-ink/5 bg-white p-6 transition-shadow hover:shadow-md">
+            <Link
+              key={feature.title}
+              href={feature.href}
+              className="group flex flex-col rounded-2xl border border-ink/5 bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-terracotta-300 hover:shadow-md"
+            >
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-terracotta-100">
                 <feature.icon className="h-5 w-5 text-terracotta-500" aria-hidden />
               </div>
               <h3 className="mt-4 font-serif text-lg">{feature.title}</h3>
               <p className="mt-2 text-sm text-ink-muted">{feature.body}</p>
-            </div>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-terracotta-500 transition-transform group-hover:translate-x-0.5">
+                {feature.cta} <ArrowRight className="h-4 w-4" aria-hidden />
+              </span>
+            </Link>
           ))}
         </div>
       </section>
