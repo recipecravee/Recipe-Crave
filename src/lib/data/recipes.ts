@@ -1,6 +1,7 @@
 import 'server-only';
 import { SEED_RECIPES, SEED_COLLECTIONS } from '@/content/seed-recipes';
 import { RECIPECRAVE_RECIPES } from '@/content/recipecrave-recipes';
+import { THERAPEUTIC_RECIPES } from '@/content/therapeutic-recipes';
 import type { Recipe } from '@/types/recipe';
 
 // Data access layer.
@@ -17,6 +18,13 @@ const COMBINED_RECIPES: Recipe[] = (() => {
     out.push(r);
   }
   for (const r of RECIPECRAVE_RECIPES) {
+    if (seen.has(r.slug)) continue;
+    seen.add(r.slug);
+    out.push(r);
+  }
+  // Therapeutic synergy-led recipes anchor the /herbs and /conditions
+  // landing pages — see src/content/therapeutic-recipes.ts.
+  for (const r of THERAPEUTIC_RECIPES) {
     if (seen.has(r.slug)) continue;
     seen.add(r.slug);
     out.push(r);
