@@ -1,7 +1,73 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **TWENTIETH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+> Last updated: 2026-05-12 — **TWENTY-FIRST pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+
+## 🆕 TWENTY-FIRST pass (2026-05-12 — Language selector moved to floating side widget + 6 thumbnail fixes)
+
+### What this pass did
+
+User flagged two issues:
+1. Language icon in the desktop header crowded the menu row on narrower laptops (1280-1440px). Visual overlap with Login button at certain widths.
+2. Recipe thumbnails — wanted assurance every recipe has a matching image with no name-vs-photo mismatches.
+
+Both addressed in this pass.
+
+### Commits
+
+| Commit | What |
+|---|---|
+| `8b89538` | **6 thumbnail reuse fixes** in `src/content/image-bank.ts`. Distinct photo IDs assigned to: `shrimp` (was sharing shrimpPasta), `fish` (was sharing salmon), `riceBowl` (was sharing jollofRice), `cocktail` (was sharing chapman), `mimosa` (was sharing tigerNut), `ofada` (was sharing coconutJollof), `tigerNut` (was sharing mimosa). Result: 175 image-bank keys, 7 intentional reuses for visually identical dishes (alfredo/pinkPasta, jerkChicken/suya, etc.), 0 broken refs across 126 RecipeCrave recipes + 79 seed recipes. |
+| _pending_ | **Language picker relocated to floating side widget.** Removed `<LanguageSelector>` from MegaMenu desktop nav AND mobile cluster. New `src/components/site/FloatingLanguageSelector.tsx`: right-edge anchored vertical pill at `top-1/2`, terracotta gradient, shows current locale flag + rotated "LANGUAGE" label. Click opens a slide-out drawer from the right (88vw, max-w-sm). Drawer header is terracotta gradient with Languages icon + "Language" title + count badge + X close. List shows all 30 locales w/ large flag + native name + English name + RTL marker subtitle for ar/he/fa/ur + active checkmark. Picking a locale closes drawer instantly. Body scroll locks while drawer open. Outside-click, Escape, and X all close. Print-hidden via `print:hidden`. Mounted globally in `src/app/layout.tsx` right after `<ScrollToTop />`. |
+
+### Why side widget vs header
+
+- Header row at 1440px was packed: logo (249w) + 4 nav items + search (224w) + Kitchen Tools pill + Login. Adding a 129w language button pushed total nav width to ~1370px, leaving only 70px breathing room.
+- Side-anchored widget is a classic translator-app pattern (Google Translate, Bing Translator, language-app sidebars). Familiar UX, doesn't compete with primary nav.
+- Vertical pill is always visible at mid-page on every screen — desktop, tablet, mobile — using identical right-edge anchor. No responsive variant logic needed.
+- Drawer can host more content per row (larger flag, native + English name + RTL tag) than a header dropdown could.
+- Vertical rotated "LANGUAGE" text via `writing-mode: vertical-rl` + `transform: rotate(180deg)` makes the button instantly recognizable as a language switcher without needing a label dropdown.
+
+### Header layout after fix (1440px viewport)
+
+```
+[Logo+brand 29-278] [Recipes 293] [Cuisines 412] [Tips 536-716]
+[Collections 735-839] [Search 920-1144] [Kitchen Tools 1156-1303] [Log in 1315-1396]
+```
+
+Total = 1396w. Container right edge = 1411 (container padding). Clean breathing room. No overlap.
+
+### Mobile layout after fix (375px viewport)
+
+```
+[Logo+brand] [Search icon] [Hamburger]
+```
+
+Plus the floating language pill at right edge `top-1/2` (visible whether menu open or closed; print-hidden).
+
+### Files touched / created this pass
+
+```
+M  CONTEXT-HANDOFF-FOR-CLAUDE.md
+M  src/content/image-bank.ts                          (6 photo IDs replaced — commit 8b89538)
+M  src/app/layout.tsx                                 (mount FloatingLanguageSelector)
+M  src/components/site/MegaMenu.tsx                   (removed LanguageSelector imports + 2 mount points)
+A  src/components/site/FloatingLanguageSelector.tsx   (~140 lines, drawer + side pill)
+```
+
+Note: the original `src/components/site/LanguageSelector.tsx` is preserved but no longer mounted anywhere. Kept as a fallback should a future page want an inline language dropdown.
+
+### Pickup checklist for next Claude
+
+1. Header layout clean at all viewports. Language widget side-anchored, drawer pattern.
+2. Recipe thumbnails: 100% coverage, 0 broken refs, 7 intentional reuses for similar dishes documented in `image-bank.ts`.
+3. Remaining unchanged from TWENTIETH pass:
+   - Recipe content translation (~200 recipes × 30 locales) — needs DeepL or Google API key
+   - 17 minor-locale UI strings (Turkish/Dutch/Polish/Vietnamese/Thai/Indonesian/Filipino/Swedish/Norwegian/Danish/Finnish/Greek/Hebrew/Farsi/Urdu/Bengali/Swahili) currently inherit English UI
+   - Per-calculator brand-header print treatment (only meal planner has it today)
+   - /how-to article expansion + /account feature gates
+
+## 🆕 TWENTIETH pass (2026-05-12 — i18n + PDF/print logo + ScrollToTop + BackButton + Meal Planner PDF)
 
 ## 🆕 TWENTIETH pass (2026-05-12 — i18n + PDF/print logo + ScrollToTop + BackButton + Meal Planner PDF)
 

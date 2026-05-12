@@ -13,7 +13,10 @@ import {
 import { CUISINES, DIETS } from '@/lib/constants';
 import { IMG } from '@/content/image-bank';
 import { SiteSearch } from './SiteSearch';
-import { LanguageSelector } from './LanguageSelector';
+// LanguageSelector is now a floating side-anchored widget mounted globally in
+// the root layout (see FloatingLanguageSelector). It used to live in the
+// MegaMenu header but was crowding the desktop nav row and causing visual
+// overlap on narrower 13-15" laptops.
 
 // ============================================================================
 // Mega-panel data — three dropdowns: Recipes / Cuisines / Tips & Techniques
@@ -345,14 +348,8 @@ export function MegaMenu({ userEmail }: { userEmail?: string }) {
         ) : null}
       </nav>
 
-      {/* Desktop language selector lives right of the desktop nav (lg+). */}
-      <div className="hidden lg:flex items-center">
-        <LanguageSelector variant="header" />
-      </div>
-
-      {/* Mobile: language + search + hamburger */}
+      {/* Mobile: search + hamburger. Language picker lives as a floating side widget. */}
       <div className="flex items-center gap-2 lg:hidden">
-        <LanguageSelector variant="compact" />
         <SiteSearch variant="icon" />
         <button
           type="button"
