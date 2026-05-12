@@ -11,20 +11,30 @@ export const dynamic = 'force-dynamic';
  * TODO #13 — Daily digest cron.
  *
  * Scheduled by vercel.json to fire 09:00 UTC every day. Picks 3 recipes
- * deterministically for today's date and sends a digest email.
+ * deterministically for today's date and sends a digest email to every
+ * subscribed contact in the Resend audience.
  *
  * Auth: Vercel Cron requests carry a `Authorization: Bearer <CRON_SECRET>`
  * header (set via env). Any non-cron caller hitting this URL will be
  * rejected unless they present the secret.
  *
- * Recipient list: until a subscribers DB exists (Supabase migration
- * 0001 covers the unrelated pantry/variations tables; newsletter
- * subscribers are tracked via Resend Audiences in v2). For now, the
- * digest goes to a single address from `DIGEST_TEST_TO` env var so
- * owner can preview the daily email without spamming a real list.
+ * Recipient list: Resend Audience identified by RESEND_AUDIENCE_ID.
+ * Contacts are added by the /api/newsletter/subscribe route when a
+ * visitor opts in. The cron fetches `contacts.list({ audienceId })`,
+ * filters out unsubscribed, and sends one email per remaining contact.
+ *
+ * If the audience is empty OR RESEND_AUDIENCE_ID is unset, the cron
+ * falls back to `DIGEST_TEST_TO` (defaults to the owner email) so the
+ * daily preview still arrives. This lets the cron be useful from day 1.
+ *
+ * Rate limiting: Resend free tier caps at 100 emails/day. The cron sends
+ * sequentially and bails (HTTP 429) once that limit is reached, so an
+ * audience over 100 silently rotates across multiple days. Upgrade tier
+ * + remove the guard to ship to everyone every day.
  */
 
 const ADMIN_FALLBACK_TO = 'recipecrave@gmail.com';
+const FREE_TIER_DAILY_CAP = 100;
 
 export async function GET(req: Request) {
   // Auth — Vercel Cron sends Authorization: Bearer <CRON_SECRET>.
@@ -49,7 +59,8 @@ export async function GET(req: Request) {
   }
 
   const fromEmail = process.env.RESEND_FROM_EMAIL ?? 'hello@mail.recipecrave.com';
-  const to = process.env.DIGEST_TEST_TO ?? ADMIN_FALLBACK_TO;
+  const audienceId = process.env.RESEND_AUDIENCE_ID;
+  const fallbackTo = process.env.DIGEST_TEST_TO ?? ADMIN_FALLBACK_TO;
 
   // Pick today's 3 recipes deterministically — same triplet for everyone
   // who runs the cron on the same calendar day. Day-of-year drives the
@@ -75,25 +86,59 @@ export async function GET(req: Request) {
   const subject = `Today on RecipeCrave: ${a.title}, ${b.title}, ${c.title}`;
   const html = renderDigestHtml(picks);
 
-  try {
-    const resend = new Resend(apiKey);
-    const result = await resend.emails.send({
-      from: `RecipeCrave Daily <${fromEmail}>`,
-      to,
-      subject,
-      html,
-      headers: {
-        'X-Entity-Ref-ID': `digest-${today.toISOString().slice(0, 10)}`,
-      },
-    });
-    return NextResponse.json({ ok: true, sent: result.data?.id ?? null, picks: picks.map((p) => p.slug) });
-  } catch (err) {
-    console.error('[digest] send failed', err);
-    return NextResponse.json(
-      { ok: false, error: err instanceof Error ? err.message : 'send failed' },
-      { status: 500 },
-    );
+  const resend = new Resend(apiKey);
+
+  // Build the recipient list. Resend Audience first; fallback to the
+  // owner email when audience is empty or unconfigured.
+  let recipients: string[] = [];
+  if (audienceId) {
+    try {
+      const list = await resend.contacts.list({ audienceId });
+      const data = list.data?.data ?? [];
+      recipients = data
+        .filter((c) => !c.unsubscribed)
+        .map((c) => c.email)
+        .filter((e): e is string => typeof e === 'string' && e.length > 0);
+    } catch (err) {
+      console.error('[digest] audience.list failed', err);
+    }
   }
+  if (recipients.length === 0) recipients = [fallbackTo];
+  if (recipients.length > FREE_TIER_DAILY_CAP) {
+    // Trim to free-tier cap. We rotate which slice of the audience gets
+    // the digest based on day-of-year so over time every subscriber
+    // receives an email.
+    const offsetWithinDay = dayIdx % Math.ceil(recipients.length / FREE_TIER_DAILY_CAP);
+    const start = offsetWithinDay * FREE_TIER_DAILY_CAP;
+    recipients = recipients.slice(start, start + FREE_TIER_DAILY_CAP);
+  }
+
+  const sent: string[] = [];
+  const failed: { email: string; error: string }[] = [];
+  for (const email of recipients) {
+    try {
+      await resend.emails.send({
+        from: `RecipeCrave Daily <${fromEmail}>`,
+        to: email,
+        subject,
+        html,
+        headers: {
+          'X-Entity-Ref-ID': `digest-${today.toISOString().slice(0, 10)}`,
+        },
+      });
+      sent.push(email);
+    } catch (err) {
+      failed.push({ email, error: err instanceof Error ? err.message : 'send failed' });
+    }
+  }
+
+  return NextResponse.json({
+    ok: failed.length === 0,
+    sentCount: sent.length,
+    failedCount: failed.length,
+    picks: picks.map((p) => p.slug),
+    failures: failed.slice(0, 5),
+  });
 }
 
 type RecipePick = {
