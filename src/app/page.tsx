@@ -151,6 +151,34 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Herbal Cooking Hub CTA — surfaces the food-as-medicine layer
+          prominently for first-time visitors who would otherwise miss it. */}
+      <section className="container py-12">
+        <Link
+          href="/herbal-cooking"
+          className="group block rounded-3xl bg-gradient-to-br from-forest-100 via-cream-50 to-terracotta-50 p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md sm:p-10"
+        >
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-forest-700">
+                🌿 New · Herbal Cooking Hub
+              </p>
+              <h2 className="mt-2 font-serif text-3xl font-bold text-ink group-hover:text-forest-700 sm:text-4xl">
+                Cook your way to better health
+              </h2>
+              <p className="mt-3 max-w-2xl text-base text-ink-muted">
+                Match herbs to your aches, energy dips, sleep struggles, or
+                cold-season prep. Five demo recipes, daily-intake guidance, and
+                drug-safety checks — all free, all explained in plain English.
+              </p>
+            </div>
+            <span className="inline-flex shrink-0 rounded-full bg-forest-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm group-hover:bg-forest-700">
+              Explore the hub →
+            </span>
+          </div>
+        </Link>
+      </section>
+
       {/* Collections */}
       <section className="container py-16">
         <h2 className="mb-8 font-serif text-3xl text-ink sm:text-4xl">Hand-picked collections</h2>

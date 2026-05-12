@@ -62,6 +62,11 @@ export function Footer() {
               <li><Link href="/recipes" className="hover:text-ink">All Recipes</Link></li>
               <li><Link href="/collections" className="hover:text-ink">Collections</Link></li>
               <li><Link href="/meal-planner" className="hover:text-ink">Meal Planner</Link></li>
+              <li><Link href="/meal-plans" className="hover:text-ink">30-Day Meal Plans</Link></li>
+              <li><Link href="/herbal-cooking" className="font-bold text-forest-700 hover:text-forest-800">🌿 Herbal Cooking Hub</Link></li>
+              <li><Link href="/herbs" className="hover:text-ink">All Herbs</Link></li>
+              <li><Link href="/safety-check" className="hover:text-ink">Herb-Drug Safety Check</Link></li>
+              <li><Link href="/blog" className="hover:text-ink">Blog</Link></li>
               <li><Link href="/pantry-match" className="hover:text-ink">Pantry Match</Link></li>
               <li><Link href="/how-to" className="hover:text-ink">How-To Guides</Link></li>
               <li><Link href="/calculators" className="hover:text-ink">Free Tools</Link></li>

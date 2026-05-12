@@ -44,6 +44,7 @@ const PAGES: SearchItem[] = [
   { kind: 'page', title: 'Managing Type 2 Diabetes Through Food', href: '/blog/managing-type-2-diabetes-through-food', hint: 'Article · 11 min read', keywords: 'type 2 diabetes diet blood sugar food management glycemic' },
   { kind: 'page', title: 'Cinnamon for Blood Sugar', href: '/blog/cinnamon-for-blood-sugar-complete-guide', hint: 'Article · 7 min read', keywords: 'cinnamon blood sugar diabetes ceylon cassia dosage' },
   { kind: 'page', title: 'Bone Broth & Gut Healing', href: '/blog/bone-broth-gut-healing-real-evidence', hint: 'Article · 8 min read', keywords: 'bone broth gut healing collagen glutamine leaky gut science evidence' },
+  { kind: 'page', title: 'Herbal Cooking Hub', href: '/herbal-cooking', hint: 'Friendly beginner guide', keywords: 'cooking with herbs for health herbal recipes beginner food as medicine cook for inflammation diabetes sleep' },
   { kind: 'page', title: 'Therapeutic Herbs & Functional Foods', href: '/herbs', hint: 'Food as medicine', keywords: 'medicinal herbs functional food turmeric ginger cinnamon ashwagandha inflammation blood sugar gut health' },
   { kind: 'page', title: 'Herb-Drug Safety Checker', href: '/safety-check', hint: 'Free interaction checker', keywords: 'herb drug interaction checker turmeric warfarin cinnamon metformin ashwagandha thyroid contraindication' },
   { kind: 'page', title: 'Your Health Profile', href: '/profile', hint: 'Personalized recommendations', keywords: 'health profile personalize conditions diet allergies recommendations' },

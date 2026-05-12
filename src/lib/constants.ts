@@ -44,6 +44,45 @@ export const CUISINES = [
   { slug: 'peruvian', name: 'Peruvian', emoji: '🌶️' },
   { slug: 'egyptian', name: 'Egyptian', emoji: '🫓' },
   { slug: 'australian', name: 'Australian', emoji: '🦘' },
+  // === Asia + Pacific expansion ===
+  { slug: 'filipino', name: 'Filipino', emoji: '🇵🇭' },
+  { slug: 'malaysian', name: 'Malaysian', emoji: '🥥' },
+  { slug: 'singaporean', name: 'Singaporean', emoji: '🍤' },
+  { slug: 'pakistani', name: 'Pakistani', emoji: '🍛' },
+  { slug: 'sri-lankan', name: 'Sri Lankan', emoji: '🌶️' },
+  { slug: 'nepalese', name: 'Nepalese', emoji: '🥟' },
+  { slug: 'burmese', name: 'Burmese', emoji: '🍜' },
+  { slug: 'cambodian', name: 'Cambodian', emoji: '🍚' },
+  { slug: 'mongolian', name: 'Mongolian', emoji: '🍖' },
+  // === Middle East + North Africa expansion ===
+  { slug: 'persian', name: 'Persian', emoji: '🍢' },
+  { slug: 'lebanese', name: 'Lebanese', emoji: '🥙' },
+  { slug: 'moroccan', name: 'Moroccan', emoji: '🍲' },
+  { slug: 'tunisian', name: 'Tunisian', emoji: '🌶️' },
+  { slug: 'israeli', name: 'Israeli', emoji: '🧆' },
+  // === Africa expansion ===
+  { slug: 'kenyan', name: 'Kenyan', emoji: '🍖' },
+  { slug: 'senegalese', name: 'Senegalese', emoji: '🍛' },
+  { slug: 'ivorian', name: 'Ivorian', emoji: '🍲' },
+  // === Latin America + Caribbean expansion ===
+  { slug: 'cuban', name: 'Cuban', emoji: '🥘' },
+  { slug: 'dominican', name: 'Dominican', emoji: '🍌' },
+  { slug: 'colombian', name: 'Colombian', emoji: '☕' },
+  { slug: 'venezuelan', name: 'Venezuelan', emoji: '🌮' },
+  { slug: 'chilean', name: 'Chilean', emoji: '🌶️' },
+  // === Europe expansion ===
+  { slug: 'portuguese', name: 'Portuguese', emoji: '🍷' },
+  { slug: 'british', name: 'British', emoji: '🫖' },
+  { slug: 'irish', name: 'Irish', emoji: '☘️' },
+  { slug: 'hungarian', name: 'Hungarian', emoji: '🌶️' },
+  { slug: 'ukrainian', name: 'Ukrainian', emoji: '🥟' },
+  { slug: 'austrian', name: 'Austrian', emoji: '🥨' },
+  { slug: 'belgian', name: 'Belgian', emoji: '🍫' },
+  // === North America regional ===
+  { slug: 'hawaiian', name: 'Hawaiian', emoji: '🍍' },
+  { slug: 'cajun', name: 'Cajun', emoji: '🌶️' },
+  { slug: 'soul-food', name: 'Soul Food', emoji: '🍗' },
+  { slug: 'tex-mex', name: 'Tex-Mex', emoji: '🌯' },
 ] as const;
 
 export const COURSES_NAV = [
@@ -76,6 +115,17 @@ export const DIETS = [
   { slug: 'diabetic', name: 'Diabetic-Friendly', schema: 'DiabeticDiet' },
   { slug: 'halal', name: 'Halal', schema: 'HalalDiet' },
   { slug: 'kosher', name: 'Kosher', schema: 'KosherDiet' },
+  // === Lifestyle + clinical-style diets ===
+  { slug: 'mediterranean-diet', name: 'Mediterranean Diet', schema: 'LowCalorieDiet' },
+  { slug: 'dash-diet', name: 'DASH Diet (heart-healthy)', schema: 'LowSaltDiet' },
+  { slug: 'whole30', name: 'Whole30', schema: 'LowCarbohydrateDiet' },
+  { slug: 'pescatarian', name: 'Pescatarian', schema: 'VegetarianDiet' },
+  { slug: 'flexitarian', name: 'Flexitarian', schema: 'VegetarianDiet' },
+  { slug: 'low-fodmap', name: 'Low-FODMAP (IBS-friendly)', schema: 'LowCalorieDiet' },
+  { slug: 'anti-inflammatory', name: 'Anti-Inflammatory', schema: 'LowCalorieDiet' },
+  { slug: 'plant-based', name: 'Plant-Based', schema: 'VegetarianDiet' },
+  { slug: 'nut-free', name: 'Nut-Free (allergy-safe)', schema: 'LowCalorieDiet' },
+  { slug: 'pregnancy-safe', name: 'Pregnancy-Safe', schema: 'LowCalorieDiet' },
 ] as const;
 
 export const COURSES = [
