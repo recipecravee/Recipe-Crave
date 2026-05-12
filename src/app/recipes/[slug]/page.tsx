@@ -12,6 +12,7 @@ import { RecipeVariationForm } from '@/components/recipe/RecipeVariationForm';
 import { PinItButton } from '@/components/recipe/PinItButton';
 import { TranslateRecipeButton } from '@/components/recipe/TranslateRecipeButton';
 import { MeasurementBanner } from '@/components/recipe/MeasurementBanner';
+import { CookedCount } from '@/components/recipe/CookedCount';
 import { ReviewsSection } from '@/components/recipe/ReviewsSection';
 import { StarRating } from '@/components/recipe/StarRating';
 import { VoiceCookMode } from '@/components/recipe/VoiceCookMode';
@@ -170,6 +171,7 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <RecipeActions slug={recipe.slug} title={recipe.title} />
           <RecipeSaveButton slug={recipe.slug} />
+          <CookedCount slug={recipe.slug} />
           <PinItButton recipeSlug={recipe.slug} title={recipe.title} description={recipe.description} />
           <TranslateRecipeButton recipe={recipe} />
           <VoiceCookMode title={recipe.title} servings={recipe.servings} instructions={recipe.instructions} />
@@ -262,6 +264,20 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
                       <p className="mt-1 inline-flex items-center gap-1 rounded-full bg-cream-200 px-3 py-0.5 text-xs text-ink-muted">
                         <Clock className="h-3 w-3" aria-hidden /> {step.timerMin} min timer
                       </p>
+                    ) : null}
+                    {/* Step-photo slot — image rendered if step.imageUrl is set,
+                        otherwise hidden. Slot reserved so future bulk-photo
+                        backfills drop in without page-layout shift. */}
+                    {step.imageUrl ? (
+                      <div className="mt-3 overflow-hidden rounded-xl border border-ink/10 bg-cream-50">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={step.imageUrl}
+                          alt={`Step ${step.step}: ${step.text.slice(0, 80)}`}
+                          loading="lazy"
+                          className="w-full max-w-md object-cover"
+                        />
+                      </div>
                     ) : null}
                   </div>
                 </li>
