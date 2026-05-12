@@ -66,6 +66,12 @@ export const metadata: Metadata = {
   creator: SITE.publisher,
   publisher: SITE.publisher,
   alternates: { canonical: '/' },
+  // Google Search Console ownership verification — provisioned 2026-05-12
+  // (URL-prefix property https://recipecrave.com). Next.js emits the
+  // <meta name="google-site-verification" ...> tag in <head> automatically.
+  verification: {
+    google: 'Dxappw2dqUgc5bOU3DWOL2tmWvYFsNdENcNtdF6Y3Ak',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
