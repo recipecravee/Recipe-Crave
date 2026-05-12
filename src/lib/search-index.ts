@@ -46,6 +46,7 @@ const PAGES: SearchItem[] = [
   { kind: 'page', title: 'Bone Broth & Gut Healing', href: '/blog/bone-broth-gut-healing-real-evidence', hint: 'Article · 8 min read', keywords: 'bone broth gut healing collagen glutamine leaky gut science evidence' },
   { kind: 'page', title: 'Therapeutic Herbs & Functional Foods', href: '/herbs', hint: 'Food as medicine', keywords: 'medicinal herbs functional food turmeric ginger cinnamon ashwagandha inflammation blood sugar gut health' },
   { kind: 'page', title: 'Herb-Drug Safety Checker', href: '/safety-check', hint: 'Free interaction checker', keywords: 'herb drug interaction checker turmeric warfarin cinnamon metformin ashwagandha thyroid contraindication' },
+  { kind: 'page', title: 'Your Health Profile', href: '/profile', hint: 'Personalized recommendations', keywords: 'health profile personalize conditions diet allergies recommendations' },
   { kind: 'page', title: 'Chicken Recipes', href: '/ingredient/chicken', keywords: 'chicken thigh breast wings poultry' },
   { kind: 'page', title: 'Beef Recipes', href: '/ingredient/beef', keywords: 'beef steak ground ribeye chuck' },
   { kind: 'page', title: 'Pork Recipes', href: '/ingredient/pork', keywords: 'pork chop tenderloin bacon sausage' },
