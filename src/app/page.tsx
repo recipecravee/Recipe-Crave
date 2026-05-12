@@ -11,6 +11,13 @@ import { QuickFilters } from '@/components/home/QuickFilters';
 import { RecipeOfTheDay } from '@/components/home/RecipeOfTheDay';
 import { getAllRecipes } from '@/lib/data/recipes';
 
+// Cache the homepage at the edge for 1 hour. Without this Next.js
+// emits Cache-Control: no-store because the I18nProvider reads the
+// locale cookie inside the layout, marking every page dynamic. ISR
+// here gets us proper edge caching + bf-cache eligibility on Chrome,
+// at the cost of a 1-hour delay for recipe-of-the-day changes.
+export const revalidate = 3600;
+
 export default async function HomePage() {
   const [featured, collections, all] = await Promise.all([
     getFeaturedRecipes(8),

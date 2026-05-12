@@ -40,7 +40,12 @@ const config: Config = {
         ink: {
           DEFAULT: '#1F1B16',
           muted: '#6B6660',
-          subtle: '#9A9389',
+          // Was #9A9389 which gave a 2.8:1 contrast ratio on the cream-50
+          // background — failed WCAG AA 4.5:1. Darkened to #6F6960
+          // (~4.76:1) so every uppercase tracking-widest eyebrow tag and
+          // metadata caption passes AA without changing the visual
+          // hierarchy more than a hair.
+          subtle: '#6F6960',
         },
         warning: '#D4A24A',
         success: '#4A7C59',
