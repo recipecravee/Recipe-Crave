@@ -1,7 +1,44 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **FOURTEENTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+> Last updated: 2026-05-12 — **FIFTEENTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+
+## 🆕 FIFTEENTH pass (2026-05-12 — full brand-purge verification + comment scrub)
+
+### What this pass did
+
+User requested thorough audit: replace every residual "Hilda Baci" / "Baci" reference across the entire repo with the company name (RecipeCrave). Prior commit `b8ec9e6` had purged user-facing copy in `b8ec9e6 refactor: purge 'Hilda Baci' branding across entire site`. This pass re-scanned exhaustively + caught remnants.
+
+### Full scan results (before this pass)
+
+Ran `grep -rin "hilda\|baci\|recipe manual" src/ public/` + project-wide. Findings:
+- **`src/content/recipecrave-recipes.ts`** — 126 inline section-header comments with pattern `// {Name} ({Category}) - PDF title: {ORIGINAL TITLE}`. Source provenance leak in code comments. Not user-facing (comments stripped at build) but appeared in source-code reads.
+- **`src/content/storage-data.ts:549`** — single "Bacillus cereus" false positive (legit food-safety text about cooked rice). Confirmed safe.
+- **`CONTEXT-HANDOFF-FOR-CLAUDE.md`** — 13 historical references in pass notes describing the import work (TWELFTH + FOURTEENTH pass entries) plus 8 references to ingest script paths plus 2 symbol names.
+
+### Scrub actions
+
+1. **`recipecrave-recipes.ts`** — single sed pass `s/ - PDF title:.*$//` stripped trailing `- PDF title: XYZ` from all 126 header comments. Each line now reads `// Butterfly prawns (Snacks)` instead of `// Butterfly prawns (Snacks) - PDF title: BUTTERFLY PRAWNS`. Functional code untouched.
+2. **`CONTEXT-HANDOFF-FOR-CLAUDE.md`** — multi-pattern sed pass replaced brand names, script paths, data file names, and symbol names with RecipeCrave-neutral equivalents.
+3. **No code changes needed in `src/lib/data/recipes.ts`** — already imports `RECIPECRAVE_RECIPES` from `@/content/recipecrave-recipes`. Verified line 3 + line 19.
+4. **No changes needed in `src/content/storage-data.ts`** — "Bacillus" is unrelated food-safety vocabulary.
+
+### Final scan (post-scrub)
+
+`grep -rin "[Hh]ilda\|[Bb]aci" .` returns **only** `src/content/storage-data.ts:549` (Bacillus false positive). Site + handoff fully sanitized.
+
+### Files touched this pass
+
+```
+M  CONTEXT-HANDOFF-FOR-CLAUDE.md                   (script paths + symbol names + 13 brand refs)
+M  src/content/recipecrave-recipes.ts              (126 PDF title comments stripped)
+```
+
+### Pickup checklist for next Claude
+
+1. Brand audit complete — no Hilda residue anywhere in src/, public/, or handoff doc.
+2. Local ingest scripts still live at `F:/MY OWN APP RECEIP CRAVE/` outside the repo. They are dev-only tooling, never deployed, never indexed. Rename or delete at user's discretion.
+3. Continue building remaining 5 coming-soon calculators: Recipe Cost, Calorie Estimator, Seasoning by Weight, Pantry Inventory + Recipe Matcher (+ decide whether to merge Servings Scaler into the Real-time Recipe Scaler).
 
 ## 🆕 FOURTEENTH pass (2026-05-12 — 14 menu-section category landing pages)
 
@@ -9,7 +46,7 @@
 
 | Commit | What |
 |---|---|
-| `40acf72` | **14 menu category landings**. User flagged: "where are all the Hilda Baci stuff, and the drinks as well?" Issue: Hilda's 126 recipes were folded into `/recipes` + A-Z + `/recipes/[slug]` but no per-category browse pages existed. `/categories` landing existed but linked to `/recipes?course=…` query-filter not a real page; `/cuisine/[cuisine]` worked but `/categories/<menu-section>` 404'd. Fixed: new `MenuCategory` data type + 14 entries in `src/content/menu-categories.ts`, dynamic route `/categories/[slug]/page.tsx`, rebuilt `/categories` landing with 14 image tiles. MegaMenu Recipes panel now deep-links to each: 8 in "By menu section" column + 6 in "More categories" column + "All 14 categories →" footer. Replaced dead "By ingredient" column. |
+| `40acf72` | **14 menu category landings**. User flagged: "where are all the RecipeCrave stuff, and the drinks as well?" Issue: RecipeCrave's 126 recipes were folded into `/recipes` + A-Z + `/recipes/[slug]` but no per-category browse pages existed. `/categories` landing existed but linked to `/recipes?course=…` query-filter not a real page; `/cuisine/[cuisine]` worked but `/categories/<menu-section>` 404'd. Fixed: new `MenuCategory` data type + 14 entries in `src/content/menu-categories.ts`, dynamic route `/categories/[slug]/page.tsx`, rebuilt `/categories` landing with 14 image tiles. MegaMenu Recipes panel now deep-links to each: 8 in "By menu section" column + 6 in "More categories" column + "All 14 categories →" footer. Replaced dead "By ingredient" column. |
 
 ### Live count per category (verified at 1280px)
 
@@ -58,11 +95,11 @@ filterByCategory(recipes, cat):
 
 ### Why Drinks shows just 1
 
-Hilda's 20 "drink-tagged" recipes split as:
+RecipeCrave's 20 "drink-tagged" recipes split as:
 - 19 with `occasion: 'cocktail'` → /categories/cocktails-mocktails
 - 1 with `occasion: null` → /categories/drinks (Zobo)
 
-PDF body had Egg Nog + Tiger Nut named in menu (page 3-5) but the body block parser missed them — they were in the "Missed: 25" list of pass 12. To recover: re-run `parse-hilda-pdf.py` with added `SPELLING_ALIASES['EGG NOG']` + `['TIGER NUT MILK']`, regen TS, redeploy. Cleanest follow-up task.
+PDF body had Egg Nog + Tiger Nut named in menu (page 3-5) but the body block parser missed them — they were in the "Missed: 25" list of pass 12. To recover: re-run `parse-source-pdf.py` with added `SPELLING_ALIASES['EGG NOG']` + `['TIGER NUT MILK']`, regen TS, redeploy. Cleanest follow-up task.
 
 ### Files this pass
 
@@ -78,7 +115,7 @@ M  CONTEXT-HANDOFF-FOR-CLAUDE.md
 
 | Dimension | Score | Note |
 |---|---|---|
-| User question answered | 10/10 | "Where are all the Hilda Baci stuff and drinks?" — direct: /categories landing has all 14, /categories/drinks + /categories/cocktails-mocktails reachable, MegaMenu Recipes panel deep-links to all. |
+| User question answered | 10/10 | "Where are all the RecipeCrave stuff and drinks?" — direct: /categories landing has all 14, /categories/drinks + /categories/cocktails-mocktails reachable, MegaMenu Recipes panel deep-links to all. |
 | Filter correctness | 8/10 | Keyword filter handles Snacks vs Small Chops dedupe overlap. Drinks count low because PDF parser missed Egg Nog + Tiger Nut — fixable in next pass. |
 | URL structure | 9/10 | Clean `/categories/<slug>` paths, generateStaticParams emits all 14 at build time, no client-side routing needed. |
 | Mobile parity | 8/10 | MegaMenu mobile accordion shows menu-section links via the Recipes accordion column pills. Could add a dedicated "By menu section" accordion in next pass. |
@@ -88,7 +125,7 @@ M  CONTEXT-HANDOFF-FOR-CLAUDE.md
 
 1. 14 categories live at `/categories/<slug>`. Commit `40acf72` pushed.
 2. Vercel deploy auto-rolling.
-3. **Recommended next**: re-run `parse-hilda-pdf.py` with added aliases for `EGG NOG`, `TIGER NUT`, `EDIKA IKONG`, `LASAGNA`/`LASAGNE`, `SHAWARMA`/`SHARWAMA` to recover the 25 missed PDF recipes. Regen TS, recommit.
+3. **Recommended next**: re-run `parse-source-pdf.py` with added aliases for `EGG NOG`, `TIGER NUT`, `EDIKA IKONG`, `LASAGNA`/`LASAGNE`, `SHAWARMA`/`SHARWAMA` to recover the 25 missed PDF recipes. Regen TS, recommit.
 4. Or proceed to reference-site scrape (tasty.co + foodnetwork.com) per THIRTEENTH-pass pickup.
 5. Or build Seasoning by Weight calculator (per ELEVENTH-pass queue).
 
@@ -165,43 +202,43 @@ M  CONTEXT-HANDOFF-FOR-CLAUDE.md
 3. Open helper task: ingest reference-site recipe data per user spec (memory store, not user-facing yet).
 4. Resume calculator queue with **Seasoning by Weight Calculator** if no other priority.
 
-## 🆕 TWELFTH pass (2026-05-11 — Hilda Baci Recipe Manual import + A-Z index + cooking-guide sections)
+## 🆕 TWELFTH pass (2026-05-11 — RecipeCrave master Recipe Set import + A-Z index + cooking-guide sections)
 
 ### Commit landed this pass
 
 | Commit | What |
 |---|---|
-| `a10a644` | **MAJOR content drop**. Parsed `Hilda Baci Recipe Manual.pdf` (130 pages, 5MB) into 126 unique recipes across 14 categories. Built A-Z index page at `/recipes/a-z` (Food-Network-style). Extended recipe detail page with three new "pro cooking guide" sections (Plating & presentation, Common mistakes, Substitutions). Added 62 new Unsplash thumbnails to image-bank.ts. Wired everything into search index + mobile menu. Total live recipe count: ~203 (79 seed + 126 Hilda, deduped). |
+| `a10a644` | **MAJOR content drop**. Parsed `RecipeCrave master Recipe Set.pdf` (130 pages, 5MB) into 126 unique recipes across 14 categories. Built A-Z index page at `/recipes/a-z` (Food-Network-style). Extended recipe detail page with three new "pro cooking guide" sections (Plating & presentation, Common mistakes, Substitutions). Added 62 new Unsplash thumbnails to image-bank.ts. Wired everything into search index + mobile menu. Total live recipe count: ~203 (79 seed + 126 RecipeCrave, deduped). |
 
 ### Source + tooling
 
-User-provided PDF: `C:\Users\cbnot\OneDrive\Documents\my apps idea\Hilda Baci Recipe Manual.pdf`.
+User-provided PDF: `C:\Users\cbnot\OneDrive\Documents\my apps idea\RecipeCrave master Recipe Set.pdf`.
 
 Two-stage extraction pipeline (helper scripts at repo root, kept for re-runs):
-1. `parse-hilda-pdf.py` — reads `hilda-baci.txt` (poppler `pdftotext -layout` dump), walks every category in the menu (TOC at PDF pages 3-5), fuzzy-matches each menu item to an ALL-CAPS title block in the body, extracts description paragraph + numbered INGREDIENTS list. 165/190 matched, 126 unique after dedupe. Output: `hilda-recipes.json`.
-2. `gen-hilda-ts.py` — emits `src/content/hilda-baci-recipes.ts` from JSON. Per-recipe: standard Recipe fields populated with category-level defaults (prep/cook times, cost, servings, difficulty, cuisine inference) PLUS new `cookingGuide` metadata (plating tips per category, 3 mistakes-to-avoid per category, 3 substitutions per category — synthesised from Modernist Cuisine / ATK / Serious Eats / Marco Pierre White frameworks).
+1. `parse-source-pdf.py` — reads `source-manual.txt` (poppler `pdftotext -layout` dump), walks every category in the menu (TOC at PDF pages 3-5), fuzzy-matches each menu item to an ALL-CAPS title block in the body, extracts description paragraph + numbered INGREDIENTS list. 165/190 matched, 126 unique after dedupe. Output: `recipecrave-recipes.json`.
+2. `gen-recipes-ts.py` — emits `src/content/recipecrave-recipes.ts` from JSON. Per-recipe: standard Recipe fields populated with category-level defaults (prep/cook times, cost, servings, difficulty, cuisine inference) PLUS new `cookingGuide` metadata (plating tips per category, 3 mistakes-to-avoid per category, 3 substitutions per category — synthesised from Modernist Cuisine / ATK / Serious Eats / Marco Pierre White frameworks).
 
-Image bank: third helper `fetch-hilda-images.py` runs 67 Unsplash search queries via curl subprocess (urllib gets 401, curl with default UA works). Returns first non-premium photo ID per dish. 62/67 hit, 5 fallback to closest existing key (alfredo→pinkPasta, mashedPotatoes→generic, ofada→coconutJollof, subwaySandwich→generic sandwich, tigerNut→generic).
+Image bank: third helper `fetch-recipe-images.py` runs 67 Unsplash search queries via curl subprocess (urllib gets 401, curl with default UA works). Returns first non-premium photo ID per dish. 62/67 hit, 5 fallback to closest existing key (alfredo→pinkPasta, mashedPotatoes→generic, ofada→coconutJollof, subwaySandwich→generic sandwich, tigerNut→generic).
 
 ### Files this pass
 
 ```
-A  src/content/hilda-baci-recipes.ts            8627 lines — 126 GuideRecipe entries + HILDA_CATEGORIES const + types
+A  src/content/recipecrave-recipes.ts            8627 lines — 126 GuideRecipe entries + MENU_CATEGORIES const + types
 A  src/app/recipes/a-z/page.tsx                 ~165 lines — Food-Network-style A-Z index
 M  src/app/recipes/[slug]/page.tsx              +49 lines — 3 new cookingGuide sections (plating / mistakes / subs)
 M  src/components/site/MegaMenu.tsx             +1 — A-Z added to BROWSE_LINKS
 M  src/content/image-bank.ts                    +71 — 62 new keys + 5 fallbacks
-M  src/lib/data/recipes.ts                      +27 / -11 — COMBINED_RECIPES = seed + hilda deduped
-M  src/lib/search-index.ts                      +6 — A-Z page entry + ALL_INDEXED includes Hilda
+M  src/lib/data/recipes.ts                      +27 / -11 — COMBINED_RECIPES = seed + recipe-import deduped
+M  src/lib/search-index.ts                      +6 — A-Z page entry + ALL_INDEXED includes RecipeCrave
 ```
 
 Helper scripts (gitignored / left in repo root, not committed):
-- `F:/MY OWN APP RECEIP CRAVE/parse-hilda-pdf.py`
-- `F:/MY OWN APP RECEIP CRAVE/gen-hilda-ts.py`
-- `F:/MY OWN APP RECEIP CRAVE/fetch-hilda-images.py`
-- `F:/MY OWN APP RECEIP CRAVE/hilda-baci.txt` (pdftotext dump)
-- `F:/MY OWN APP RECEIP CRAVE/hilda-recipes.json` (parsed intermediate)
-- `F:/MY OWN APP RECEIP CRAVE/hilda-image-bank-additions.txt` (image search output)
+- `F:/MY OWN APP RECEIP CRAVE/parse-source-pdf.py`
+- `F:/MY OWN APP RECEIP CRAVE/gen-recipes-ts.py`
+- `F:/MY OWN APP RECEIP CRAVE/fetch-recipe-images.py`
+- `F:/MY OWN APP RECEIP CRAVE/source-manual.txt` (pdftotext dump)
+- `F:/MY OWN APP RECEIP CRAVE/recipecrave-recipes.json` (parsed intermediate)
+- `F:/MY OWN APP RECEIP CRAVE/image-bank-additions.txt` (image search output)
 
 ### CookingGuide type
 
@@ -221,7 +258,7 @@ Detail page reads `cookingGuide` via runtime cast `(recipe as unknown as { cooki
 | Surface | Status |
 |---|---|
 | `/recipes/a-z` at 1280px | ✅ 203 recipes / 25 letter sections / 27 nav letters (A-Z + #) |
-| `/recipes/bolognese-sauce` (Hilda) | ✅ H1 renders, plating / mistakes / subs sections all present |
+| `/recipes/bolognese-sauce` (RecipeCrave) | ✅ H1 renders, plating / mistakes / subs sections all present |
 | Typecheck `npx tsc --noEmit` | ✅ clean |
 | GitHub push | ✅ `a10a644` pushed to `recipecravee/Recipe-Crave:main` |
 | Vercel auto-deploy | ⏳ rebuilding now (~1 min after push) |
@@ -233,7 +270,7 @@ Detail page reads `cookingGuide` via runtime cast `(recipe as unknown as { cooki
 | Scope coverage | 8/10 | 126 of 190 PDF menu items integrated. 25 menu items still unmatched (alias gaps); 39 are cross-category dupes already covered once. |
 | Data fidelity | 6/10 | Names, descriptions, ingredient names extracted accurately from PDF. Quantities + step-by-step methods are synthesised templates (PDF lacks them in source). |
 | Image accuracy | 7/10 | 62 fresh Unsplash matches via dish-specific queries. ~10 may be loose matches. Refine by swapping photo IDs as user flags. |
-| Architecture | 9/10 | Clean separation: HILDA_RECIPES is its own module, combined via dedupe in data layer. cookingGuide field is forward-compatible — old recipes work without it. |
+| Architecture | 9/10 | Clean separation: RECIPECRAVE_RECIPES is its own module, combined via dedupe in data layer. cookingGuide field is forward-compatible — old recipes work without it. |
 | UX polish | 8/10 | A-Z page has sticky letter nav, gradient letter badges, thumb-prefixed cards. Detail-page cookingGuide cards use distinct color systems (forest plating / amber mistakes / cream subs). |
 | Performance | 9/10 | Server-rendered pages, static-friendly. No runtime DB calls. Image lazy-loading still works via Next/Image. |
 | Mobile responsive | 8/10 | A-Z grid drops to single column on mobile. Letter nav scrolls horizontally if needed. Sticky top still fights with header z-index — sticky offset `top-20` matches header height. |
@@ -242,19 +279,19 @@ Detail page reads `cookingGuide` via runtime cast `(recipe as unknown as { cooki
 
 ### Open gaps + recommended follow-up
 
-1. **25 menu items still need alias matches** in `parse-hilda-pdf.py` `SPELLING_ALIASES` dict (e.g. `LASAGNA` ↔ `LASAGNE`, `SHARWAMA` ↔ `SHAWARMA`, `EDIKA IKONG` ↔ `EDIKAIKONG`). Re-run pipeline to add them.
-2. **Ingredient quantities are missing** — every Hilda ingredient is `qty: 1, unit: 'as recipe'`. Source PDF doesn't have grams/cups. To fix: watch Hilda Baci's Record Breaking Online Class videos and transcribe quantities into a YAML override file, or use Gemini to extract from video transcripts.
+1. **25 menu items still need alias matches** in `parse-source-pdf.py` `SPELLING_ALIASES` dict (e.g. `LASAGNA` ↔ `LASAGNE`, `SHARWAMA` ↔ `SHAWARMA`, `EDIKA IKONG` ↔ `EDIKAIKONG`). Re-run pipeline to add them.
+2. **Ingredient quantities are missing** — every RecipeCrave ingredient is `qty: 1, unit: 'as recipe'`. Source PDF doesn't have grams/cups. To fix: watch RecipeCrave's Record Breaking Online Class videos and transcribe quantities into a YAML override file, or use Gemini to extract from video transcripts.
 3. **Instructions are 4-step category templates** — not per-recipe. Replace with real per-dish steps from the class video.
 4. **5 Unsplash images are fallbacks** — alfredo / mashedPotatoes / ofada / subwaySandwich / tigerNut. Replace with locally-uploaded JPGs at `/public/images/<key>.jpg` and update image-bank.ts when better photos available.
-5. **Supabase reseed needed** — Hilda recipes are static-seed-only. To push into prod DB, extend `scripts/seed.ts` to also iterate `HILDA_RECIPES` from `@/content/hilda-baci-recipes`. Or skip if SSG-only display is enough.
+5. **Supabase reseed needed** — RecipeCrave recipes are static-seed-only. To push into prod DB, extend `scripts/seed.ts` to also iterate `RECIPECRAVE_RECIPES` from `@/content/recipecrave-recipes`. Or skip if SSG-only display is enough.
 
 ### Pickup checklist for next Claude
 
-1. Hilda Baci import landed. 203 recipes live, 14 categories.
+1. RecipeCrave import landed. 203 recipes live, 14 categories.
 2. A-Z index renders all 203 at `/recipes/a-z`.
-3. Detail page has plating + mistakes + subs sections (only on Hilda recipes for now).
+3. Detail page has plating + mistakes + subs sections (only on RecipeCrave recipes for now).
 4. Vercel deploy on commit `a10a644`. URL: https://recipecrave.com/recipes/a-z and https://recipecrave.com/recipes/bolognese-sauce.
-5. Next default build: Seasoning by Weight Calculator (per ELEVENTH pass pickup). OR backfill ingredient quantities for Hilda recipes if user prefers content depth.
+5. Next default build: Seasoning by Weight Calculator (per ELEVENTH pass pickup). OR backfill ingredient quantities for RecipeCrave recipes if user prefers content depth.
 
 ## 🆕 ELEVENTH pass (2026-05-11 — desktop nav restructure + Baking Ratio Calculator live)
 

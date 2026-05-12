@@ -15,7 +15,7 @@ export type GuideRecipe = Recipe & { cookingGuide: CookingGuideMeta };
 
 const NOW = '2026-05-11T13:00:00Z';
 
-// Butterfly prawns (Snacks) - PDF title: BUTTERFLY PRAWNS
+// Butterfly prawns (Snacks)
 const r_butterfly_prawns: GuideRecipe = {
  id: 'butterfly-prawns',
  slug: 'butterfly-prawns',
@@ -79,7 +79,7 @@ const r_butterfly_prawns: GuideRecipe = {
  },
 };
 
-// Sloppy Joes (Snacks) - PDF title: SLOPPY JOES
+// Sloppy Joes (Snacks)
 const r_sloppy_joes: GuideRecipe = {
  id: 'sloppy-joes',
  slug: 'sloppy-joes',
@@ -144,7 +144,7 @@ const r_sloppy_joes: GuideRecipe = {
  },
 };
 
-// Shrimp Taco (Snacks) - PDF title: SHRIMP TACO
+// Shrimp Taco (Snacks)
 const r_shrimp_taco: GuideRecipe = {
  id: 'shrimp-taco',
  slug: 'shrimp-taco',
@@ -207,7 +207,7 @@ const r_shrimp_taco: GuideRecipe = {
  },
 };
 
-// Scotch egg (Snacks) - PDF title: SCOTCH EGG
+// Scotch egg (Snacks)
 const r_scotch_egg: GuideRecipe = {
  id: 'scotch-egg',
  slug: 'scotch-egg',
@@ -269,7 +269,7 @@ const r_scotch_egg: GuideRecipe = {
  },
 };
 
-// Caramel Popcorn (Snacks) - PDF title: CARAMEL POPCORN
+// Caramel Popcorn (Snacks)
 const r_caramel_popcorn: GuideRecipe = {
  id: 'caramel-popcorn',
  slug: 'caramel-popcorn',
@@ -326,7 +326,7 @@ const r_caramel_popcorn: GuideRecipe = {
  },
 };
 
-// Bao bun (Snacks) - PDF title: BAO BUN
+// Bao bun (Snacks)
 const r_bao_bun: GuideRecipe = {
  id: 'bao-bun',
  slug: 'bao-bun',
@@ -389,7 +389,7 @@ const r_bao_bun: GuideRecipe = {
  },
 };
 
-// Onion rings (Snacks) - PDF title: ONION RINGS
+// Onion rings (Snacks)
 const r_onion_rings: GuideRecipe = {
  id: 'onion-rings',
  slug: 'onion-rings',
@@ -451,7 +451,7 @@ const r_onion_rings: GuideRecipe = {
  },
 };
 
-// Popcorn Chicken (Snacks) - PDF title: POPCORN CHICKEN
+// Popcorn Chicken (Snacks)
 const r_popcorn_chicken: GuideRecipe = {
  id: 'popcorn-chicken',
  slug: 'popcorn-chicken',
@@ -520,7 +520,7 @@ const r_popcorn_chicken: GuideRecipe = {
  },
 };
 
-// Fish roll (Snacks) - PDF title: FISH ROLL
+// Fish roll (Snacks)
 const r_fish_roll: GuideRecipe = {
  id: 'fish-roll',
  slug: 'fish-roll',
@@ -583,7 +583,7 @@ const r_fish_roll: GuideRecipe = {
  },
 };
 
-// Chicken nuggets (Snacks) - PDF title: CHICKEN NUGGETS
+// Chicken nuggets (Snacks)
 const r_chicken_nuggets: GuideRecipe = {
  id: 'chicken-nuggets',
  slug: 'chicken-nuggets',
@@ -643,7 +643,7 @@ const r_chicken_nuggets: GuideRecipe = {
  },
 };
 
-// Apple Pie (Snacks) - PDF title: APPLE PIE
+// Apple Pie (Snacks)
 const r_apple_pie: GuideRecipe = {
  id: 'apple-pie',
  slug: 'apple-pie',
@@ -700,7 +700,7 @@ const r_apple_pie: GuideRecipe = {
  },
 };
 
-// Plantain chips (Snacks) - PDF title: PLANTAIN CHIPS
+// Plantain chips (Snacks)
 const r_plantain_chips: GuideRecipe = {
  id: 'plantain-chips',
  slug: 'plantain-chips',
@@ -757,7 +757,7 @@ const r_plantain_chips: GuideRecipe = {
  },
 };
 
-// Meat pie (Snacks) - PDF title: MEAT PIE
+// Meat pie (Snacks)
 const r_meat_pie: GuideRecipe = {
  id: 'meat-pie',
  slug: 'meat-pie',
@@ -820,7 +820,7 @@ const r_meat_pie: GuideRecipe = {
  },
 };
 
-// Sub Way Sandwich (Snacks) - PDF title: SUBWAY SANDWICH
+// Sub Way Sandwich (Snacks)
 const r_subway_sandwich: GuideRecipe = {
  id: 'subway-sandwich',
  slug: 'subway-sandwich',
@@ -886,7 +886,7 @@ const r_subway_sandwich: GuideRecipe = {
  },
 };
 
-// Chicken Quesadilla (Snacks) - PDF title: CHICKEN QUESADILLA
+// Chicken Quesadilla (Snacks)
 const r_chicken_quesadilla: GuideRecipe = {
  id: 'chicken-quesadilla',
  slug: 'chicken-quesadilla',
@@ -951,7 +951,7 @@ const r_chicken_quesadilla: GuideRecipe = {
  },
 };
 
-// Crispy Calamari And Tar Tar (Snacks) - PDF title: CRISPY CALAMARI AND TARTAR
+// Crispy Calamari And Tar Tar (Snacks)
 const r_crispy_calamari_and_tartar: GuideRecipe = {
  id: 'crispy-calamari-and-tartar',
  slug: 'crispy-calamari-and-tartar',
@@ -1014,7 +1014,7 @@ const r_crispy_calamari_and_tartar: GuideRecipe = {
  },
 };
 
-// Lemon Cake (Snacks) - PDF title: LEMON CAKE
+// Lemon Cake (Snacks)
 const r_lemon_cake: GuideRecipe = {
  id: 'lemon-cake',
  slug: 'lemon-cake',
@@ -1079,7 +1079,7 @@ const r_lemon_cake: GuideRecipe = {
  },
 };
 
-// Banana Bread (Snacks) - PDF title: BANANA BREAD
+// Banana Bread (Snacks)
 const r_banana_bread: GuideRecipe = {
  id: 'banana-bread',
  slug: 'banana-bread',
@@ -1136,7 +1136,7 @@ const r_banana_bread: GuideRecipe = {
  },
 };
 
-// Short Bread Cookies (Snacks) - PDF title: GINGER BREAD COOKIES
+// Short Bread Cookies (Snacks)
 const r_ginger_bread_cookies: GuideRecipe = {
  id: 'ginger-bread-cookies',
  slug: 'ginger-bread-cookies',
@@ -1203,7 +1203,7 @@ const r_ginger_bread_cookies: GuideRecipe = {
  },
 };
 
-// Samosa (Small Chops) - PDF title: SAMOSA AND SPRING ROLL
+// Samosa (Small Chops)
 const r_samosa_and_spring_roll: GuideRecipe = {
  id: 'samosa-and-spring-roll',
  slug: 'samosa-and-spring-roll',
@@ -1259,7 +1259,7 @@ const r_samosa_and_spring_roll: GuideRecipe = {
  },
 };
 
-// Money bag (Small Chops) - PDF title: MONEY BAG
+// Money bag (Small Chops)
 const r_money_bag: GuideRecipe = {
  id: 'money-bag',
  slug: 'money-bag',
@@ -1321,7 +1321,7 @@ const r_money_bag: GuideRecipe = {
  },
 };
 
-// Beer batter fish burger (Small Chops) - PDF title: BEER BATTER FISH BURGER
+// Beer batter fish burger (Small Chops)
 const r_beer_batter_fish_burger: GuideRecipe = {
  id: 'beer-batter-fish-burger',
  slug: 'beer-batter-fish-burger',
@@ -1388,7 +1388,7 @@ const r_beer_batter_fish_burger: GuideRecipe = {
  },
 };
 
-// Beef burger (Small Chops) - PDF title: BEEF BURGER
+// Beef burger (Small Chops)
 const r_beef_burger: GuideRecipe = {
  id: 'beef-burger',
  slug: 'beef-burger',
@@ -1463,7 +1463,7 @@ const r_beef_burger: GuideRecipe = {
  },
 };
 
-// Puff puff (Small Chops) - PDF title: PUFF PUFF
+// Puff puff (Small Chops)
 const r_puff_puff: GuideRecipe = {
  id: 'puff-puff',
  slug: 'puff-puff',
@@ -1526,7 +1526,7 @@ const r_puff_puff: GuideRecipe = {
  },
 };
 
-// Spaghetti & meat balls (Pasta) - PDF title: SPAGHETTI AND MEAT BALLS
+// Spaghetti & meat balls (Pasta)
 const r_spaghetti_and_meat_balls: GuideRecipe = {
  id: 'spaghetti-and-meat-balls',
  slug: 'spaghetti-and-meat-balls',
@@ -1583,7 +1583,7 @@ const r_spaghetti_and_meat_balls: GuideRecipe = {
  },
 };
 
-// Mac & Cheese (Pasta) - PDF title: MAC AND CHEESE
+// Mac & Cheese (Pasta)
 const r_mac_and_cheese: GuideRecipe = {
  id: 'mac-and-cheese',
  slug: 'mac-and-cheese',
@@ -1653,7 +1653,7 @@ const r_mac_and_cheese: GuideRecipe = {
  },
 };
 
-// Spicy beef penne (Pasta) - PDF title: SPICY BEEF PENNE
+// Spicy beef penne (Pasta)
 const r_spicy_beef_penne: GuideRecipe = {
  id: 'spicy-beef-penne',
  slug: 'spicy-beef-penne',
@@ -1723,7 +1723,7 @@ const r_spicy_beef_penne: GuideRecipe = {
  },
 };
 
-// Singapore noodles (Pasta) - PDF title: SINGAPORE NOODLES
+// Singapore noodles (Pasta)
 const r_singapore_noodles: GuideRecipe = {
  id: 'singapore-noodles',
  slug: 'singapore-noodles',
@@ -1792,7 +1792,7 @@ const r_singapore_noodles: GuideRecipe = {
  },
 };
 
-// 's Prawn Native Pasta (Pasta) - PDF title: PRAWN NATIVE PASTA
+// 's Prawn Native Pasta (Pasta)
 const r_prawn_native_pasta: GuideRecipe = {
  id: 'prawn-native-pasta',
  slug: 'prawn-native-pasta',
@@ -1859,7 +1859,7 @@ const r_prawn_native_pasta: GuideRecipe = {
  },
 };
 
-// Seafood pasta (Pasta) - PDF title: SEAFOOD PASTA
+// Seafood pasta (Pasta)
 const r_seafood_pasta: GuideRecipe = {
  id: 'seafood-pasta',
  slug: 'seafood-pasta',
@@ -1925,7 +1925,7 @@ const r_seafood_pasta: GuideRecipe = {
  },
 };
 
-// Spicy chilli garlic noodles (Pasta) - PDF title: SPICY CHILI GARLIC NOODLES
+// Spicy chilli garlic noodles (Pasta)
 const r_spicy_chili_garlic_noodles: GuideRecipe = {
  id: 'spicy-chili-garlic-noodles',
  slug: 'spicy-chili-garlic-noodles',
@@ -1993,7 +1993,7 @@ const r_spicy_chili_garlic_noodles: GuideRecipe = {
  },
 };
 
-// Pink pasta (Pasta) - PDF title: PINK PASTA
+// Pink pasta (Pasta)
 const r_pink_pasta: GuideRecipe = {
  id: 'pink-pasta',
  slug: 'pink-pasta',
@@ -2062,7 +2062,7 @@ const r_pink_pasta: GuideRecipe = {
  },
 };
 
-// Alfredo Pasta (Pasta) - PDF title: ALFREDO PASTA
+// Alfredo Pasta (Pasta)
 const r_alfredo_pasta: GuideRecipe = {
  id: 'alfredo-pasta',
  slug: 'alfredo-pasta',
@@ -2129,7 +2129,7 @@ const r_alfredo_pasta: GuideRecipe = {
  },
 };
 
-// Pineapple fried rice (Rice) - PDF title: SPECIAL SEAFOOD FRIED RICE
+// Pineapple fried rice (Rice)
 const r_special_seafood_fried_rice: GuideRecipe = {
  id: 'special-seafood-fried-rice',
  slug: 'special-seafood-fried-rice',
@@ -2203,7 +2203,7 @@ const r_special_seafood_fried_rice: GuideRecipe = {
  },
 };
 
-// 's Signature coconut rice (Rice) - PDF title: 'S SIGNATURE COCONUT RICE
+// 's Signature coconut rice (Rice)
 const r_signature_coconut_rice: GuideRecipe = {
  id: 'signature-coconut-rice',
  slug: 'signature-coconut-rice',
@@ -2273,7 +2273,7 @@ const r_signature_coconut_rice: GuideRecipe = {
  },
 };
 
-// Flavored Herb Rice (Rice) - PDF title: FLAVOURED HERB RICE
+// Flavored Herb Rice (Rice)
 const r_flavoured_herb_rice: GuideRecipe = {
  id: 'flavoured-herb-rice',
  slug: 'flavoured-herb-rice',
@@ -2330,7 +2330,7 @@ const r_flavoured_herb_rice: GuideRecipe = {
  },
 };
 
-// 's Asun rice (Rice) - PDF title: 'S ASUN RICE
+// 's Asun rice (Rice)
 const r_asun_rice: GuideRecipe = {
  id: 'asun-rice',
  slug: 'asun-rice',
@@ -2399,7 +2399,7 @@ const r_asun_rice: GuideRecipe = {
  },
 };
 
-// Carribean rice & peas (Rice) - PDF title: CARRIBEAN RICE AND PEAS
+// Carribean rice & peas (Rice)
 const r_carribean_rice_and_peas: GuideRecipe = {
  id: 'carribean-rice-and-peas',
  slug: 'carribean-rice-and-peas',
@@ -2466,7 +2466,7 @@ const r_carribean_rice_and_peas: GuideRecipe = {
  },
 };
 
-// Coconut jollof rice (Rice) - PDF title: SMOKEY JOLLOF RICE
+// Coconut jollof rice (Rice)
 const r_smokey_jollof_rice: GuideRecipe = {
  id: 'smokey-jollof-rice',
  slug: 'smokey-jollof-rice',
@@ -2539,7 +2539,7 @@ const r_smokey_jollof_rice: GuideRecipe = {
  },
 };
 
-// Native rice (Rice) - PDF title: NATIVE RICE
+// Native rice (Rice)
 const r_native_rice: GuideRecipe = {
  id: 'native-rice',
  slug: 'native-rice',
@@ -2610,7 +2610,7 @@ const r_native_rice: GuideRecipe = {
  },
 };
 
-// Suya Rice (Rice) - PDF title: SUYA RICE
+// Suya Rice (Rice)
 const r_suya_rice: GuideRecipe = {
  id: 'suya-rice',
  slug: 'suya-rice',
@@ -2679,7 +2679,7 @@ const r_suya_rice: GuideRecipe = {
  },
 };
 
-// Jambalaya Rice (Rice) - PDF title: JAMBALAYA RICE
+// Jambalaya Rice (Rice)
 const r_jambalaya_rice: GuideRecipe = {
  id: 'jambalaya-rice',
  slug: 'jambalaya-rice',
@@ -2749,7 +2749,7 @@ const r_jambalaya_rice: GuideRecipe = {
  },
 };
 
-// Banga rice (Rice) - PDF title: ATAMA BANGA
+// Banga rice (Rice)
 const r_atama_banga: GuideRecipe = {
  id: 'atama-banga',
  slug: 'atama-banga',
@@ -2817,7 +2817,7 @@ const r_atama_banga: GuideRecipe = {
  },
 };
 
-// Cream Cheese Bread (Breakfast) - PDF title: CREAM CHEESE BREAD
+// Cream Cheese Bread (Breakfast)
 const r_cream_cheese_bread: GuideRecipe = {
  id: 'cream-cheese-bread',
  slug: 'cream-cheese-bread',
@@ -2878,7 +2878,7 @@ const r_cream_cheese_bread: GuideRecipe = {
  },
 };
 
-// Potato balls (Breakfast) - PDF title: POTATO BALLS
+// Potato balls (Breakfast)
 const r_potato_balls: GuideRecipe = {
  id: 'potato-balls',
  slug: 'potato-balls',
@@ -2935,7 +2935,7 @@ const r_potato_balls: GuideRecipe = {
  },
 };
 
-// Garlic Bread (Breakfast) - PDF title: GARLIC BREAD
+// Garlic Bread (Breakfast)
 const r_garlic_bread: GuideRecipe = {
  id: 'garlic-bread',
  slug: 'garlic-bread',
@@ -2998,7 +2998,7 @@ const r_garlic_bread: GuideRecipe = {
  },
 };
 
-// Sharwama (Breakfast) - PDF title: SHAWARMA
+// Sharwama (Breakfast)
 const r_shawarma: GuideRecipe = {
  id: 'shawarma',
  slug: 'shawarma',
@@ -3055,7 +3055,7 @@ const r_shawarma: GuideRecipe = {
  },
 };
 
-// Crispy fried chicken (Breakfast) - PDF title: CRISPY FRIED CHICKEN
+// Crispy fried chicken (Breakfast)
 const r_crispy_fried_chicken: GuideRecipe = {
  id: 'crispy-fried-chicken',
  slug: 'crispy-fried-chicken',
@@ -3112,7 +3112,7 @@ const r_crispy_fried_chicken: GuideRecipe = {
  },
 };
 
-// Yamarita (Breakfast) - PDF title: YAMARITA
+// Yamarita (Breakfast)
 const r_yamarita: GuideRecipe = {
  id: 'yamarita',
  slug: 'yamarita',
@@ -3177,7 +3177,7 @@ const r_yamarita: GuideRecipe = {
  },
 };
 
-// Waffles (Breakfast) - PDF title: WAFFLES
+// Waffles (Breakfast)
 const r_waffles: GuideRecipe = {
  id: 'waffles',
  slug: 'waffles',
@@ -3242,7 +3242,7 @@ const r_waffles: GuideRecipe = {
  },
 };
 
-// Grilled Cheese Sandwich (Breakfast) - PDF title: GRILLED CHEESE SANDWICH
+// Grilled Cheese Sandwich (Breakfast)
 const r_grilled_cheese_sandwich: GuideRecipe = {
  id: 'grilled-cheese-sandwich',
  slug: 'grilled-cheese-sandwich',
@@ -3299,7 +3299,7 @@ const r_grilled_cheese_sandwich: GuideRecipe = {
  },
 };
 
-// Mashed Potatoes (Breakfast) - PDF title: MASHED POTATOES
+// Mashed Potatoes (Breakfast)
 const r_mashed_potatoes: GuideRecipe = {
  id: 'mashed-potatoes',
  slug: 'mashed-potatoes',
@@ -3360,7 +3360,7 @@ const r_mashed_potatoes: GuideRecipe = {
  },
 };
 
-// Flavoured pancakes (Breakfast) - PDF title: FLAVOURED PANCAKES
+// Flavoured pancakes (Breakfast)
 const r_flavoured_pancakes: GuideRecipe = {
  id: 'flavoured-pancakes',
  slug: 'flavoured-pancakes',
@@ -3423,7 +3423,7 @@ const r_flavoured_pancakes: GuideRecipe = {
  },
 };
 
-// Akara (Breakfast) - PDF title: AKARA
+// Akara (Breakfast)
 const r_akara: GuideRecipe = {
  id: 'akara',
  slug: 'akara',
@@ -3487,7 +3487,7 @@ const r_akara: GuideRecipe = {
  },
 };
 
-// Buttered Potatoes (Breakfast) - PDF title: BUTTERED POTATOES
+// Buttered Potatoes (Breakfast)
 const r_buttered_potatoes: GuideRecipe = {
  id: 'buttered-potatoes',
  slug: 'buttered-potatoes',
@@ -3548,7 +3548,7 @@ const r_buttered_potatoes: GuideRecipe = {
  },
 };
 
-// Owo (Soup) - PDF title: OWO
+// Owo (Soup)
 const r_owo: GuideRecipe = {
  id: 'owo',
  slug: 'owo',
@@ -3605,7 +3605,7 @@ const r_owo: GuideRecipe = {
  },
 };
 
-// Ogbono (Soup) - PDF title: OGBONO
+// Ogbono (Soup)
 const r_ogbono: GuideRecipe = {
  id: 'ogbono',
  slug: 'ogbono',
@@ -3672,7 +3672,7 @@ const r_ogbono: GuideRecipe = {
  },
 };
 
-// Efo riro (Soup) - PDF title: EFO RIRO
+// Efo riro (Soup)
 const r_efo_riro: GuideRecipe = {
  id: 'efo-riro',
  slug: 'efo-riro',
@@ -3738,7 +3738,7 @@ const r_efo_riro: GuideRecipe = {
  },
 };
 
-// Waterleaf Soup (Soup) - PDF title: WATERLEAF SOUP
+// Waterleaf Soup (Soup)
 const r_waterleaf_soup: GuideRecipe = {
  id: 'waterleaf-soup',
  slug: 'waterleaf-soup',
@@ -3803,7 +3803,7 @@ const r_waterleaf_soup: GuideRecipe = {
  },
 };
 
-// Seafood Okra (Soup) - PDF title: SEAFOOD OKRA
+// Seafood Okra (Soup)
 const r_seafood_okra: GuideRecipe = {
  id: 'seafood-okra',
  slug: 'seafood-okra',
@@ -3864,7 +3864,7 @@ const r_seafood_okra: GuideRecipe = {
  },
 };
 
-// Oha Soup (Soup) - PDF title: OHA SOUP
+// Oha Soup (Soup)
 const r_oha_soup: GuideRecipe = {
  id: 'oha-soup',
  slug: 'oha-soup',
@@ -3928,7 +3928,7 @@ const r_oha_soup: GuideRecipe = {
  },
 };
 
-// Ofe owerri (Soup) - PDF title: OFE OWERRI
+// Ofe owerri (Soup)
 const r_ofe_owerri: GuideRecipe = {
  id: 'ofe-owerri',
  slug: 'ofe-owerri',
@@ -4006,7 +4006,7 @@ const r_ofe_owerri: GuideRecipe = {
  },
 };
 
-// Seafood Boil (Soup) - PDF title: SEAFOOD BOIL
+// Seafood Boil (Soup)
 const r_seafood_boil: GuideRecipe = {
  id: 'seafood-boil',
  slug: 'seafood-boil',
@@ -4077,7 +4077,7 @@ const r_seafood_boil: GuideRecipe = {
  },
 };
 
-// Fisherman Soup (Soup) - PDF title: FISHERMAN SOUP
+// Fisherman Soup (Soup)
 const r_fisherman_soup: GuideRecipe = {
  id: 'fisherman-soup',
  slug: 'fisherman-soup',
@@ -4147,7 +4147,7 @@ const r_fisherman_soup: GuideRecipe = {
  },
 };
 
-// Buka Stew (Stew & Sauce) - PDF title: BUKA STEW
+// Buka Stew (Stew & Sauce)
 const r_buka_stew: GuideRecipe = {
  id: 'buka-stew',
  slug: 'buka-stew',
@@ -4209,7 +4209,7 @@ const r_buka_stew: GuideRecipe = {
  },
 };
 
-// Casserole Sauce (Stew & Sauce) - PDF title: CASSEROLE SAUCE
+// Casserole Sauce (Stew & Sauce)
 const r_casserole_sauce: GuideRecipe = {
  id: 'casserole-sauce',
  slug: 'casserole-sauce',
@@ -4274,7 +4274,7 @@ const r_casserole_sauce: GuideRecipe = {
  },
 };
 
-// Vegetable Sauce (Stew & Sauce) - PDF title: VEGETABLE SAUCE
+// Vegetable Sauce (Stew & Sauce)
 const r_vegetable_sauce: GuideRecipe = {
  id: 'vegetable-sauce',
  slug: 'vegetable-sauce',
@@ -4338,7 +4338,7 @@ const r_vegetable_sauce: GuideRecipe = {
  },
 };
 
-// Curry goat (Stew & Sauce) - PDF title: 9 CURRY GOAT
+// Curry goat (Stew & Sauce)
 const r_curry_goat: GuideRecipe = {
  id: 'curry-goat',
  slug: 'curry-goat',
@@ -4407,7 +4407,7 @@ const r_curry_goat: GuideRecipe = {
  },
 };
 
-// Turkey Stew (Stew & Sauce) - PDF title: TURKEY STEW
+// Turkey Stew (Stew & Sauce)
 const r_turkey_stew: GuideRecipe = {
  id: 'turkey-stew',
  slug: 'turkey-stew',
@@ -4471,7 +4471,7 @@ const r_turkey_stew: GuideRecipe = {
  },
 };
 
-// Butter chicken curry (Stew & Sauce) - PDF title: BUTTER CHICKEN CURRY
+// Butter chicken curry (Stew & Sauce)
 const r_butter_chicken_curry: GuideRecipe = {
  id: 'butter-chicken-curry',
  slug: 'butter-chicken-curry',
@@ -4542,7 +4542,7 @@ const r_butter_chicken_curry: GuideRecipe = {
  },
 };
 
-// Bolognese sauce (Stew & Sauce) - PDF title: 2 BOLOGNESE SAUCE
+// Bolognese sauce (Stew & Sauce)
 const r_bolognese_sauce: GuideRecipe = {
  id: 'bolognese-sauce',
  slug: 'bolognese-sauce',
@@ -4599,7 +4599,7 @@ const r_bolognese_sauce: GuideRecipe = {
  },
 };
 
-// Ofe Akwu (Stew & Sauce) - PDF title: OFE AKWU
+// Ofe Akwu (Stew & Sauce)
 const r_ofe_akwu: GuideRecipe = {
  id: 'ofe-akwu',
  slug: 'ofe-akwu',
@@ -4665,7 +4665,7 @@ const r_ofe_akwu: GuideRecipe = {
  },
 };
 
-// Beef goulash (Stew & Sauce) - PDF title: BEEF GOULASH
+// Beef goulash (Stew & Sauce)
 const r_beef_goulash: GuideRecipe = {
  id: 'beef-goulash',
  slug: 'beef-goulash',
@@ -4736,7 +4736,7 @@ const r_beef_goulash: GuideRecipe = {
  },
 };
 
-// Ofada Sauce (Stew & Sauce) - PDF title: OFADA SAUCE
+// Ofada Sauce (Stew & Sauce)
 const r_ofada_sauce: GuideRecipe = {
  id: 'ofada-sauce',
  slug: 'ofada-sauce',
@@ -4802,7 +4802,7 @@ const r_ofada_sauce: GuideRecipe = {
  },
 };
 
-// Charcuterie (Dessert) - PDF title: CHARCUTERIE BOARD
+// Charcuterie (Dessert)
 const r_charcuterie_board: GuideRecipe = {
  id: 'charcuterie-board',
  slug: 'charcuterie-board',
@@ -4865,7 +4865,7 @@ const r_charcuterie_board: GuideRecipe = {
  },
 };
 
-// Parfait (Dessert) - PDF title: PARFAIT
+// Parfait (Dessert)
 const r_parfait: GuideRecipe = {
  id: 'parfait',
  slug: 'parfait',
@@ -4928,7 +4928,7 @@ const r_parfait: GuideRecipe = {
  },
 };
 
-// Oreo Crumble (Dessert) - PDF title: OREO CRUMBLE
+// Oreo Crumble (Dessert)
 const r_oreo_crumble: GuideRecipe = {
  id: 'oreo-crumble',
  slug: 'oreo-crumble',
@@ -4985,7 +4985,7 @@ const r_oreo_crumble: GuideRecipe = {
  },
 };
 
-// Single Skillet Chocolate Chip Cookies (Dessert) - PDF title: SINGLE SKILLET CHOCOLATE CHIPS COOKIES
+// Single Skillet Chocolate Chip Cookies (Dessert)
 const r_single_skillet_chocolate_chips_cookies: GuideRecipe = {
  id: 'single-skillet-chocolate-chips-cookies',
  slug: 'single-skillet-chocolate-chips-cookies',
@@ -5050,7 +5050,7 @@ const r_single_skillet_chocolate_chips_cookies: GuideRecipe = {
  },
 };
 
-// Velvet (Dessert) - PDF title: VELVET
+// Velvet (Dessert)
 const r_velvet: GuideRecipe = {
  id: 'velvet',
  slug: 'velvet',
@@ -5113,7 +5113,7 @@ const r_velvet: GuideRecipe = {
  },
 };
 
-// Chocolate Muffin (Dessert) - PDF title: CHOCOLATE MUFFIN
+// Chocolate Muffin (Dessert)
 const r_chocolate_muffin: GuideRecipe = {
  id: 'chocolate-muffin',
  slug: 'chocolate-muffin',
@@ -5175,7 +5175,7 @@ const r_chocolate_muffin: GuideRecipe = {
  },
 };
 
-// Rotisserie chicken (Grills) - PDF title: ROTISSERIE CHICKEN
+// Rotisserie chicken (Grills)
 const r_rotisserie_chicken: GuideRecipe = {
  id: 'rotisserie-chicken',
  slug: 'rotisserie-chicken',
@@ -5239,7 +5239,7 @@ const r_rotisserie_chicken: GuideRecipe = {
  },
 };
 
-// Grilled Prawns (Grills) - PDF title: GRILLED PRAWNS
+// Grilled Prawns (Grills)
 const r_grilled_prawns: GuideRecipe = {
  id: 'grilled-prawns',
  slug: 'grilled-prawns',
@@ -5304,7 +5304,7 @@ const r_grilled_prawns: GuideRecipe = {
  },
 };
 
-// T-bone beef steak (Grills) - PDF title: T-BONE STEAK
+// T-bone beef steak (Grills)
 const r_t_bone_steak: GuideRecipe = {
  id: 't-bone-steak',
  slug: 't-bone-steak',
@@ -5365,7 +5365,7 @@ const r_t_bone_steak: GuideRecipe = {
  },
 };
 
-// Honey Barbecue Chicken Wings (Grills) - PDF title: HONEY BARBECUE WINGS
+// Honey Barbecue Chicken Wings (Grills)
 const r_honey_barbecue_wings: GuideRecipe = {
  id: 'honey-barbecue-wings',
  slug: 'honey-barbecue-wings',
@@ -5422,7 +5422,7 @@ const r_honey_barbecue_wings: GuideRecipe = {
  },
 };
 
-// Grilled fish (Grills) - PDF title: GRILLED FISH
+// Grilled fish (Grills)
 const r_grilled_fish: GuideRecipe = {
  id: 'grilled-fish',
  slug: 'grilled-fish',
@@ -5490,7 +5490,7 @@ const r_grilled_fish: GuideRecipe = {
  },
 };
 
-// Grilled Titus & Bole (Grills) - PDF title: GRILLED FISH AND BOLE
+// Grilled Titus & Bole (Grills)
 const r_grilled_fish_and_bole: GuideRecipe = {
  id: 'grilled-fish-and-bole',
  slug: 'grilled-fish-and-bole',
@@ -5547,7 +5547,7 @@ const r_grilled_fish_and_bole: GuideRecipe = {
  },
 };
 
-// Grilled turkey (Grills) - PDF title: GRILLED TURKEY
+// Grilled turkey (Grills)
 const r_grilled_turkey: GuideRecipe = {
  id: 'grilled-turkey',
  slug: 'grilled-turkey',
@@ -5612,7 +5612,7 @@ const r_grilled_turkey: GuideRecipe = {
  },
 };
 
-// Naan Bread (Sides) - PDF title: NAAN BREAD
+// Naan Bread (Sides)
 const r_naan_bread: GuideRecipe = {
  id: 'naan-bread',
  slug: 'naan-bread',
@@ -5674,7 +5674,7 @@ const r_naan_bread: GuideRecipe = {
  },
 };
 
-// Stuffed Masa (Sides) - PDF title: STUFFED MASA
+// Stuffed Masa (Sides)
 const r_stuffed_masa: GuideRecipe = {
  id: 'stuffed-masa',
  slug: 'stuffed-masa',
@@ -5741,7 +5741,7 @@ const r_stuffed_masa: GuideRecipe = {
  },
 };
 
-// Butterfly Fluffy Moi Moi (Sides) - PDF title: BUTTER FLY FLUFFY MOI MOI
+// Butterfly Fluffy Moi Moi (Sides)
 const r_butter_fly_fluffy_moi_moi: GuideRecipe = {
  id: 'butter-fly-fluffy-moi-moi',
  slug: 'butter-fly-fluffy-moi-moi',
@@ -5798,7 +5798,7 @@ const r_butter_fly_fluffy_moi_moi: GuideRecipe = {
  },
 };
 
-// Isi Ewu (Sides) - PDF title: ISI EWU
+// Isi Ewu (Sides)
 const r_isi_ewu: GuideRecipe = {
  id: 'isi-ewu',
  slug: 'isi-ewu',
@@ -5855,7 +5855,7 @@ const r_isi_ewu: GuideRecipe = {
  },
 };
 
-// Kelewele (Sides) - PDF title: KELEWELE
+// Kelewele (Sides)
 const r_kelewele: GuideRecipe = {
  id: 'kelewele',
  slug: 'kelewele',
@@ -5919,7 +5919,7 @@ const r_kelewele: GuideRecipe = {
  },
 };
 
-// Full Salad (Sides) - PDF title: FULL SALAD
+// Full Salad (Sides)
 const r_full_salad: GuideRecipe = {
  id: 'full-salad',
  slug: 'full-salad',
@@ -5976,7 +5976,7 @@ const r_full_salad: GuideRecipe = {
  },
 };
 
-// Chicken Salad (Sides) - PDF title: CHICKEN SALAD
+// Chicken Salad (Sides)
 const r_chicken_salad: GuideRecipe = {
  id: 'chicken-salad',
  slug: 'chicken-salad',
@@ -6033,7 +6033,7 @@ const r_chicken_salad: GuideRecipe = {
  },
 };
 
-// Peppered goat meat (Sides) - PDF title: 1. BASMATI RICE 7. GOAT MEAT
+// Peppered goat meat (Sides)
 const r_1_basmati_rice_7_goat_meat: GuideRecipe = {
  id: '1-basmati-rice-7-goat-meat',
  slug: '1-basmati-rice-7-goat-meat',
@@ -6090,7 +6090,7 @@ const r_1_basmati_rice_7_goat_meat: GuideRecipe = {
  },
 };
 
-// Fresh fish pepper soup (Sides) - PDF title: FRESH FISH PEPPER SOUP
+// Fresh fish pepper soup (Sides)
 const r_fresh_fish_pepper_soup: GuideRecipe = {
  id: 'fresh-fish-pepper-soup',
  slug: 'fresh-fish-pepper-soup',
@@ -6155,7 +6155,7 @@ const r_fresh_fish_pepper_soup: GuideRecipe = {
  },
 };
 
-// Nkwobi (Sides) - PDF title: NKWOBI
+// Nkwobi (Sides)
 const r_nkwobi: GuideRecipe = {
  id: 'nkwobi',
  slug: 'nkwobi',
@@ -6219,7 +6219,7 @@ const r_nkwobi: GuideRecipe = {
  },
 };
 
-// Bush meat & plantain (Sides) - PDF title: BUSH MEAT AND PLANTAIN
+// Bush meat & plantain (Sides)
 const r_bush_meat_and_plantain: GuideRecipe = {
  id: 'bush-meat-and-plantain',
  slug: 'bush-meat-and-plantain',
@@ -6276,7 +6276,7 @@ const r_bush_meat_and_plantain: GuideRecipe = {
  },
 };
 
-// Cowtail & Plantain (Porridges) - PDF title: COWTAIL AND PLANTAIN
+// Cowtail & Plantain (Porridges)
 const r_cowtail_and_plantain: GuideRecipe = {
  id: 'cowtail-and-plantain',
  slug: 'cowtail-and-plantain',
@@ -6339,7 +6339,7 @@ const r_cowtail_and_plantain: GuideRecipe = {
  },
 };
 
-// Fried beans (Porridges) - PDF title: 13 FRIED BEANS
+// Fried beans (Porridges)
 const r_fried_beans: GuideRecipe = {
  id: 'fried-beans',
  slug: 'fried-beans',
@@ -6402,7 +6402,7 @@ const r_fried_beans: GuideRecipe = {
  },
 };
 
-// Yam & sweet potato (Porridges) - PDF title: YAM AND SWEET PTATOES
+// Yam & sweet potato (Porridges)
 const r_yam_and_sweet_ptatoes: GuideRecipe = {
  id: 'yam-and-sweet-ptatoes',
  slug: 'yam-and-sweet-ptatoes',
@@ -6467,7 +6467,7 @@ const r_yam_and_sweet_ptatoes: GuideRecipe = {
  },
 };
 
-// Ekpang Nkukwo (Porridges) - PDF title: EKPANG NKUKWO
+// Ekpang Nkukwo (Porridges)
 const r_ekpang_nkukwo: GuideRecipe = {
  id: 'ekpang-nkukwo',
  slug: 'ekpang-nkukwo',
@@ -6534,7 +6534,7 @@ const r_ekpang_nkukwo: GuideRecipe = {
  },
 };
 
-// Tropical juice (Porridges) - PDF title: TROPICAL JUICE
+// Tropical juice (Porridges)
 const r_tropical_juice: GuideRecipe = {
  id: 'tropical-juice',
  slug: 'tropical-juice',
@@ -6591,7 +6591,7 @@ const r_tropical_juice: GuideRecipe = {
  },
 };
 
-// Zobo drinks (Drinks) - PDF title: ZOBO
+// Zobo drinks (Drinks)
 const r_zobo: GuideRecipe = {
  id: 'zobo',
  slug: 'zobo',
@@ -6659,7 +6659,7 @@ const r_zobo: GuideRecipe = {
  },
 };
 
-// Chocolate chips ice cream (Iced Treats) - PDF title: CHOCOLATE CHIPS ICE CREAM
+// Chocolate chips ice cream (Iced Treats)
 const r_chocolate_chips_ice_cream: GuideRecipe = {
  id: 'chocolate-chips-ice-cream',
  slug: 'chocolate-chips-ice-cream',
@@ -6720,7 +6720,7 @@ const r_chocolate_chips_ice_cream: GuideRecipe = {
  },
 };
 
-// Berry mix popsicles (Iced Treats) - PDF title: BERRY MIX POPSICLE
+// Berry mix popsicles (Iced Treats)
 const r_berry_mix_popsicle: GuideRecipe = {
  id: 'berry-mix-popsicle',
  slug: 'berry-mix-popsicle',
@@ -6780,7 +6780,7 @@ const r_berry_mix_popsicle: GuideRecipe = {
  },
 };
 
-// Simple Oreo Milkshake (Iced Treats) - PDF title: SIMPLE OREO MILK SHAKE
+// Simple Oreo Milkshake (Iced Treats)
 const r_simple_oreo_milk_shake: GuideRecipe = {
  id: 'simple-oreo-milk-shake',
  slug: 'simple-oreo-milk-shake',
@@ -6837,7 +6837,7 @@ const r_simple_oreo_milk_shake: GuideRecipe = {
  },
 };
 
-// Whiskey Sour (Cocktails & Mocktails) - PDF title: WHISKEY SOUR WITHOUT EGGS
+// Whiskey Sour (Cocktails & Mocktails)
 const r_whiskey_sour_without_eggs: GuideRecipe = {
  id: 'whiskey-sour-without-eggs',
  slug: 'whiskey-sour-without-eggs',
@@ -6894,7 +6894,7 @@ const r_whiskey_sour_without_eggs: GuideRecipe = {
  },
 };
 
-// Tequila sunrise (Cocktails & Mocktails) - PDF title: TEQUILA SUNRISE
+// Tequila sunrise (Cocktails & Mocktails)
 const r_tequila_sunrise: GuideRecipe = {
  id: 'tequila-sunrise',
  slug: 'tequila-sunrise',
@@ -6951,7 +6951,7 @@ const r_tequila_sunrise: GuideRecipe = {
  },
 };
 
-// 3 Flavor Mimosa (Cocktails & Mocktails) - PDF title: 3 FLAVOR MIMOSA
+// 3 Flavor Mimosa (Cocktails & Mocktails)
 const r_flavor_mimosa: GuideRecipe = {
  id: 'flavor-mimosa',
  slug: 'flavor-mimosa',
@@ -7008,7 +7008,7 @@ const r_flavor_mimosa: GuideRecipe = {
  },
 };
 
-// Cosmopolitan (Cocktails & Mocktails) - PDF title: COSMOPOLITAN
+// Cosmopolitan (Cocktails & Mocktails)
 const r_cosmopolitan: GuideRecipe = {
  id: 'cosmopolitan',
  slug: 'cosmopolitan',
@@ -7065,7 +7065,7 @@ const r_cosmopolitan: GuideRecipe = {
  },
 };
 
-// Rainbow Paradise (Cocktails & Mocktails) - PDF title: RAINBOW PARADISE
+// Rainbow Paradise (Cocktails & Mocktails)
 const r_rainbow_paradise: GuideRecipe = {
  id: 'rainbow-paradise',
  slug: 'rainbow-paradise',
@@ -7122,7 +7122,7 @@ const r_rainbow_paradise: GuideRecipe = {
  },
 };
 
-// Long Island Iced Tea (Cocktails & Mocktails) - PDF title: LONG ISLAND ICED TEA
+// Long Island Iced Tea (Cocktails & Mocktails)
 const r_long_island_iced_tea: GuideRecipe = {
  id: 'long-island-iced-tea',
  slug: 'long-island-iced-tea',
@@ -7179,7 +7179,7 @@ const r_long_island_iced_tea: GuideRecipe = {
  },
 };
 
-// Margarita (Cocktails & Mocktails) - PDF title: MARGARITA
+// Margarita (Cocktails & Mocktails)
 const r_margarita: GuideRecipe = {
  id: 'margarita',
  slug: 'margarita',
@@ -7241,7 +7241,7 @@ const r_margarita: GuideRecipe = {
  },
 };
 
-// Champagne Holiday (Cocktails & Mocktails) - PDF title: CHAMPAGNE HOLIDAY
+// Champagne Holiday (Cocktails & Mocktails)
 const r_champagne_holiday: GuideRecipe = {
  id: 'champagne-holiday',
  slug: 'champagne-holiday',
@@ -7298,7 +7298,7 @@ const r_champagne_holiday: GuideRecipe = {
  },
 };
 
-// Classic Mojito (Cocktails & Mocktails) - PDF title: CLASSIC MOJITO
+// Classic Mojito (Cocktails & Mocktails)
 const r_classic_mojito: GuideRecipe = {
  id: 'classic-mojito',
  slug: 'classic-mojito',
@@ -7355,7 +7355,7 @@ const r_classic_mojito: GuideRecipe = {
  },
 };
 
-// Passion Fruit Daiquiri (Cocktails & Mocktails) - PDF title: PASSION FRUIT DAIQUIRI
+// Passion Fruit Daiquiri (Cocktails & Mocktails)
 const r_passion_fruit_daiquiri: GuideRecipe = {
  id: 'passion-fruit-daiquiri',
  slug: 'passion-fruit-daiquiri',
@@ -7412,7 +7412,7 @@ const r_passion_fruit_daiquiri: GuideRecipe = {
  },
 };
 
-// Wings Signature (Cocktails & Mocktails) - PDF title: WINGS SIGNATURE
+// Wings Signature (Cocktails & Mocktails)
 const r_wings_signature: GuideRecipe = {
  id: 'wings-signature',
  slug: 'wings-signature',
@@ -7469,7 +7469,7 @@ const r_wings_signature: GuideRecipe = {
  },
 };
 
-// Classic Martini (Cocktails & Mocktails) - PDF title: CLASSIC MARTINI
+// Classic Martini (Cocktails & Mocktails)
 const r_classic_martini: GuideRecipe = {
  id: 'classic-martini',
  slug: 'classic-martini',
@@ -7526,7 +7526,7 @@ const r_classic_martini: GuideRecipe = {
  },
 };
 
-// Moscow Mule (Cocktails & Mocktails) - PDF title: MOSCOW MULE
+// Moscow Mule (Cocktails & Mocktails)
 const r_moscow_mule: GuideRecipe = {
  id: 'moscow-mule',
  slug: 'moscow-mule',
@@ -7583,7 +7583,7 @@ const r_moscow_mule: GuideRecipe = {
  },
 };
 
-// Kiwi Fizz (Cocktails & Mocktails) - PDF title: KIWI FIZZ
+// Kiwi Fizz (Cocktails & Mocktails)
 const r_kiwi_fizz: GuideRecipe = {
  id: 'kiwi-fizz',
  slug: 'kiwi-fizz',
@@ -7640,7 +7640,7 @@ const r_kiwi_fizz: GuideRecipe = {
  },
 };
 
-// Wavy (Cocktails & Mocktails) - PDF title: WAVY
+// Wavy (Cocktails & Mocktails)
 const r_wavy: GuideRecipe = {
  id: 'wavy',
  slug: 'wavy',
@@ -7697,7 +7697,7 @@ const r_wavy: GuideRecipe = {
  },
 };
 
-// Blue Colada (Cocktails & Mocktails) - PDF title: BLUE COLADA
+// Blue Colada (Cocktails & Mocktails)
 const r_blue_colada: GuideRecipe = {
  id: 'blue-colada',
  slug: 'blue-colada',
@@ -7754,7 +7754,7 @@ const r_blue_colada: GuideRecipe = {
  },
 };
 
-// Cinnamon Mimosa (Cocktails & Mocktails) - PDF title: CINNAMON MIMOSA
+// Cinnamon Mimosa (Cocktails & Mocktails)
 const r_cinnamon_mimosa: GuideRecipe = {
  id: 'cinnamon-mimosa',
  slug: 'cinnamon-mimosa',
@@ -7811,7 +7811,7 @@ const r_cinnamon_mimosa: GuideRecipe = {
  },
 };
 
-// Bubble Signature (Cocktails & Mocktails) - PDF title: BUBBLE SIGNATURE
+// Bubble Signature (Cocktails & Mocktails)
 const r_bubble_signature: GuideRecipe = {
  id: 'bubble-signature',
  slug: 'bubble-signature',
@@ -7868,7 +7868,7 @@ const r_bubble_signature: GuideRecipe = {
  },
 };
 
-// Whipped Cream Mimosa (Cocktails & Mocktails) - PDF title: WHIPPED CREAM MIMOSA
+// Whipped Cream Mimosa (Cocktails & Mocktails)
 const r_whipped_cream_mimosa: GuideRecipe = {
  id: 'whipped-cream-mimosa',
  slug: 'whipped-cream-mimosa',
