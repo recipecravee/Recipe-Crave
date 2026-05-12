@@ -1,7 +1,96 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **THIRTEENTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+> Last updated: 2026-05-12 — **FOURTEENTH pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+
+## 🆕 FOURTEENTH pass (2026-05-12 — 14 menu-section category landing pages)
+
+### Commit landed this pass
+
+| Commit | What |
+|---|---|
+| `40acf72` | **14 menu category landings**. User flagged: "where are all the Hilda Baci stuff, and the drinks as well?" Issue: Hilda's 126 recipes were folded into `/recipes` + A-Z + `/recipes/[slug]` but no per-category browse pages existed. `/categories` landing existed but linked to `/recipes?course=…` query-filter not a real page; `/cuisine/[cuisine]` worked but `/categories/<menu-section>` 404'd. Fixed: new `MenuCategory` data type + 14 entries in `src/content/menu-categories.ts`, dynamic route `/categories/[slug]/page.tsx`, rebuilt `/categories` landing with 14 image tiles. MegaMenu Recipes panel now deep-links to each: 8 in "By menu section" column + 6 in "More categories" column + "All 14 categories →" footer. Replaced dead "By ingredient" column. |
+
+### Live count per category (verified at 1280px)
+
+| Slug | Name | Count |
+|---|---|---|
+| snacks | Snacks | 19 |
+| small-chops | Small Chops | 7 |
+| pasta | Pasta | 9 |
+| rice | Rice | 10 |
+| breakfast | Breakfast | 17 |
+| soups | Soups | 17 |
+| stews-sauces | Stews & Sauces | 10 |
+| desserts | Desserts | 6 |
+| grills | Grills | 7 |
+| sides | Sides | 14 |
+| porridges | Porridges | 5 |
+| **drinks** | **Drinks** | **1** (Zobo) |
+| iced-treats | Iced Treats & Shakes | 3 |
+| **cocktails-mocktails** | **Cocktails & Mocktails** | **19** |
+
+Total = 144 (some recipes appear in 2 categories — e.g. Snacks + Small Chops share appetizer course; titleKeywords filter isolates them).
+
+### MenuCategory filter contract
+
+```ts
+type MenuCategory = {
+  slug: string;
+  name: string;
+  blurb: string;
+  emoji: string;
+  image: string;
+  course: string;          // primary filter: recipe.course === cat.course
+  occasions?: string[];    // optional secondary: recipe.occasion in occasions
+  occasionMode?: 'none-only';  // requires recipe.occasion === null
+  titleKeywords?: string[];    // fallback: title/keywords contain any keyword
+                                // (overrides occasion rules when set)
+};
+
+filterByCategory(recipes, cat):
+  recipe.course must equal cat.course AND one of:
+    - if titleKeywords[] set: title OR keywords contain any keyword
+    - if occasionMode='none-only': recipe.occasion === null
+    - if occasions[] set: recipe.occasion in occasions
+    - else: any
+```
+
+### Why Drinks shows just 1
+
+Hilda's 20 "drink-tagged" recipes split as:
+- 19 with `occasion: 'cocktail'` → /categories/cocktails-mocktails
+- 1 with `occasion: null` → /categories/drinks (Zobo)
+
+PDF body had Egg Nog + Tiger Nut named in menu (page 3-5) but the body block parser missed them — they were in the "Missed: 25" list of pass 12. To recover: re-run `parse-hilda-pdf.py` with added `SPELLING_ALIASES['EGG NOG']` + `['TIGER NUT MILK']`, regen TS, redeploy. Cleanest follow-up task.
+
+### Files this pass
+
+```
+A  src/content/menu-categories.ts                Menu type + 14 entries + filter helper
+A  src/app/categories/[slug]/page.tsx            Dynamic per-category list page
+M  src/app/categories/page.tsx                   Rebuilt landing w/ 14 image tiles + counts
+M  src/components/site/MegaMenu.tsx              Deep-link Recipes panel columns to /categories/<slug>
+M  CONTEXT-HANDOFF-FOR-CLAUDE.md
+```
+
+### Self-score for this pass
+
+| Dimension | Score | Note |
+|---|---|---|
+| User question answered | 10/10 | "Where are all the Hilda Baci stuff and drinks?" — direct: /categories landing has all 14, /categories/drinks + /categories/cocktails-mocktails reachable, MegaMenu Recipes panel deep-links to all. |
+| Filter correctness | 8/10 | Keyword filter handles Snacks vs Small Chops dedupe overlap. Drinks count low because PDF parser missed Egg Nog + Tiger Nut — fixable in next pass. |
+| URL structure | 9/10 | Clean `/categories/<slug>` paths, generateStaticParams emits all 14 at build time, no client-side routing needed. |
+| Mobile parity | 8/10 | MegaMenu mobile accordion shows menu-section links via the Recipes accordion column pills. Could add a dedicated "By menu section" accordion in next pass. |
+| **Overall** | **8.75/10** | Closes the gap user flagged. Drinks underpopulation is a data-quality issue (PDF parse miss) not a UI issue. |
+
+### Pickup checklist for next Claude
+
+1. 14 categories live at `/categories/<slug>`. Commit `40acf72` pushed.
+2. Vercel deploy auto-rolling.
+3. **Recommended next**: re-run `parse-hilda-pdf.py` with added aliases for `EGG NOG`, `TIGER NUT`, `EDIKA IKONG`, `LASAGNA`/`LASAGNE`, `SHAWARMA`/`SHARWAMA` to recover the 25 missed PDF recipes. Regen TS, recommit.
+4. Or proceed to reference-site scrape (tasty.co + foodnetwork.com) per THIRTEENTH-pass pickup.
+5. Or build Seasoning by Weight calculator (per ELEVENTH-pass queue).
 
 ## 🆕 THIRTEENTH pass (2026-05-12 — mega-menu rebuild, tasty.co / foodnetwork.com–inspired)
 
