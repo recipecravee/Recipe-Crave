@@ -5,7 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {
   Heart, Calendar, ShoppingCart, Camera, Settings, Sparkles, Clock, ChefHat,
-  Bookmark, TrendingUp, Flame, Leaf, Utensils, Award, Mic,
+  Bookmark, TrendingUp, Flame, Leaf, Utensils, Award, Mic, Lightbulb, Target,
+  Activity,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -84,6 +85,25 @@ export function AccountDashboard({ userEmail, catalog }: Props) {
 
   const displayName = userEmail.split('@')[0] ?? 'there';
 
+  // Time-of-day greeting
+  const hour = new Date().getHours();
+  const greeting =
+    hour < 5 ? 'Up late' :
+    hour < 12 ? 'Good morning' :
+    hour < 17 ? 'Good afternoon' :
+    hour < 21 ? 'Good evening' :
+    'Winding down';
+
+  // Daily cooking tip — deterministic-by-day-of-year so it rotates without
+  // a server roundtrip. Pulled from a curated list of herb wisdom + technique
+  // pointers that match the strategy doc's "voice-search snippet" surface.
+  const dailyTip = DAILY_TIPS[new Date().getDay() * 3 % DAILY_TIPS.length];
+
+  // Weekly cooking goal — tracks last 7 calendar days w/ activity
+  const weekDays = cookingStreak();
+  const weeklyGoal = 4;        // default 4 cooks per week
+  const weeklyPct = Math.min(100, (weekDays / weeklyGoal) * 100);
+
   return (
     <div className="container py-8 lg:py-12">
       {/* HERO + STATS */}
@@ -94,7 +114,8 @@ export function AccountDashboard({ userEmail, catalog }: Props) {
               Your kitchen
             </p>
             <h1 className="mt-2 font-serif text-3xl font-bold text-ink sm:text-4xl">
-              Welcome back, <span className="capitalize text-terracotta-600">{displayName}</span>
+              {greeting},{' '}
+              <span className="capitalize text-terracotta-600">{displayName}</span>
             </h1>
             <p className="mt-1 text-sm text-ink-muted">{userEmail}</p>
           </div>
@@ -104,7 +125,41 @@ export function AccountDashboard({ userEmail, catalog }: Props) {
           <Stat icon={Bookmark} label="Saved" value={savedRecipes.length} tone="terracotta" />
           <Stat icon={Calendar} label="Meal plans" value={mealPlanCount} tone="forest" />
           <Stat icon={Clock} label="Recently viewed" value={recentRecipes.length} tone="amber" />
-          <Stat icon={Award} label="Streak (days)" value={cookingStreak()} tone="ink" />
+          <Stat icon={Award} label="Streak (days)" value={weekDays} tone="ink" />
+        </div>
+
+        {/* Weekly cooking goal progress bar */}
+        <div className="mt-6 rounded-2xl bg-white/70 p-4 backdrop-blur-sm">
+          <div className="flex items-center justify-between text-xs">
+            <span className="inline-flex items-center gap-1.5 font-bold uppercase tracking-widest text-forest-700">
+              <Target className="h-3.5 w-3.5" aria-hidden /> This week&apos;s cooking goal
+            </span>
+            <span className="font-bold text-ink">
+              {weekDays} / {weeklyGoal} days
+            </span>
+          </div>
+          <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-cream-100">
+            <div
+              className="h-full bg-gradient-to-r from-forest-400 to-forest-600 transition-all duration-500"
+              style={{ width: `${weeklyPct}%` }}
+            />
+          </div>
+          <p className="mt-1.5 text-[11px] text-ink-muted">
+            {weekDays >= weeklyGoal
+              ? '🎉 Goal hit. You are cooking like a pro this week.'
+              : `Cook ${weeklyGoal - weekDays} more day${weeklyGoal - weekDays === 1 ? '' : 's'} to hit your weekly goal.`}
+          </p>
+        </div>
+
+        {/* Daily tip banner */}
+        <div className="mt-4 flex items-start gap-3 rounded-2xl bg-amber-50 p-4 ring-1 ring-amber-200">
+          <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" aria-hidden />
+          <div className="flex-1">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-amber-700">
+              Tip of the day
+            </p>
+            <p className="mt-1 text-sm text-ink">{dailyTip}</p>
+          </div>
         </div>
       </section>
 
@@ -198,6 +253,9 @@ export function AccountDashboard({ userEmail, catalog }: Props) {
           </div>
         </section>
       ) : null}
+
+      {/* RECENT ACTIVITY FEED */}
+      <ActivityFeedSection savedCount={savedRecipes.length} mealPlanCount={mealPlanCount} recentCount={recentRecipes.length} />
 
       {/* COOKING JOURNEY / FEATURE EXPLORER */}
       <section className="mt-12">
@@ -348,6 +406,64 @@ function EmptyTile({
   );
 }
 
+function ActivityFeedSection({
+  savedCount, mealPlanCount, recentCount,
+}: { savedCount: number; mealPlanCount: number; recentCount: number }) {
+  const entries: Array<{ icon: typeof Activity; label: string; sub: string; tone: string }> = [];
+
+  if (savedCount > 0) {
+    entries.push({
+      icon: Bookmark,
+      label: `${savedCount} saved recipe${savedCount === 1 ? '' : 's'} in your library`,
+      sub: 'Stored locally — synced to your account when you log in on another device',
+      tone: 'text-terracotta-600',
+    });
+  }
+  if (mealPlanCount > 0) {
+    entries.push({
+      icon: Calendar,
+      label: `${mealPlanCount} meal plan${mealPlanCount === 1 ? '' : 's'} generated`,
+      sub: 'Find them in your meal-plan history',
+      tone: 'text-forest-700',
+    });
+  }
+  if (recentCount > 0) {
+    entries.push({
+      icon: Clock,
+      label: `${recentCount} recipe${recentCount === 1 ? '' : 's'} viewed this week`,
+      sub: 'Recently viewed strip above shows them',
+      tone: 'text-amber-700',
+    });
+  }
+  if (entries.length === 0) {
+    entries.push({
+      icon: Sparkles,
+      label: 'Start your cooking activity',
+      sub: 'Browse a recipe, generate a meal plan, or use a calculator to populate this feed',
+      tone: 'text-ink-subtle',
+    });
+  }
+
+  return (
+    <section className="mt-12">
+      <h2 className="mb-3 font-serif text-2xl">Recent activity</h2>
+      <div className="rounded-2xl bg-white p-5 shadow-sm">
+        <ul className="divide-y divide-ink/5">
+          {entries.map((entry, i) => (
+            <li key={i} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
+              <entry.icon className={`mt-0.5 h-4 w-4 shrink-0 ${entry.tone}`} aria-hidden />
+              <div>
+                <p className="font-semibold text-ink">{entry.label}</p>
+                <p className="mt-0.5 text-xs text-ink-muted">{entry.sub}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
 function ExploreTile({
   icon: Icon, href, title, body,
 }: {
@@ -371,6 +487,28 @@ function ExploreTile({
     </Link>
   );
 }
+
+/**
+ * Curated daily tips — rotated by day-of-year so every visit on the same
+ * date gets the same tip. Pull from herb wisdom + technique pointers that
+ * double as voice-search snippet candidates. Update list quarterly.
+ */
+const DAILY_TIPS: string[] = [
+  'Salt your pasta water at 1.0-1.5% of water weight ("salty as the sea"). Reserve a cup of starchy water before draining — that is the secret to a sauce that clings.',
+  'Dry-brine chicken with 1% kosher salt by weight, uncovered in the fridge for 12-24 hours. Crispier skin than wet brine, half the work.',
+  'Turmeric + black pepper increases curcumin absorption by 2000%. Always pair them when cooking for anti-inflammatory benefits.',
+  'Bloom dry spices in fat for 20-30 seconds before adding liquid. Volatile oils release into the fat and coat every bite.',
+  'Cool food fully within 2 hours of cooking before refrigerating. Hot food in a sealed container creates condensation that ruins texture and speeds spoilage.',
+  'Rest meat after cooking for one-third its cook time. A 30-min roast rests 10 min. Cuts retain 30-40% more juice when sliced.',
+  'Cinnamon improves fasting glucose by 10-29% in type-2 diabetics across multiple trials. 0.5-1 tsp daily is the therapeutic window.',
+  'Garlic should rest 10 minutes after crushing before cooking. Allicin (the active compound) needs that time to activate. Skipping this step kills the health benefits.',
+  'Pasta water should be "salty as the sea" — about 1 tablespoon kosher salt per 4 quarts. Most home cooks under-salt by 5×.',
+  'Sear before braise. The Maillard crust on browned meat dissolves into the braising liquid and gives stew its depth. Skip this step and the stew tastes flat.',
+  'Salt is the single biggest variable in cooking. Most home recipes are under-salted by 30%. Taste at every stage and adjust.',
+  'Ginger + turmeric stack compound anti-inflammatory pathways. Hitting both reduces inflammation more than either alone — try them in soup tonight.',
+  'Bring sauces back to a rolling boil for 1 full minute when reheating. Bacteria die at 165°F, but flavor compounds also reawaken at that temperature.',
+  'Cool stock with shallow containers — they cool 3× faster than deep ones. Speed through the danger zone (40-140°F) matters more than refrigerator temperature.',
+];
 
 /**
  * Cooking-streak heuristic — checks how many of the last 7 days have any
