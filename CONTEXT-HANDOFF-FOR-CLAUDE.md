@@ -1,7 +1,140 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **TWENTY-FIRST pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+> Last updated: 2026-05-12 — **TWENTY-SECOND pass** by Claude Opus 4.7 (caveman mode). Sections 1–20 below cover every fix landed across the day's session. Read top-to-bottom. PENDING ITEMS at "Site audit — 2026-05-11 final pass" section.
+
+## 🆕 TWENTY-SECOND pass (2026-05-12 — strategy-doc alignment: PAA + Quick Filters + Cook-Time/Method/Servings browse + Recipe of the Day + Affiliate infra)
+
+### Why this pass
+
+User pasted full competitive strategy doc targeting Food Network + Tasty traffic capture. Pass executes the highest-impact strategy items in one go: layered category hierarchy expansion + SEO depth + monetization scaffolding.
+
+### What landed
+
+| Strategy element | This pass |
+|---|---|
+| Layered categories: Time-to-Cook browse pages | ✅ `/cook-time/under-15-minutes`, `/under-30-minutes`, `/under-1-hour`, `/over-1-hour` |
+| Layered categories: Cooking Method browse pages | ✅ `/method/air-fryer`, `/oven`, `/stovetop`, `/slow-cooker`, `/grilling`, `/no-cook` |
+| Layered categories: Servings browse pages | ✅ `/servings/individual`, `/couple`, `/family`, `/party` |
+| People Also Ask section on every recipe page | ✅ auto-generator covers all 200+ recipes |
+| Homepage Quick Filters widget | ✅ 5-section pill grid linking to all new browse pages |
+| Recipe of the Day | ✅ deterministic UTC-day pick, hero card on homepage |
+| Affiliate link infrastructure | ✅ `AffiliateLink` + `AffiliateDisclosure` components |
+
+### Commit
+
+| Commit | What |
+|---|---|
+| _pending_ | Files added: `src/lib/seo/paa-generator.ts` (9-question PAA synthesizer using recipe metadata), `src/components/home/QuickFilters.tsx` (5-section pill widget), `src/components/home/RecipeOfTheDay.tsx` (hero card), `src/app/cook-time/[range]/page.tsx`, `src/app/method/[method]/page.tsx`, `src/app/servings/[size]/page.tsx`, `src/components/recipe/AffiliateLink.tsx` (AffiliateLink + AffiliateDisclosure). Edited: `src/app/page.tsx` (mount Quick Filters + Recipe of the Day, deterministic-pick math), `src/app/recipes/[slug]/page.tsx` (auto-PAA wired via `getFaqOrPaa`, accordion render replaces previous `recipe.faq.length > 0` conditional). |
+
+### File-by-file
+
+#### `src/lib/seo/paa-generator.ts` (~170 lines)
+
+Produces 9 PAA items from any recipe via metadata reads. No external API. Categories of question covered:
+1. How long to make? — uses `totalTimeMin` + `servings`
+2. How to store leftovers? — uses `storageNotes` with sensible fallback
+3. Can I freeze it? — uses `freezerNotes` with fallback
+4. What can I substitute? — references `ingredients[0]` + cross-links to Substitution Matcher
+5. Can I scale up/down? — cross-links to Recipe Scaler
+6. What equipment do I need? — uses `equipment[]` list
+7. How many calories per serving? — uses `nutrition.calories`+macros if present, else cross-links to Calorie Estimator
+8. How to make it healthier? — uses `dietaryTags`
+9. Is this difficult? — uses `difficulty` field with mapped explainer
+
+Returns `FaqItem[]` (`{q, a}` schema). Feeds both visible accordion and FAQPage JSON-LD on same page.
+
+`getFaqOrPaa(recipe)` — primary entry. Returns hand-authored FAQ if `recipe.faq.length > 0`, otherwise auto-PAA. Always non-empty for a valid recipe.
+
+#### `src/app/recipes/[slug]/page.tsx` (edits)
+
+- Imported `getFaqOrPaa`
+- Replaced conditional FAQ block with always-rendered PAA section
+- Section heading: "People also ask · Common questions about {title}"
+- JSON-LD now unconditionally includes `faqJsonLd(paaItems)` — every recipe page now eligible for FAQPage featured snippets and voice-search answer boxes
+
+#### `src/components/home/QuickFilters.tsx`
+
+5-section pill widget at top of homepage above collections:
+- By cook time → 4 pills → `/cook-time/under-15-minutes` etc.
+- By diet → 6 pills → `/diet/vegetarian|vegan|gluten-free|keto|high-protein|dairy-free`
+- By cooking method → 6 pills → `/method/air-fryer|oven|stovetop|slow-cooker|grilling|no-cook`
+- By cuisine → 8 emoji pills → `/cuisine/nigerian|italian|mexican|indian|chinese|japanese|thai|mediterranean`
+- By serving size → footer row → `/servings/individual|couple|family|party`
+
+Every pill is a hard `<Link>` so SSR + crawler-friendly. Color-coded tones per section (terracotta/forest/amber/cream/ink) for visual differentiation.
+
+#### `src/components/home/RecipeOfTheDay.tsx`
+
+Hero card with featured recipe image, "RECIPE OF THE DAY" gradient ribbon, title, description, time/servings/cuisine chips. Deterministic pick:
+```ts
+const dayIdx = Math.floor((today - Date.UTC(year, 0, 0)) / 86400000) % allRecipes.length
+```
+Every visitor on the same day sees the same recipe. Caching-friendly, daily-digest-email ready.
+
+#### `src/app/cook-time/[range]/page.tsx`
+
+Static-generated dynamic route. 4 valid ranges: `under-15-minutes`, `under-30-minutes`, `under-1-hour`, `over-1-hour`. Per range:
+- SEO-rich title + description per `RANGE_CONFIG`
+- Breadcrumb
+- Filtered recipe grid (sorted by totalTimeMin asc, capped 48)
+- Active-state pill nav at bottom for cross-range browsing
+
+#### `src/app/method/[method]/page.tsx`
+
+Static-generated. 6 valid methods. Predicates match against combined recipe text (title + description + equipment + keywords + instructions) via word-boundary regex. Method-by-method keyword sets:
+- air-fryer: `/air[\s-]?fry/i`
+- oven: `\b(oven|bake|roast|sheet[\s-]pan|casserole)\b`
+- stovetop: `\b(skillet|saute|stir[\s-]fry|wok|pan[\s-]fry|saucepan|stove|fry)\b`
+- slow-cooker: `\b(slow[\s-]cook|crock[\s-]?pot|braise|braised)\b`
+- grilling: `\b(grill|barbecue|bbq|charcoal|smoked|jerk|suya|kebab|skewer)\b`
+- no-cook: matches salad/wrap/raw/ceviche/etc AND lacks oven/stove/grill keywords
+
+#### `src/app/servings/[size]/page.tsx`
+
+4 valid sizes: individual (1), couple (2), family (4-6), party (8+). Cross-links to Recipe Scaler in empty/footer states.
+
+#### `src/components/recipe/AffiliateLink.tsx`
+
+```ts
+<AffiliateLink to="amazon" sku="B07VJF98DT">Lodge cast iron skillet</AffiliateLink>
+```
+
+- `rel="sponsored noopener"` (Google-recommended for paid placements)
+- `target="_blank"` opens in new tab
+- Shopping-bag icon marks affiliate visually
+- `buildHref(provider, sku)` switches by provider (amazon, walmart, instacart, imperfectfoods, misfits, tesco). Default Amazon Associates tag placeholder `?tag=recipecrave-20` — replace when user provides real Associates ID.
+- Companion `AffiliateDisclosure` component renders FTC-compliant disclosure paragraph: "RecipeCrave participates in affiliate programs… Editorial picks are never influenced by commission."
+
+### Strategy doc residual gaps (next-pass priorities)
+
+| Item | Status |
+|---|---|
+| Ingredient-based browse pages (`/ingredient/chicken`, `/seafood`, etc.) | ⏳ next pass |
+| Meal Purpose pages (`/for/date-night`, `/for/meal-prep`, `/for/family-dinner`) | ⏳ next pass |
+| Wine/beverage pairing field on every recipe | ⏳ requires recipe data backfill |
+| Step photos / video timestamps | ⏳ requires media production |
+| Content depth 1200-1600 words | ⏳ 79 seed recipes near range; 126 RecipeCrave recipes need expansion |
+| Blog section (`/blog`) for ingredient guides + technique tutorials | ⏳ next pass |
+| Sponsored content zones | ⏳ awaits brand partnerships |
+| Deep URL structure `/recipes/category/cuisine/method/name` | ⏳ would require 301 redirects from current flat structure; defer until traffic data shows demand |
+| Recipe price tracking (budget meals under $5) | ⏳ requires per-ingredient cost data backfill |
+| Lingva / LibreTranslate wire-up for recipe content translation | ⏳ awaiting user's go-ahead on free API choice |
+
+### Pickup checklist for next Claude
+
+1. 200+ recipes now have PAA auto-generated. Featured-snippet eligibility unlocked.
+2. 14 new browse pages live (4 cook-time + 6 method + 4 servings) — major long-tail SEO surface added.
+3. Homepage now has Quick Filters widget + Recipe of the Day above Collections.
+4. AffiliateLink + AffiliateDisclosure components ready — call sites in recipe pages can drop these in. User needs to provide Amazon Associates tag (replace `recipecrave-20` placeholder in `buildHref`).
+5. Next default priorities per strategy doc:
+   - Ingredient-based browse: `/ingredient/[item]` with predicate against `recipe.ingredients[].name`
+   - Meal Purpose: `/for/[occasion]` against `recipe.occasion`
+   - `/blog` section scaffold for ingredient guides + technique tutorials (long-form SEO content per strategy doc)
+   - Wine/beverage pairing data backfill or generator
+6. Translation gap unchanged from TWENTIETH/FIRST passes. User has not picked Lingva vs LibreTranslate yet; framework remains ready to wire.
+
+## 🆕 TWENTY-FIRST pass (2026-05-12 — Language selector moved to floating side widget + 6 thumbnail fixes)
 
 ## 🆕 TWENTY-FIRST pass (2026-05-12 — Language selector moved to floating side widget + 6 thumbnail fixes)
 

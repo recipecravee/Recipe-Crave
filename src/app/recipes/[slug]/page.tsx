@@ -13,6 +13,7 @@ import { VoiceCookMode } from '@/components/recipe/VoiceCookMode';
 import { AdSlot } from '@/components/site/AdSlot';
 import { getAllRecipes, getRecipeBySlug, getRelatedRecipes } from '@/lib/data/recipes';
 import { recipeJsonLd, faqJsonLd, breadcrumbJsonLd } from '@/lib/seo/structured-data';
+import { getFaqOrPaa } from '@/lib/seo/paa-generator';
 import { formatMinutes, formatCurrency, absoluteUrl } from '@/lib/utils';
 
 export async function generateStaticParams() {
@@ -58,10 +59,15 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
     { name: recipe.title, url: `/recipes/${recipe.slug}` },
   ];
 
+  // PAA (People Also Ask) — hand-authored FAQ if present, otherwise auto-
+  // generated from recipe metadata. Always non-empty. Feeds both the visible
+  // accordion + the FAQPage JSON-LD for featured-snippet eligibility.
+  const paaItems = getFaqOrPaa(recipe);
+
   const jsonLd = [
     recipeJsonLd(recipe),
     breadcrumbJsonLd(breadcrumbs),
-    ...(recipe.faq.length > 0 ? [faqJsonLd(recipe.faq)] : []),
+    faqJsonLd(paaItems),
   ];
 
   return (
@@ -318,23 +324,28 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
             </section>
           ) : null}
 
-          {/* FAQ */}
-          {recipe.faq.length > 0 ? (
-            <section className="mt-10">
-              <h2 className="mb-4 font-serif text-2xl">Frequently asked questions</h2>
-              <div className="divide-y divide-ink/10 rounded-2xl bg-white shadow-sm">
-                {recipe.faq.map((f, i) => (
-                  <details key={i} className="group p-5">
-                    <summary className="cursor-pointer list-none font-medium">
-                      {f.q}
-                      <span aria-hidden className="float-right transition-transform group-open:rotate-45">+</span>
-                    </summary>
-                    <p className="mt-3 text-sm text-ink-muted">{f.a}</p>
-                  </details>
-                ))}
-              </div>
-            </section>
-          ) : null}
+          {/* People Also Ask — visible accordion, doubles as featured-snippet
+              fodder via FAQPage JSON-LD. Auto-generated for recipes without
+              hand-authored FAQ. */}
+          <section className="mt-10">
+            <p className="text-xs font-bold uppercase tracking-widest text-terracotta-500">
+              People also ask
+            </p>
+            <h2 className="mt-1 mb-4 font-serif text-2xl">
+              Common questions about {recipe.title}
+            </h2>
+            <div className="divide-y divide-ink/10 rounded-2xl bg-white shadow-sm">
+              {paaItems.map((f, i) => (
+                <details key={i} className="group p-5">
+                  <summary className="cursor-pointer list-none font-medium">
+                    {f.q}
+                    <span aria-hidden className="float-right transition-transform group-open:rotate-45">+</span>
+                  </summary>
+                  <p className="mt-3 text-sm text-ink-muted">{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </section>
         </div>
       </div>
 

@@ -7,9 +7,23 @@ import { RecipeCard } from '@/components/recipe/RecipeCard';
 import { getFeaturedRecipes, getAllCollections } from '@/lib/data/recipes';
 import { TESTIMONIALS } from '@/content/testimonials';
 import { CUISINES, DIETS, SITE } from '@/lib/constants';
+import { QuickFilters } from '@/components/home/QuickFilters';
+import { RecipeOfTheDay } from '@/components/home/RecipeOfTheDay';
+import { getAllRecipes } from '@/lib/data/recipes';
 
 export default async function HomePage() {
-  const [featured, collections] = await Promise.all([getFeaturedRecipes(8), getAllCollections()]);
+  const [featured, collections, all] = await Promise.all([
+    getFeaturedRecipes(8),
+    getAllCollections(),
+    getAllRecipes(),
+  ]);
+
+  // Pick a recipe-of-the-day deterministically based on UTC day-of-year so all
+  // visitors on a given day see the same pick. Avoids hydration mismatch.
+  const today = new Date();
+  const dayIdx =
+    Math.floor((today.getTime() - Date.UTC(today.getUTCFullYear(), 0, 0)) / 86400000) % Math.max(1, all.length);
+  const recipeOfDay = all[dayIdx] ?? all[0];
 
   return (
     <>
@@ -124,6 +138,16 @@ export default async function HomePage() {
               </Link>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Quick Filters + Recipe of the Day — strategy doc requires both
+          surfaced on the homepage to capture broad-intent search traffic and
+          give returning visitors a fresh anchor every day. */}
+      <section className="container py-12 lg:py-16">
+        <div className="grid gap-8 lg:grid-cols-[1.4fr,1fr]">
+          <QuickFilters />
+          {recipeOfDay ? <RecipeOfTheDay recipe={recipeOfDay} /> : null}
         </div>
       </section>
 
