@@ -11,7 +11,11 @@
 |---|---|
 | `770a3e6` | TODO #12 closed end-to-end. /api/variations public POST + RecipeVariationForm wired to backend + ApprovedVariations server component renders approved rows on every recipe page above the submit form. |
 | `5b6ca9e` | Selectively re-added container-defer to four below-fold homepage sections (Collections, Diets, Testimonials, bottom CTA). Above-fold stays eager so a11y target-size measurement stays clean. |
-| `3ba7228` | Seven non-critical floating widgets switched to next/dynamic ssr:false. GA4 gtag scripts moved from afterInteractive → lazyOnload. Saves ~30-50KB initial JS + ~50KB delayed gtag download. |
+| `3ba7228` | (PARTIALLY REVERTED) Lazy floating widgets via next/dynamic — build failed in turbopack because ssr:false isn't allowed in Server Components. GA4 → lazyOnload kept. |
+| `21d2756` | Wrapped lazy widgets in client component to fix build. Built ok but Lighthouse showed TBT 90 → 1240ms — hydration storm from 7 separate chunk mounts. |
+| `ac8e054` | **REVERTED lazy widgets** — kept GA4 → lazyOnload (still helpful for the 50KB third-party gtag.js). Net delta after revert + keep: same perf as pre-pass, ~75 mobile. |
+| `770a3e6 verified` | E2E test of variation submit confirmed: POST → Supabase row → admin queue → publish flow all working. |
+| `e7df9a5` | IP-keyed rate limit on /api/variations (5/hr) and /api/submit-recipe (3/hr). 429 response with retry-after minutes. Stops casual spam. |
 
 ### Closed TODOs after this pass
 
