@@ -20,27 +20,62 @@ export function RecipeVariationForm({ recipeSlug }: { recipeSlug: string }) {
   const [name, setName] = useState('');
   const [variation, setVariation] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!variation.trim()) return;
+    const text = variation.trim();
+    if (text.length < 20) {
+      setError('Variation must be at least 20 characters so reviewers can act on it.');
+      return;
+    }
+    if (busy) return;
+    setBusy(true);
+    setError(null);
+
+    // Mirror submission locally for instant feedback. Backend insert
+    // queues it pending admin moderation; published versions render via
+    // <ApprovedVariations /> on the same page once approved.
     try {
       const key = `rc:variations:${recipeSlug}`;
       const raw = window.localStorage.getItem(key);
       const arr = raw ? (JSON.parse(raw) as Array<{ name: string; text: string; at: number }>) : [];
-      arr.unshift({
-        name: name.trim() || 'Anonymous cook',
-        text: variation.trim(),
-        at: Date.now(),
-      });
+      arr.unshift({ name: name.trim() || 'Anonymous cook', text, at: Date.now() });
       window.localStorage.setItem(key, JSON.stringify(arr.slice(0, 25)));
     } catch {
       /* swallow */
     }
+
+    try {
+      const res = await fetch('/api/variations', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          recipe_slug: recipeSlug,
+          display_name: name.trim() || undefined,
+          body: text,
+        }),
+      });
+      const data = (await res.json()) as { ok: boolean; message?: string };
+      if (!data.ok) {
+        setError(data.message ?? 'Could not submit. Try again.');
+        setBusy(false);
+        return;
+      }
+    } catch {
+      // Local copy already saved; surface a soft error so user knows
+      // backend didn't accept it.
+      setError('Saved locally, but our server is unreachable right now.');
+      setBusy(false);
+      return;
+    }
+
     setSubmitted(true);
     setName('');
     setVariation('');
-    setTimeout(() => setSubmitted(false), 3000);
+    setBusy(false);
+    setTimeout(() => setSubmitted(false), 4000);
   }
 
   return (

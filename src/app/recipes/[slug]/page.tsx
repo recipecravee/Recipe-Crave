@@ -9,6 +9,7 @@ import { RecipeImage } from '@/components/recipe/RecipeImage';
 import { RecipeActions } from '@/components/recipe/RecipeActions';
 import { RecipeSaveButton } from '@/components/recipe/RecipeSaveButton';
 import { RecipeVariationForm } from '@/components/recipe/RecipeVariationForm';
+import { ApprovedVariations } from '@/components/recipe/ApprovedVariations';
 import { PinItButton } from '@/components/recipe/PinItButton';
 import { TranslateRecipeButton } from '@/components/recipe/TranslateRecipeButton';
 import { MeasurementBanner } from '@/components/recipe/MeasurementBanner';
@@ -412,6 +413,11 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
               nutrition, variations). Pushes every recipe page comfortably past
               the 1,500-word SEO floor for high-intent recipe queries. */}
           <RecipeDeepDive recipe={recipe} />
+
+          {/* Approved community variations — render before the submit form so
+              readers see existing variations first. Component returns null
+              when no approved rows exist for the slug. */}
+          <ApprovedVariations recipeSlug={recipe.slug} />
 
           {/* User-submitted variation form — drives UGC + internal link diversity */}
           <section className="mt-10">
