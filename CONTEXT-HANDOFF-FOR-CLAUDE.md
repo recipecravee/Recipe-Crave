@@ -1,7 +1,60 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **THIRTY-SECOND pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+> Last updated: 2026-05-12 — **THIRTY-THIRD pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+
+## 🆕 THIRTY-THIRD pass (2026-05-12 late night — global Back button + Supabase migration applied + Sentry/self-host triage)
+
+### Commits
+
+| Commit | What |
+|---|---|
+| `67b3305` | Global FloatingBackButton — every page except home/admin, bottom-left pill, history.back() with parent-route fallback |
+
+### Supabase migration
+
+Confirmed `pantry_items` was already present in Supabase from a prior session. The remaining objects from `drizzle/0001_pantry_and_variations.sql` were applied this pass via Supabase SQL Editor (browser MCP):
+
+- ✅ `recipe_variations` table + RLS policies (public read approved / author read pending / anon insert / admin update)
+- ✅ `variation_helpful_votes` table + RLS policies
+- ✅ `bump_helpful_count` trigger
+- ✅ `touch_updated_at` trigger on both `pantry_items` and `recipe_variations`
+
+**TODO #11 and #12 are now unblocked.** App code that reads/writes pantry + variation moderation can ship without further owner action.
+
+### Sentry / self-host triage (no commits — won't help)
+
+- Sentry is NOT actually loading in production. `withOptionalSentry` in `next.config.mjs` only wraps when `SENTRY_AUTH_TOKEN` is set; Vercel env only has `NEXT_PUBLIC_SENTRY_DSN`. Live HTML has no sentry references. The bf-cache flag in Lighthouse is from GA4 + Umami beacons (intentional, both required for analytics). Not worth disabling.
+- Self-hosting Unsplash recipe hero images: ~200 images × 100KB WebP = 20MB git bloat. Cold-Lighthouse-only benefit; warm users hit Vercel's edge cache after first request. Diminishing returns. Skipped.
+
+### Final Lighthouse (mobile, post all 32 passes)
+
+| Metric | Score |
+|---|---|
+| Performance | **75** |
+| Accessibility | **94** |
+| Best Practices | **100** |
+| SEO | **100** |
+| Agentic Browsing | **100** |
+| LCP | 4.5s (cold edge fn) |
+| CLS | 0 |
+| TBT | 90ms |
+| FCP | 2.1s |
+| TTI | 4.8s |
+
+Three of five categories at 100. Performance 75 is bottlenecked on cold edge-function LCP (4.5s) — warm real-user LCP is ~1s. Accessibility 94 has one remaining colour-contrast on a non-default-button component + touch-target on one anchor; both would need surgical CSS to push past 95.
+
+### Remaining path to 100/100 (each tagged free vs paid)
+
+| Target | Current → Goal | Path | Free? |
+|---|---|---|---|
+| Performance | 75 → 90+ | Static-export the homepage (no force-dynamic), inline above-fold CSS, preload hero with explicit `<link>` | Free, ~half-day work |
+| Performance | 90 → 100 | Vercel Pro tier for warm functions (eliminates cold-start), or move to fully static export | $20/mo for Pro |
+| Accessibility | 94 → 100 | Audit colour-contrast on specific anchor + bump touch-target padding on flagged button | Free, ~30 min |
+
+Best Practices, SEO, and Agentic Browsing already at 100.
+
+
 
 ## 🆕 THIRTY-SECOND pass (2026-05-12 late night — Rich Results validation + LCP triage)
 
