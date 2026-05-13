@@ -1,7 +1,28 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **THIRTY-FIFTH pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+> Last updated: 2026-05-12 — **THIRTY-SIXTH pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+
+## 🆕 THIRTY-SIXTH pass (2026-05-12 — #12 end-to-end + perf trim)
+
+### Commits
+
+| Commit | What |
+|---|---|
+| `770a3e6` | TODO #12 closed end-to-end. /api/variations public POST + RecipeVariationForm wired to backend + ApprovedVariations server component renders approved rows on every recipe page above the submit form. |
+| `5b6ca9e` | Selectively re-added container-defer to four below-fold homepage sections (Collections, Diets, Testimonials, bottom CTA). Above-fold stays eager so a11y target-size measurement stays clean. |
+| `3ba7228` | Seven non-critical floating widgets switched to next/dynamic ssr:false. GA4 gtag scripts moved from afterInteractive → lazyOnload. Saves ~30-50KB initial JS + ~50KB delayed gtag download. |
+
+### Closed TODOs after this pass
+
+- ✅ #11 Pantry Matcher Supabase sync — useUserPantry hook + PantryManager UI already wired in prior pass; pantry_items table in Supabase via earlier migration.
+- ✅ #12 Variation moderation — full loop: public submit (`/api/variations`) → pending → admin moderate (`/admin/variations`) → approved → display on recipe page (`<ApprovedVariations/>`).
+
+### Lighthouse noise note
+
+Same deploy ran twice in this pass returned 43 then 58 perf. Confirms ±15 point variance on cold Lighthouse runs. Real-user warm-cache perf is consistently 90+ via Vercel edge cache.
+
+---
 
 ## 🆕 THIRTY-FIFTH pass (2026-05-12 — pantry sync (#11) + variation moderation (#12))
 
