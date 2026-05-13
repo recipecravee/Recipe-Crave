@@ -1,7 +1,31 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **THIRTY-FOURTH pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+> Last updated: 2026-05-12 — **THIRTY-FIFTH pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+
+## 🆕 THIRTY-FIFTH pass (2026-05-12 — pantry sync (#11) + variation moderation (#12))
+
+### Commits
+
+| Commit | What |
+|---|---|
+| `88bae64` | useUserPantry hook + /account/pantry manager + /admin/variations queue + GET + PATCH admin API routes |
+
+### What landed
+
+#11 Pantry sync (Supabase pantry_items table):
+- `useUserPantry` hook handles auth state, add/addMany/remove/clear with idempotent upserts on (user_id, ingredient).
+- /account/pantry — list/add/remove/clear UI, sidebar messaging, linked from Account dashboard quick actions.
+- Browser supabase client uses RLS so each user only sees their own rows.
+
+#12 Variation moderation queue (Supabase recipe_variations table):
+- /admin/variations gated by admin cookie auth. ModerationQueue client component with status-filter chips, per-row Approve / Reject / Spam buttons, refresh.
+- GET /api/admin/variations?status=… and PATCH /api/admin/variations/[id] use the service-role key (bypasses RLS for moderation, mirrors the editorial inbox pattern).
+- Linked from /admin/dashboard external-dashboard grid.
+
+Both surfaces respect the RLS policies applied in THIRTY-THIRD pass via the SQL Editor.
+
+---
 
 ## 🆕 THIRTY-FOURTH pass (2026-05-12 — a11y 94 → 97 → 100 chase)
 
