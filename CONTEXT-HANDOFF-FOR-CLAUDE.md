@@ -1,7 +1,41 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **THIRTY-FIRST pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+> Last updated: 2026-05-12 — **THIRTY-SECOND pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+
+## 🆕 THIRTY-SECOND pass (2026-05-12 late night — Rich Results validation + LCP triage)
+
+### Commits
+
+| Commit | What |
+|---|---|
+| `a647f60` | Dropped empty `sameAs: []` from Organization schema + switched HowTo → Article schema on /how-to/[slug] |
+
+### Rich Results sweep results
+
+Validated every JSON-LD type the site emits by parsing live HTML:
+- ✅ Recipe — all required + recommended fields present (name, image, recipeIngredient, recipeInstructions, author, prepTime, cookTime, totalTime, recipeYield, recipeCuisine, nutrition, aggregateRating)
+- ✅ FAQPage — proper Question/Answer mainEntity structure
+- ✅ BreadcrumbList — ordered itemListElement with position numbers
+- ✅ WebSite — name + url
+- ✅ Organization — sameAs empty-array warning fixed (a647f60)
+- ⚠️ HowTo — was emitting only name/description/totalTime, missing required `step`. Switched to Article schema which works with our data (a647f60).
+
+Recipe pages now produce 5 valid JSON-LD blocks per page. Google should start showing Recipe + FAQ rich cards within 48-72h of next crawl.
+
+### LCP triage notes (no commit needed)
+
+Lighthouse mobile LCP 4.3s on /. Investigation:
+- Hero is `/logo.png` (self-hosted, already 196KB after compression), not Unsplash
+- `priority` + `fetchPriority="high"` both set on next/image
+- Next.js auto-injects `<link rel="preload" as="image">` for priority images
+- Fonts use `display: swap` so text-LCP is paint-against-fallback (fast)
+
+The 4.3s LCP is Vercel edge-fn cold-start: time from request → first byte is 1.2-1.8s on cold. After warm-up, real-user LCP should be ~1s. The Lighthouse score is worst-case.
+
+True LCP fix would require: pre-rendered static HTML (no force-dynamic), longer ISR revalidate, or Vercel Pro tier for warm functions. Diminishing returns at this stage.
+
+---
 
 ## 🆕 THIRTY-FIRST pass (2026-05-12 late night — empty-cuisine backfill + perf pass)
 
