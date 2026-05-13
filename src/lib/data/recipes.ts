@@ -2,6 +2,7 @@ import 'server-only';
 import { SEED_RECIPES, SEED_COLLECTIONS } from '@/content/seed-recipes';
 import { RECIPECRAVE_RECIPES } from '@/content/recipecrave-recipes';
 import { THERAPEUTIC_RECIPES } from '@/content/therapeutic-recipes';
+import { WORLD_CUISINE_HEROES } from '@/content/world-cuisine-heroes';
 import type { Recipe } from '@/types/recipe';
 
 // Data access layer.
@@ -25,6 +26,13 @@ const COMBINED_RECIPES: Recipe[] = (() => {
   // Therapeutic synergy-led recipes anchor the /herbs and /conditions
   // landing pages — see src/content/therapeutic-recipes.ts.
   for (const r of THERAPEUTIC_RECIPES) {
+    if (seen.has(r.slug)) continue;
+    seen.add(r.slug);
+    out.push(r);
+  }
+  // Hand-authored hero recipes for previously-empty world cuisines so
+  // every cuisine landing page has at least one canonical dish.
+  for (const r of WORLD_CUISINE_HEROES) {
     if (seen.has(r.slug)) continue;
     seen.add(r.slug);
     out.push(r);
