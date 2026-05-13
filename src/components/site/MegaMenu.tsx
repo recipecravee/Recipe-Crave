@@ -13,6 +13,7 @@ import {
 import { CUISINES, DIETS } from '@/lib/constants';
 import { IMG } from '@/content/image-bank';
 import { SiteSearch } from './SiteSearch';
+import { AccountButton } from './AccountButton';
 // LanguageSelector is now a floating side-anchored widget mounted globally in
 // the root layout (see FloatingLanguageSelector). It used to live in the
 // MegaMenu header but was crowding the desktop nav row and causing visual
@@ -221,7 +222,7 @@ const FEATURED_MOBILE = [
 // Component
 // ============================================================================
 
-export function MegaMenu({ userEmail }: { userEmail?: string }) {
+export function MegaMenu({ userEmail }: { userEmail?: string } = {}) {
   const [open, setOpen] = useState(false);
   const [openPanel, setOpenPanel] = useState<MegaPanelKey | null>(null);
   const [mounted, setMounted] = useState(false);
@@ -316,23 +317,7 @@ export function MegaMenu({ userEmail }: { userEmail?: string }) {
             <Calculator className="h-4 w-4 transition-transform group-hover:rotate-6" aria-hidden />
             Kitchen Tools
           </Link>
-          {userEmail ? (
-            <Link
-              href="/account"
-              className="flex h-11 w-11 items-center justify-center rounded-full bg-terracotta-100 text-terracotta-600 hover:bg-terracotta-200 focus-ring"
-              aria-label="My account"
-              title={userEmail}
-            >
-              <User className="h-5 w-5" aria-hidden />
-            </Link>
-          ) : (
-            <Link
-              href="/login"
-              className="whitespace-nowrap rounded-full bg-terracotta-400 px-5 py-2 text-sm font-bold text-white shadow-sm transition-colors hover:bg-terracotta-500 focus-ring"
-            >
-              Log in
-            </Link>
-          )}
+          <AccountButton />
         </div>
 
         {/* Mega panel — anchored to nav wrapper, full-width centered */}
@@ -684,23 +669,9 @@ function MobileOverlay({
           ))}
         </div>
 
-        {/* Auth */}
+        {/* Auth — client island reads Supabase user from browser context */}
         <div className="mt-8 border-t-2 border-ink/10 pt-5">
-          {userEmail ? (
-            <Link
-              href="/account"
-              className="block rounded-2xl bg-gradient-to-r from-terracotta-400 to-terracotta-500 px-5 py-4 text-center text-lg font-bold text-white shadow-md transition-transform hover:scale-[1.01] active:scale-[0.99]"
-            >
-              My account
-            </Link>
-          ) : (
-            <Link
-              href="/login"
-              className="block rounded-2xl bg-gradient-to-r from-terracotta-400 to-terracotta-500 px-5 py-4 text-center text-lg font-bold text-white shadow-md transition-transform hover:scale-[1.01] active:scale-[0.99]"
-            >
-              Log in / Sign up
-            </Link>
-          )}
+          <AccountButton variant="mobile" />
         </div>
       </div>
     </div>

@@ -1,20 +1,15 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Search, User } from 'lucide-react';
 import { SITE } from '@/lib/constants';
-import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { MegaMenu } from './MegaMenu';
 
-export async function Header() {
-  let user: { email: string | undefined } | null = null;
-  try {
-    const supabase = await createSupabaseServerClient();
-    const { data } = await supabase.auth.getUser();
-    user = data.user ? { email: data.user.email ?? undefined } : null;
-  } catch {
-    user = null;
-  }
-
+/**
+ * Static server component. Auth state is fetched by the <AccountButton />
+ * client island inside MegaMenu — keeping cookies() out of this tree
+ * means the root layout no longer marks every page as dynamic, which
+ * is what restores ISR caching of the homepage (revalidate: 3600).
+ */
+export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-ink/10 bg-cream-100/95 shadow-sm backdrop-blur-md">
       <div className="container flex h-20 items-center justify-between gap-4">
@@ -32,17 +27,13 @@ export async function Header() {
             className="h-14 w-14 sm:h-12 sm:w-12"
             priority
           />
-          {/* Wordmark scales with viewport. Hidden on ultra-narrow (<360px) so the
-              logo + search + hamburger fit without clipping. */}
-          {/* Wordmark scales with viewport. Hidden on ultra-narrow (<360px) so the
-              logo + search + hamburger fit without clipping. */}
           <span className="hidden font-serif text-xl font-bold min-[360px]:inline sm:text-2xl lg:text-3xl">
             <span className="text-ink">Recipe</span>
             <span className="text-terracotta-400">Crave</span>
           </span>
         </Link>
 
-        <MegaMenu userEmail={user?.email} />
+        <MegaMenu />
       </div>
     </header>
   );
