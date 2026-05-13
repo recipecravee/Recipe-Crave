@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { SITE, CUISINES, DIETS } from '@/lib/constants';
+import { SITE, CUISINES, DIETS, COURSES_NAV } from '@/lib/constants';
 import { getAllRecipes, getAllCollections } from '@/lib/data/recipes';
 import { HERBS, CONDITIONS } from '@/content/herbs';
 import { HOW_TO_GUIDES } from '@/content/how-to-guides';
@@ -58,6 +58,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: now,
     changeFrequency: 'weekly',
     priority: 0.7,
+  }));
+
+  const courseRoutes: MetadataRoute.Sitemap = COURSES_NAV.map((c) => ({
+    url: `${SITE.url}/category/${c.slug}`,
+    lastModified: now,
+    changeFrequency: 'weekly' as const,
+    priority: 0.75,
   }));
 
   const dietRoutes: MetadataRoute.Sitemap = DIETS.map((d) => ({
@@ -129,6 +136,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     ...staticRoutes,
     ...cuisineRoutes,
+    ...courseRoutes,
     ...dietRoutes,
     ...collectionRoutes,
     ...recipeRoutes,

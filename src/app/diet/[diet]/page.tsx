@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { RecipeCard } from '@/components/recipe/RecipeCard';
 import { JsonLd } from '@/components/seo/JsonLd';
@@ -51,9 +52,61 @@ export default async function DietPage({ params }: { params: Promise<{ diet: str
       </header>
 
       {recipes.length === 0 ? (
-        <p className="rounded-2xl bg-white p-12 text-center text-ink-muted">
-          More {data.name.toLowerCase()} recipes coming soon. Check back this week.
-        </p>
+        <div className="space-y-8">
+          <div className="rounded-3xl border border-cream-200 bg-cream-50/60 p-8 sm:p-10">
+            <p className="text-xs font-bold uppercase tracking-widest text-forest-700">
+              Editorial in progress
+            </p>
+            <h2 className="mt-2 font-serif text-2xl text-ink">
+              {data.name} recipes our editors are testing right now
+            </h2>
+            <p className="mt-3 max-w-3xl text-sm text-ink-muted">
+              The {data.name.toLowerCase()} eating pattern has a specific nutritional
+              profile that our kitchen team is honouring on every recipe we tag with it.
+              First {data.name.toLowerCase()} recipes typically land within 4-8 weeks of a
+              tag being added — in the meantime browse the rest of our nutrition-tagged
+              recipes or send in a recipe you swear by.
+            </p>
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link
+                href="/submit-recipe"
+                className="rounded-full bg-terracotta-500 px-5 py-2.5 text-sm font-bold text-white shadow-sm hover:bg-terracotta-600 focus-ring"
+              >
+                ✍️ Submit a {data.name.toLowerCase()} recipe
+              </Link>
+              <Link
+                href="/diets"
+                className="rounded-full border-2 border-forest-300 bg-white px-5 py-2.5 text-sm font-bold text-forest-700 hover:border-forest-500 focus-ring"
+              >
+                Browse all {DIETS.length} diets
+              </Link>
+              <Link
+                href="/recipes"
+                className="rounded-full border-2 border-ink/15 bg-white px-5 py-2.5 text-sm font-bold text-ink hover:border-ink/30 focus-ring"
+              >
+                See every recipe
+              </Link>
+            </div>
+          </div>
+
+          <section>
+            <h2 className="mb-4 font-serif text-2xl">Related dietary patterns</h2>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+              {DIETS.filter((d) => d.slug !== diet).slice(0, 8).map((d) => (
+                <Link
+                  key={d.slug}
+                  href={`/diet/${d.slug}`}
+                  className="group flex flex-col items-start gap-2 rounded-2xl border border-ink/5 bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-forest-300 hover:shadow-md"
+                >
+                  <span className="font-serif text-sm font-bold text-ink group-hover:text-forest-700">
+                    {d.name}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </section>
+        </div>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {recipes.map((r) => (

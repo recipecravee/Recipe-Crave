@@ -44,17 +44,22 @@ export default function SubmitRecipePage() {
         </p>
       </header>
 
-      <div className="grid gap-10 lg:grid-cols-[1.4fr,1fr]">
-        <div className="rounded-3xl border border-cream-200 bg-white p-6 shadow-sm sm:p-8">
-          <h2 className="mb-2 font-serif text-2xl">Recipe details</h2>
-          <p className="mb-6 text-sm text-ink-muted">
-            All fields except photo URL are required. Take your time — there is no
-            character limit, and the more detail you give, the smoother the editorial pass.
-          </p>
-          <SubmitRecipeForm />
-        </div>
+      {/* Form + live preview span full width. The form component handles
+          its own two-column split (fields | preview) so the preview
+          tracks the form as the user types. */}
+      <div className="rounded-3xl border border-cream-200 bg-white p-6 shadow-sm sm:p-8">
+        <h2 className="mb-2 font-serif text-2xl">Recipe details</h2>
+        <p className="mb-6 text-sm text-ink-muted">
+          All fields except photo URL are required. The card on the right updates as you
+          type so you can see exactly how the published recipe will look.
+        </p>
+        <SubmitRecipeForm />
+      </div>
 
-        <aside className="space-y-6">
+      {/* Editorial guidance — full-width 4-column row below the form. */}
+      <section className="mt-12">
+        <h2 className="mb-6 font-serif text-2xl">Editorial guidelines</h2>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <SidebarCard
             icon={ChefHat}
             title="How submissions work"
@@ -75,8 +80,8 @@ export default function SubmitRecipePage() {
             title="Editorial standards"
             body="No AI-generated recipes without testing. No copy-pasting from other sites. We credit every source and family member you cite."
           />
-        </aside>
-      </div>
+        </div>
+      </section>
     </article>
   );
 }
