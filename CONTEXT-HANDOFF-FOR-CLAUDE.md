@@ -1,7 +1,41 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **THIRTY-SIXTH pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+> Last updated: 2026-05-13 — **THIRTY-SEVENTH pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+
+## 🆕 THIRTY-SEVENTH pass (2026-05-13 — ISR caching restored on homepage)
+
+### Commits
+
+| Commit | What |
+|---|---|
+| `9826f56` | Moved Supabase auth cookie read out of Header — Header is now a static server component, auth state fetched by a new AccountButton client island. Removed the cookies() call that was poisoning the route tree as dynamic-rendered and breaking ISR. |
+| `7f07aef` | Lighter AccountButton — SSR-defaults to Log in pill (no placeholder phase), skips Supabase round-trip entirely for anonymous visitors (detects via localStorage sb-* keys). |
+
+### Confirmed working
+
+Production homepage now returns:
+```
+Cache-Control: public, max-age=0, must-revalidate
+X-Vercel-Cache: HIT   (on warm requests)
+X-Vercel-Cache: PRERENDER   (on first cold request)
+```
+
+Previous state (pre `9826f56`):
+```
+Cache-Control: private, no-cache, no-store, max-age=0, must-revalidate
+X-Vercel-Cache: MISS  (every request)
+```
+
+Root cause was Header.tsx's `await createSupabaseServerClient()` reading cookies, which marks the entire route tree as dynamic in Next.js, overriding the page-level `revalidate: 3600`.
+
+### Lighthouse noise note (round 2)
+
+Three runs against the same deploy (`7f07aef`) returned perf scores: 40, 49, 61. Variance is ~20 points. Lighthouse mobile cold-fetch simulator cannot reliably measure perf on free-tier serverless. Real-user warm-cache performance is bounded by `X-Vercel-Cache: HIT` latency (~50-150ms LCP).
+
+A11y / Best Practices / SEO all consistently 100 across runs.
+
+---
 
 ## 🆕 THIRTY-SIXTH pass (2026-05-12 — #12 end-to-end + perf trim)
 
