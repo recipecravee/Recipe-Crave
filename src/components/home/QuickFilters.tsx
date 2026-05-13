@@ -147,7 +147,7 @@ function FilterPanel({
           <ArrowRight className="h-3 w-3" aria-hidden />
         </Link>
       </div>
-      <div className="flex flex-wrap gap-2 sm:gap-2.5">
+      <div className="flex flex-wrap gap-3 sm:gap-3">
         {chips.map((c) => (
           <Chip key={c.href} href={c.href} label={c.label} tone={tone} />
         ))}
@@ -167,7 +167,7 @@ function Chip({ href, label, tone }: { href: string; label: string; tone: Tone }
   return (
     <Link
       href={href}
-      className={`inline-flex min-h-[36px] items-center rounded-full border px-4 py-2 text-xs font-semibold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus-ring sm:min-h-[40px] sm:px-4 sm:py-2.5 sm:text-sm ${toneClass[tone]}`}
+      className={`inline-flex min-h-[44px] items-center rounded-full border px-4 py-2.5 text-xs font-semibold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus-ring sm:min-h-[44px] sm:px-5 sm:py-3 sm:text-sm ${toneClass[tone]}`}
     >
       {label}
     </Link>
