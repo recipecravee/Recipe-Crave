@@ -1,7 +1,50 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **TWENTY-NINTH pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+> Last updated: 2026-05-12 — **THIRTIETH pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+
+## 🆕 THIRTIETH pass (2026-05-12 night — UX polish + audit + submit-recipe)
+
+### Commits
+
+| Commit | What |
+|---|---|
+| `2f1380a` | SplashLoader (~900ms first-visit) + RouteProgress bar + page-transition fade + mobile-menu auto-close on same-page tap + /submit-recipe form & /api/submit-recipe handler |
+| `4147dae` | /category/[course] route built (was missing — AboutThisDish/DeepDive linked to 404) + rich empty-state on /cuisine + /diet pages + live preview pane on /submit-recipe |
+
+### What shipped
+
+1. **SplashLoader** — full-screen RecipeCrave wordmark + tagline on first visit (~900ms, then fade). sessionStorage flag skips on subsequent navigations. CSS @keyframes only, respects prefers-reduced-motion. Zero animation library.
+2. **RouteProgress** — 2px terracotta gradient bar at top of viewport on every Link navigation. Driven by usePathname + useSearchParams hooks. No NProgress library, ~1KB component. Wrapped in `<Suspense>` to avoid bailing out static rendering.
+3. **Page-transition fade** in globals.css — uses View Transitions API in Chrome 111+ / Safari 18+ (compositor-driven, 0ms main thread) with a CSS-only `<main>` fade-in fallback for Firefox. 220ms cubic-bezier. Skipped under prefers-reduced-motion.
+4. **Mobile menu auto-close on same-page tap** — event-delegated anchor-click handler inside MobileOverlay so tapping the link to the page you are already on closes the menu. Existing pathname useEffect only fires on actual route change; this catches the same-page case the owner reported.
+5. **/submit-recipe + /api/submit-recipe** — full editorial-grade form with controlled inputs, zod-validated server route, two Resend emails per submission (editorial copy to recipecrave@gmail.com, confirmation to submitter). Wired into footer + sitemap.
+6. **Live preview pane on /submit-recipe** — sticky right-side card that updates as the user types: title, story, cuisine badge, time + servings + author byline, ingredients list (collapses past 15), instructions list (collapses past 8), photo URL preview that gracefully hides on load error.
+7. **/category/[course] route built** — covers 12 courses (breakfast → drinks). AboutThisDish + RecipeDeepDive linked to it on every recipe page, but the route did not exist so clicks 404'd. Recipe pages still render fine — this fixes the cross-link only. Rich empty-state with "Submit your X recipe" CTA + cross-category nav.
+8. **Rich empty-state on /cuisine + /diet** — single-line "Coming soon" replaced with editorial-status paragraph + three CTAs (submit / browse all / see every recipe) + 6-8 nearby cuisines/diets so the page links out instead of dead-ending. SEO weight matches populated pages.
+
+### Page audit results
+
+Crawled all 403 sitemap URLs via HEAD requests:
+- **0 broken pages** (1 transient timeout on /herbs/basil — re-probe was 200)
+- All static + dynamic routes resolve 200
+- /admin and admin sub-routes intentionally blocked from robots.txt + return 200 only to authenticated cookie
+
+Thin-content audit:
+- 35 cuisines with 0 recipes (Filipino, Persian, Lebanese, Hawaiian, Cajun, etc.) — now rendered with rich empty-state (✅ this pass)
+- ~12 diets with 0 recipes (DASH, Whole30, Mediterranean Diet, etc.) — same treatment (✅ this pass)
+- /category/[course] previously 404'd from AboutThisDish links — now built (✅ this pass)
+
+### Pickup checklist
+
+1. Production is live and crawlable. All 403 sitemap URLs resolve 200.
+2. SplashLoader fires once per session — sessionStorage `rc:splash-seen` controls it.
+3. RouteProgress is wrapped in `<Suspense fallback={null}>` so it does not bail static rendering.
+4. Submit-recipe form is fully controlled; preview pane mirrors every keystroke.
+5. Cuisines/diets with 0 recipes still SEO-rank because of the new editorial empty-state content.
+6. Vercel webhook lag still possible — if a route 404s after a fresh push, run `vercel --prod --yes` from `F:/MY OWN APP RECEIP CRAVE/recipecrave` (CLI is already linked).
+
+---
 
 ## 🚀 PRODUCTION STATE (as of 2026-05-12)
 
