@@ -248,8 +248,10 @@ export default async function HomePage() {
         </Link>
       </section>
 
-      {/* Collections */}
-      <section className="container py-16">
+      {/* Collections. Safe to defer — far below the QuickFilters chip whose
+          target-size audit was breaking under content-visibility's
+          intrinsic-size estimate. */}
+      <section className="container-defer container py-16">
         <h2 className="mb-8 font-serif text-3xl text-ink sm:text-4xl">Hand-picked collections</h2>
         <div className="grid gap-6 md:grid-cols-3">
           {collections.slice(0, 6).map((col) => {
@@ -327,7 +329,7 @@ export default async function HomePage() {
       {/* Diets — interactive card grid mirroring the cuisines section so the
           two read as a pair. Each card shows the diet name + how many recipes
           in the library qualify. Mobile = 2 cols; tablet = 3; desktop = 4. */}
-      <section className="bg-cream-200/40 py-16">
+      <section className="container-defer bg-cream-200/40 py-16">
         <div className="container">
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
@@ -376,7 +378,7 @@ export default async function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="container py-16">
+      <section className="container-defer container py-16">
         <div className="mb-10 text-center">
           <p className="text-sm font-medium uppercase tracking-wider text-terracotta-500">Early users speak</p>
           <h2 className="mt-2 font-serif text-3xl text-ink sm:text-4xl">Real cooks, real kitchens</h2>
@@ -407,7 +409,7 @@ export default async function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-forest-500 py-16 text-white">
+      <section className="container-defer bg-forest-500 py-16 text-white">
         <div className="container text-center">
           <h2 className="font-serif text-3xl sm:text-4xl">Stop saving recipes you&apos;ll never cook.</h2>
           <p className="mx-auto mt-3 max-w-xl text-cream-200">
