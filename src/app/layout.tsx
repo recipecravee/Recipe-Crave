@@ -4,19 +4,8 @@ import Script from 'next/script';
 import { Header } from '@/components/site/Header';
 import { Footer } from '@/components/site/Footer';
 import { ScrollToTop } from '@/components/site/ScrollToTop';
-import dynamic from 'next/dynamic';
 import { GoogleAnalytics } from '@/components/site/GoogleAnalytics';
-// Lazy-mount non-critical floating widgets so they don't block first paint.
-// All four are client-only and not in the LCP path; defer their JS download
-// to idle to improve TTI and main-thread budget.
-const FloatingLanguageSelector = dynamic(() => import('@/components/site/FloatingLanguageSelector').then((m) => m.FloatingLanguageSelector), { ssr: false });
-const WelcomePopup = dynamic(() => import('@/components/site/WelcomePopup').then((m) => m.WelcomePopup), { ssr: false });
-const CookieBanner = dynamic(() => import('@/components/site/CookieBanner').then((m) => m.CookieBanner), { ssr: false });
-const StreakTracker = dynamic(() => import('@/components/site/StreakTracker').then((m) => m.StreakTracker), { ssr: false });
-const SplashLoader = dynamic(() => import('@/components/site/SplashLoader').then((m) => m.SplashLoader), { ssr: false });
-const RouteProgress = dynamic(() => import('@/components/site/RouteProgress').then((m) => m.RouteProgress), { ssr: false });
-const FloatingBackButton = dynamic(() => import('@/components/site/FloatingBackButton').then((m) => m.FloatingBackButton), { ssr: false });
-import { Suspense } from 'react';
+import { LazyFloatingWidgets } from '@/components/site/LazyFloatingWidgets';
 import { I18nProvider } from '@/lib/i18n/I18nProvider';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { organizationJsonLd, websiteJsonLd } from '@/lib/seo/structured-data';
@@ -130,13 +119,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        {/* Route progress bar at the very top of the viewport. Suspense
-            boundary so useSearchParams doesn't bail out static rendering. */}
-        <Suspense fallback={null}>
-          <RouteProgress />
-        </Suspense>
-        {/* First-paint splash. Skips after the first session visit. */}
-        <SplashLoader />
         <I18nProvider>
           {/* Global print-only brand header — appears at the top of every printed page
               (display:none on screen, display:flex when printing per globals.css). */}
@@ -160,11 +142,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
 
           <ScrollToTop />
-          <FloatingBackButton />
-          <FloatingLanguageSelector />
-          <WelcomePopup />
-          <CookieBanner />
-          <StreakTracker />
+          {/* Single client wrapper that lazy-mounts all seven non-critical
+              floating widgets via next/dynamic ssr:false. Keeps the
+              homepage's initial JS payload lean. */}
+          <LazyFloatingWidgets />
         </I18nProvider>
 
         {umamiId && umamiSrc ? (
