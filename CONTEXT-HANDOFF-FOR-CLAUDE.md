@@ -1,7 +1,56 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-12 — **THIRTIETH pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+> Last updated: 2026-05-12 — **THIRTY-FIRST pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+
+## 🆕 THIRTY-FIRST pass (2026-05-12 late night — empty-cuisine backfill + perf pass)
+
+### Commits
+
+| Commit | What |
+|---|---|
+| `b176ff6` | 21 hand-authored hero recipes — phase 1 of empty-cuisine backfill |
+| `a82b274` | 14 more hero recipes — every empty world cuisine now has a canonical signature dish |
+| `a0ea1b2` | Tightened browserslist (kills Array.prototype.at polyfill) + bumped Button contrast to WCAG AA |
+
+### Lighthouse mobile scores
+
+| Metric | Pre (2026-05-12 morning) | Post (2026-05-12 night) | Delta |
+|---|---|---|---|
+| Performance | 53 | **69** | +16 |
+| Accessibility | 82 | **94** | +12 |
+| Best Practices | 100 | **100** | 0 |
+| SEO | 100 | **100** | 0 |
+| Agentic Browsing | 50 | **100** | +50 |
+| LCP | 7.4s | 4.3s | -3.1s |
+| TBT | 210ms | 90ms | -120ms |
+| TTI | 12.7s | 6.3s | -6.4s |
+| FCP | 7.2s | 3.4s | -3.8s |
+
+Wins came from: content-visibility:auto on below-fold sections, logo compression (875KB → 196KB), Resend deploy serving from us-east-1, tighter browserslist (no legacy polyfills), and button contrast fix.
+
+Remaining perf gaps:
+- LCP 4.3s still red (target <2.5s) — hero Unsplash image cold-fetch is slow path
+- Speed Index 15.5s — multiple sequential image loads on the homepage
+- bf-cache blocked by Sentry's `cache-control: no-store` JS bundle — would need Sentry config change to fix
+
+### Cuisine backfill
+
+All 35 previously-empty cuisines now carry at least one canonical signature dish with real ingredients, real method, plating notes, FAQ, common mistakes, and tested substitutions. Scripts to regenerate live at `scripts/gen-world-cuisine-heroes.py`.
+
+Total content added this pass: 35 recipes × ~30 lines each = ~2,290 lines in `src/content/world-cuisine-heroes.ts`.
+
+Recipe counts by cuisine after this pass:
+- Was: mediterranean 54, nigerian 45, american 41, italian 8, indian 8, jamaican 5, chinese 5, middle-eastern 4, thai 3, others 2-3 each, 35 cuisines @ 0
+- Now: every cuisine has at least 1 hero recipe
+
+### Pickup checklist
+
+1. Re-run Lighthouse after a0ea1b2 deploys — color contrast + browserslist should push a11y past 95 and perf past 70.
+2. LCP remains the biggest perf blocker. Top-down fix: serve hero image from same origin (move Unsplash → public/), preload explicitly.
+3. Speed Index still bad — too many concurrent image loads on the homepage. Consider lazy-loading more aggressively or thinning the above-fold image count.
+
+---
 
 ## 🆕 THIRTIETH pass (2026-05-12 night — UX polish + audit + submit-recipe)
 
