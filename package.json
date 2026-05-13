@@ -2,7 +2,7 @@
   "name": "recipecrave",
   "version": "0.1.0",
   "private": true,
-  "description": "RecipeCrave — AI-powered recipe discovery, meal planning, and cooking coach.",
+  "description": "RecipeCrave \u00e2\u20ac\u201d AI-powered recipe discovery, meal planning, and cooking coach.",
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
@@ -66,5 +66,21 @@
   },
   "engines": {
     "node": "22.x"
+  },
+  "browserslist": {
+    "production": [
+      "chrome >= 100",
+      "firefox >= 100",
+      "safari >= 15",
+      "edge >= 100",
+      "> 0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

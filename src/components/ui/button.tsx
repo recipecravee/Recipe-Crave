@@ -9,12 +9,12 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-terracotta-400 text-white shadow-sm hover:bg-terracotta-500 active:bg-terracotta-600',
+          'bg-terracotta-500 text-white shadow-sm hover:bg-terracotta-600 active:bg-terracotta-700',
         secondary: 'bg-forest-500 text-white hover:bg-forest-600',
         outline:
-          'border border-terracotta-400 text-terracotta-400 hover:bg-terracotta-50 hover:text-terracotta-500',
+          'border border-terracotta-500 text-terracotta-600 hover:bg-terracotta-50 hover:text-terracotta-700',
         ghost: 'hover:bg-cream-200 hover:text-ink',
-        link: 'text-terracotta-400 underline-offset-4 hover:underline',
+        link: 'text-terracotta-600 underline-offset-4 hover:underline',
         destructive: 'bg-danger text-white hover:bg-danger/90',
       },
       size: {
