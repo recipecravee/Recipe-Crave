@@ -409,7 +409,7 @@ export default async function HomePage() {
           <p className="mx-auto mt-3 max-w-xl text-cream-200">
             Build a week of meals in 30 seconds. Free, forever, no signup wall in your way.
           </p>
-          <Button size="lg" variant="default" asChild className="mt-8 bg-terracotta-400 hover:bg-terracotta-500">
+          <Button size="lg" variant="default" asChild className="mt-8">
             <Link href="/meal-planner">Plan my week. it&apos;s free</Link>
           </Button>
         </div>

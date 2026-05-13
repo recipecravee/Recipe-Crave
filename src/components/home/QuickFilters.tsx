@@ -167,7 +167,7 @@ function Chip({ href, label, tone }: { href: string; label: string; tone: Tone }
   return (
     <Link
       href={href}
-      className={`inline-flex items-center rounded-full border px-3 py-1.5 text-xs font-semibold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus-ring sm:px-3.5 sm:py-2 sm:text-sm ${toneClass[tone]}`}
+      className={`inline-flex min-h-[28px] items-center rounded-full border px-3.5 py-2 text-xs font-semibold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md focus-ring sm:min-h-[32px] sm:px-4 sm:py-2.5 sm:text-sm ${toneClass[tone]}`}
     >
       {label}
     </Link>
