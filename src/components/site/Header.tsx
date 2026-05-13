@@ -26,10 +26,10 @@ export async function Header() {
           <Image
             src="/logo.png"
             alt=""
-            width={48}
-            height={48}
-            sizes="48px"
-            className="h-12 w-12"
+            width={64}
+            height={64}
+            sizes="(max-width: 639px) 56px, 48px"
+            className="h-14 w-14 sm:h-12 sm:w-12"
             priority
           />
           {/* Wordmark scales with viewport. Hidden on ultra-narrow (<360px) so the
