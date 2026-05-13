@@ -195,6 +195,13 @@ export function AccountDashboard({ userEmail, catalog }: Props) {
             body="10 free cooking tools"
             tone="ink"
           />
+          <ActionCard
+            icon={ChefHat}
+            href="/account/pantry"
+            title="My pantry"
+            body="Synced ingredients across devices"
+            tone="terracotta"
+          />
         </div>
       </section>
 

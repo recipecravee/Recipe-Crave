@@ -140,6 +140,14 @@ export default async function AdminDashboardPage() {
           accent="forest"
           internal
         />
+        <DashLink
+          icon={Database}
+          label="Variation moderation"
+          desc="Review user-submitted recipe variations: approve, reject, or flag as spam."
+          href="/admin/variations"
+          accent="terracotta"
+          internal
+        />
       </div>
 
       {/* Top performing recipes by view */}
