@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { Resend } from 'resend';
+import { rateLimit, clientIp } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 
@@ -33,6 +34,20 @@ const ADMIN_INBOX = process.env.SUBMIT_RECIPE_INBOX ?? 'recipecrave@gmail.com';
  * that in 0001 if/when owner provisions Supabase.
  */
 export async function POST(req: Request) {
+  // Rate limit: 3 recipe submissions per IP per hour. Recipe submissions
+  // are higher-effort than variations so the cap is tighter.
+  const ip = clientIp(req);
+  const rl = rateLimit(`submit-recipe:${ip}`, { windowMs: 60 * 60 * 1000, max: 3 });
+  if (!rl.allowed) {
+    return NextResponse.json(
+      {
+        ok: false,
+        message: `Too many submissions from your network. Try again in ${Math.ceil(rl.resetMs / 60000)} minutes.`,
+      },
+      { status: 429 },
+    );
+  }
+
   let parsed;
   try {
     parsed = RequestSchema.parse(await req.json());

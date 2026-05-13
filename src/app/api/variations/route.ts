@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { createClient } from '@supabase/supabase-js';
+import { rateLimit, clientIp } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 
@@ -22,6 +23,20 @@ const RequestSchema = z.object({
  * checks so we don't accept very short / very long bodies.
  */
 export async function POST(req: Request) {
+  // Rate limit: 5 variations per IP per hour. Stops casual spam without
+  // blocking real users who want to submit a few.
+  const ip = clientIp(req);
+  const rl = rateLimit(`variations:${ip}`, { windowMs: 60 * 60 * 1000, max: 5 });
+  if (!rl.allowed) {
+    return NextResponse.json(
+      {
+        ok: false,
+        message: `Too many submissions from your network. Try again in ${Math.ceil(rl.resetMs / 60000)} minutes.`,
+      },
+      { status: 429 },
+    );
+  }
+
   let parsed;
   try {
     parsed = RequestSchema.parse(await req.json());
