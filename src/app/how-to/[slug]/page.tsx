@@ -6,6 +6,7 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { HOW_TO_GUIDES, getHowToGuide } from '@/content/how-to-guides';
 import { breadcrumbJsonLd } from '@/lib/seo/structured-data';
 import { absoluteUrl } from '@/lib/utils';
+import { SITE } from '@/lib/constants';
 
 export async function generateStaticParams() {
   return HOW_TO_GUIDES.map((g) => ({ slug: g.slug }));
@@ -100,12 +101,33 @@ export default async function HowToPage({ params }: { params: Promise<{ slug: st
       <JsonLd
         data={[
           breadcrumbJsonLd(breadcrumbs),
+          // Article schema (instead of HowTo) — HowTo requires a `step`
+          // array we don't have in structured form. Article is the
+          // canonical schema for technique explainers and passes
+          // Google's Rich Results Test cleanly.
           {
             '@context': 'https://schema.org',
-            '@type': 'HowTo',
-            name: guide.title,
+            '@type': 'Article',
+            headline: guide.title,
             description: guide.description,
-            totalTime: `PT${guide.readingTimeMin}M`,
+            image: `${SITE.url}/logo.png`,
+            datePublished: '2026-05-10T00:00:00Z',
+            dateModified: '2026-05-12T00:00:00Z',
+            author: {
+              '@type': 'Organization',
+              name: 'RecipeCrave Editorial',
+              url: SITE.url,
+            },
+            publisher: {
+              '@type': 'Organization',
+              name: SITE.name,
+              logo: { '@type': 'ImageObject', url: `${SITE.url}/logo.png` },
+            },
+            mainEntityOfPage: `${SITE.url}/how-to/${slug}`,
+            articleSection: 'How-To',
+            keywords: guide.keywords.join(', '),
+            wordCount: guide.body.split(/\s+/).length,
+            timeRequired: `PT${guide.readingTimeMin}M`,
           },
         ]}
       />

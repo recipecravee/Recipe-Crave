@@ -123,6 +123,8 @@ export function breadcrumbJsonLd(items: { name: string; url: string }[]) {
 }
 
 export function organizationJsonLd() {
+  // sameAs is intentionally omitted — Google flags an empty array as a
+  // schema warning. Add real URLs when social profiles exist.
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -131,7 +133,6 @@ export function organizationJsonLd() {
     logo: absoluteUrl('/logo.png'),
     foundingDate: SITE.founded,
     description: SITE.description,
-    sameAs: [],
   };
 }
 
