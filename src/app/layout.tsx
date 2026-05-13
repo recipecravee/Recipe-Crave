@@ -5,7 +5,14 @@ import { Header } from '@/components/site/Header';
 import { Footer } from '@/components/site/Footer';
 import { ScrollToTop } from '@/components/site/ScrollToTop';
 import { GoogleAnalytics } from '@/components/site/GoogleAnalytics';
-import { LazyFloatingWidgets } from '@/components/site/LazyFloatingWidgets';
+import { FloatingLanguageSelector } from '@/components/site/FloatingLanguageSelector';
+import { WelcomePopup } from '@/components/site/WelcomePopup';
+import { CookieBanner } from '@/components/site/CookieBanner';
+import { StreakTracker } from '@/components/site/StreakTracker';
+import { SplashLoader } from '@/components/site/SplashLoader';
+import { RouteProgress } from '@/components/site/RouteProgress';
+import { FloatingBackButton } from '@/components/site/FloatingBackButton';
+import { Suspense } from 'react';
 import { I18nProvider } from '@/lib/i18n/I18nProvider';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { organizationJsonLd, websiteJsonLd } from '@/lib/seo/structured-data';
@@ -142,10 +149,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
 
           <ScrollToTop />
-          {/* Single client wrapper that lazy-mounts all seven non-critical
-              floating widgets via next/dynamic ssr:false. Keeps the
-              homepage's initial JS payload lean. */}
-          <LazyFloatingWidgets />
+          <Suspense fallback={null}>
+            <RouteProgress />
+          </Suspense>
+          <SplashLoader />
+          <FloatingBackButton />
+          <FloatingLanguageSelector />
+          <WelcomePopup />
+          <CookieBanner />
+          <StreakTracker />
         </I18nProvider>
 
         {umamiId && umamiSrc ? (
