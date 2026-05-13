@@ -17,16 +17,21 @@ import { createSupabaseBrowserClient } from '@/lib/supabase/client';
  */
 export function AccountButton({ variant = 'desktop' }: { variant?: 'desktop' | 'mobile' }) {
   const [email, setEmail] = useState<string | null>(null);
-  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     let alive = true;
     const supabase = createSupabaseBrowserClient();
-    supabase.auth.getUser().then(({ data }) => {
-      if (!alive) return;
-      setEmail(data.user?.email ?? null);
-      setLoaded(true);
-    });
+    // Only call when we have credentials in localStorage — avoids a
+    // network round-trip on every page load for anonymous visitors.
+    const hasSession =
+      typeof window !== 'undefined' &&
+      Object.keys(window.localStorage).some((k) => k.startsWith('sb-'));
+    if (hasSession) {
+      supabase.auth.getUser().then(({ data }) => {
+        if (!alive) return;
+        setEmail(data.user?.email ?? null);
+      });
+    }
     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
       if (!alive) return;
       setEmail(session?.user?.email ?? null);
@@ -36,21 +41,6 @@ export function AccountButton({ variant = 'desktop' }: { variant?: 'desktop' | '
       sub.subscription.unsubscribe();
     };
   }, []);
-
-  // Pre-load placeholder. Same size as the resolved buttons so there is
-  // zero layout shift when auth state settles.
-  if (!loaded) {
-    return (
-      <span
-        aria-hidden
-        className={
-          variant === 'mobile'
-            ? 'inline-block h-11 w-24 rounded-full bg-cream-100'
-            : 'inline-block h-11 w-24 rounded-full bg-cream-100'
-        }
-      />
-    );
-  }
 
   if (variant === 'mobile') {
     // Big block pill for the mobile overlay.
