@@ -11,6 +11,7 @@ import { GoogleAnalytics } from '@/components/site/GoogleAnalytics';
 import { StreakTracker } from '@/components/site/StreakTracker';
 import { SplashLoader } from '@/components/site/SplashLoader';
 import { RouteProgress } from '@/components/site/RouteProgress';
+import { FloatingBackButton } from '@/components/site/FloatingBackButton';
 import { Suspense } from 'react';
 import { I18nProvider } from '@/lib/i18n/I18nProvider';
 import { JsonLd } from '@/components/seo/JsonLd';
@@ -155,6 +156,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
 
           <ScrollToTop />
+          <FloatingBackButton />
           <FloatingLanguageSelector />
           <WelcomePopup />
           <CookieBanner />
