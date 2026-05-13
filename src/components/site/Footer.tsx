@@ -70,6 +70,7 @@ export function Footer() {
               <li><Link href="/pantry-match" className="hover:text-ink">Pantry Match</Link></li>
               <li><Link href="/how-to" className="hover:text-ink">How-To Guides</Link></li>
               <li><Link href="/calculators" className="hover:text-ink">Free Tools</Link></li>
+              <li><Link href="/submit-recipe" className="font-bold text-terracotta-500 hover:text-terracotta-600">✍️ Submit Your Recipe</Link></li>
             </ul>
           </div>
 

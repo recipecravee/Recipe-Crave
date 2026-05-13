@@ -380,7 +380,12 @@ export function MegaMenu({ userEmail }: { userEmail?: string }) {
       {/* Mobile fullscreen overlay */}
       {open && mounted
         ? createPortal(
-            <MobileOverlay panels={Object.values(PANELS)} featured={FEATURED_MOBILE} userEmail={userEmail} />,
+            <MobileOverlay
+              panels={Object.values(PANELS)}
+              featured={FEATURED_MOBILE}
+              userEmail={userEmail}
+              onClose={() => setOpen(false)}
+            />,
             document.body,
           )
         : null}
@@ -480,12 +485,25 @@ function MobileOverlay({
   panels,
   featured,
   userEmail,
+  onClose,
 }: {
   panels: MegaPanel[];
   featured: typeof FEATURED_MOBILE;
   userEmail?: string;
+  onClose: () => void;
 }) {
   const [accordionOpen, setAccordionOpen] = useState<MegaPanelKey | null>('recipes');
+
+  // Event-delegated close: any anchor click inside the overlay closes
+  // it, including taps on the link to the page the user is already on
+  // (where pathname doesn't change so the parent's pathname useEffect
+  // wouldn't fire on its own).
+  function handleOverlayClick(e: React.MouseEvent<HTMLDivElement>) {
+    const target = e.target as HTMLElement | null;
+    if (!target) return;
+    const anchor = target.closest('a[href]');
+    if (anchor) onClose();
+  }
 
   return (
     <div
@@ -493,6 +511,7 @@ function MobileOverlay({
       role="dialog"
       aria-modal="true"
       aria-label="Main navigation"
+      onClick={handleOverlayClick}
       className="animate-fade-in fixed inset-x-0 top-20 bottom-0 z-[60] overflow-y-auto overscroll-contain bg-gradient-to-b from-cream-100 via-cream-50 to-cream-200 pb-safe backdrop-blur-sm"
     >
       <div className="container py-6">

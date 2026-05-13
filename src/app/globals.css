@@ -45,6 +45,26 @@
     font-feature-settings: 'rlig' 1, 'calt' 1, 'ss01' 1;
   }
 
+  /* Page-transition fade. Two layers: the modern View Transitions API
+     for browsers that support it (Chrome 111+, Safari 18+) — runs in
+     the compositor, ~0ms main thread; and a plain CSS animation
+     fallback for Firefox. Both are 220ms so navigation feels smooth
+     without dragging. */
+  @media (prefers-reduced-motion: no-preference) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation-duration: 220ms;
+      animation-timing-function: cubic-bezier(.2, .7, .2, 1);
+    }
+    main {
+      animation: rc-page-fade-in 220ms cubic-bezier(.2, .7, .2, 1) both;
+    }
+    @keyframes rc-page-fade-in {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: none; }
+    }
+  }
+
   /* content-visibility: auto defers layout + paint work for off-screen
      containers until they scroll into view. Big main-thread win on the
      long homepage (67 cuisines + 24 diets + 6 features + collections +
