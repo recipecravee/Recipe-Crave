@@ -208,8 +208,12 @@ export default async function HomePage() {
 
       {/* Quick Filters + Recipe of the Day — strategy doc requires both
           surfaced on the homepage to capture broad-intent search traffic and
-          give returning visitors a fresh anchor every day. */}
-      <section className="container-defer container py-12 lg:py-16">
+          give returning visitors a fresh anchor every day. NOTE: deliberately
+          NOT using container-defer here — the content-visibility:auto
+          intrinsic-size estimate was causing chip bounding rects to overlap
+          with the preceding section's CTA in Lighthouse's axe-core
+          target-size measurement. Eager render keeps the section honest. */}
+      <section className="container py-12 lg:py-16">
         <div className="grid gap-8 lg:grid-cols-[1.4fr,1fr]">
           <QuickFilters />
           {recipeOfDay ? <RecipeOfTheDay recipe={recipeOfDay} /> : null}
