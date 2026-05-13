@@ -4,14 +4,18 @@ import Script from 'next/script';
 import { Header } from '@/components/site/Header';
 import { Footer } from '@/components/site/Footer';
 import { ScrollToTop } from '@/components/site/ScrollToTop';
-import { FloatingLanguageSelector } from '@/components/site/FloatingLanguageSelector';
-import { WelcomePopup } from '@/components/site/WelcomePopup';
-import { CookieBanner } from '@/components/site/CookieBanner';
+import dynamic from 'next/dynamic';
 import { GoogleAnalytics } from '@/components/site/GoogleAnalytics';
-import { StreakTracker } from '@/components/site/StreakTracker';
-import { SplashLoader } from '@/components/site/SplashLoader';
-import { RouteProgress } from '@/components/site/RouteProgress';
-import { FloatingBackButton } from '@/components/site/FloatingBackButton';
+// Lazy-mount non-critical floating widgets so they don't block first paint.
+// All four are client-only and not in the LCP path; defer their JS download
+// to idle to improve TTI and main-thread budget.
+const FloatingLanguageSelector = dynamic(() => import('@/components/site/FloatingLanguageSelector').then((m) => m.FloatingLanguageSelector), { ssr: false });
+const WelcomePopup = dynamic(() => import('@/components/site/WelcomePopup').then((m) => m.WelcomePopup), { ssr: false });
+const CookieBanner = dynamic(() => import('@/components/site/CookieBanner').then((m) => m.CookieBanner), { ssr: false });
+const StreakTracker = dynamic(() => import('@/components/site/StreakTracker').then((m) => m.StreakTracker), { ssr: false });
+const SplashLoader = dynamic(() => import('@/components/site/SplashLoader').then((m) => m.SplashLoader), { ssr: false });
+const RouteProgress = dynamic(() => import('@/components/site/RouteProgress').then((m) => m.RouteProgress), { ssr: false });
+const FloatingBackButton = dynamic(() => import('@/components/site/FloatingBackButton').then((m) => m.FloatingBackButton), { ssr: false });
 import { Suspense } from 'react';
 import { I18nProvider } from '@/lib/i18n/I18nProvider';
 import { JsonLd } from '@/components/seo/JsonLd';
