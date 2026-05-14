@@ -134,6 +134,57 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
+  // Programmatic /quick/{combo} pages — long-tail SEO landings combining
+  // cuisine × course, cuisine × time, diet × course, time × course.
+  // Only include combos that have at least one matching recipe.
+  const DEFAULT_COURSES = new Set(['breakfast', 'lunch', 'dinner', 'dessert', 'snack']);
+  const TIME_BUCKETS = [
+    { slug: 'under-15', maxMin: 15 },
+    { slug: 'under-30', maxMin: 30 },
+    { slug: 'under-45', maxMin: 45 },
+  ];
+  type R = (typeof recipes)[number];
+  function combosWithMatches(): string[] {
+    const out: string[] = [];
+    const has = (predicate: (r: R) => boolean) => recipes.some(predicate);
+    for (const c of CUISINES) {
+      for (const cs of COURSES_NAV) {
+        if (!DEFAULT_COURSES.has(cs.slug)) continue;
+        if (has((r) => r.cuisine === c.slug && r.course === cs.slug)) {
+          out.push(`${c.slug}-${cs.slug}`);
+        }
+      }
+      for (const t of TIME_BUCKETS) {
+        if (has((r) => r.cuisine === c.slug && (r.totalTimeMin ?? 9999) <= t.maxMin)) {
+          out.push(`${c.slug}-${t.slug}`);
+        }
+      }
+    }
+    for (const d of DIETS) {
+      for (const cs of COURSES_NAV) {
+        if (!DEFAULT_COURSES.has(cs.slug)) continue;
+        if (has((r) => (r.dietaryTags ?? []).includes(d.slug) && r.course === cs.slug)) {
+          out.push(`${d.slug}-${cs.slug}`);
+        }
+      }
+    }
+    for (const t of TIME_BUCKETS) {
+      for (const cs of COURSES_NAV) {
+        if (!DEFAULT_COURSES.has(cs.slug)) continue;
+        if (has((r) => r.course === cs.slug && (r.totalTimeMin ?? 9999) <= t.maxMin)) {
+          out.push(`${t.slug}-${cs.slug}`);
+        }
+      }
+    }
+    return out;
+  }
+  const quickRoutes: MetadataRoute.Sitemap = combosWithMatches().map((slug) => ({
+    url: `${SITE.url}/quick/${slug}`,
+    lastModified: now,
+    changeFrequency: 'weekly' as const,
+    priority: 0.6,
+  }));
+
   return [
     ...staticRoutes,
     ...cuisineRoutes,
@@ -147,5 +198,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...howToRoutes,
     ...mealPlanRoutes,
     ...blogRoutes,
+    ...quickRoutes,
   ];
 }
