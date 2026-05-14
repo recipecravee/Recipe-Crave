@@ -1,7 +1,35 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-13 — **THIRTY-SEVENTH pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+> Last updated: 2026-05-14 — **THIRTY-EIGHTH pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+
+## 🆕 THIRTY-EIGHTH pass (2026-05-14 — autonomous shipping)
+
+### Commits
+
+| Commit | What |
+|---|---|
+| `1834309` | Per-recipe OG image at /recipes/[slug]/opengraph-image.png (split layout: title + cuisine + metadata left, hero photo right). RSS feed at /feed.xml (50 recent recipes + 20 blog posts, RSS 2.0, auto-discoverable via metadata.alternates.types). |
+| `89b403d` | Affiliate-link helper at src/lib/affiliate.ts + IngredientShopLink server component on every ingredient. Reads NEXT_PUBLIC_AMAZON_AFFILIATE_TAG env, falls back to clean Amazon search when unset. Owner activates monetization by dropping the tag in Vercel. |
+| `df3e98d` | Programmatic SEO at /quick/{combo} — 4 combo kinds (cuisine×course, cuisine×time, diet×course, time×course) statically generated for every combo that has at least one matching recipe. Each carries h1/description/canonical/OG/BreadcrumbList/ItemList JSON-LD. Sitemap.ts enumerates same combos. Adds several hundred new indexable URLs. |
+
+### What landed this pass (all autonomous, no owner action)
+
+1. **Per-recipe OG images** — every shared recipe link on Twitter/X, Facebook, Slack, Discord, LinkedIn, iMessage now renders a tailored card with the recipe title + hero photo.
+2. **RSS feed** — Feedly/Inoreader/IFTTT subscribers get fresh recipes + blog posts. Discoverable via auto-link tag.
+3. **Affiliate-ready ingredient links** — every ingredient on every recipe page has an outbound Amazon shop icon. Free → monetized one env var away.
+4. **Programmatic long-tail SEO** — captures "quick X Y" queries the existing taxonomy missed.
+
+### Owner one-line activation
+
+```
+# In Vercel env, optional:
+NEXT_PUBLIC_AMAZON_AFFILIATE_TAG=recipecrave-20
+```
+
+Drop tag + redeploy → every ingredient shop link starts paying.
+
+---
 
 ## 🆕 THIRTY-SEVENTH pass (2026-05-13 — ISR caching restored on homepage)
 
