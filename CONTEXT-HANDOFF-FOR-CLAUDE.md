@@ -1,7 +1,72 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-14 — **FORTY-SECOND pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com. **STORE-DEPLOYMENT READY** (Google Play + Apple App Store) **+ PUSH NOTIFICATIONS WIRED** end-to-end + **Google News eligible** + dynamic OG cards.
+> Last updated: 2026-05-14 — **FORTY-THIRD pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com. **STORE-DEPLOYMENT KIT FULLY PACKAGED** at `/store-deployment/` (Google Play + Apple App Store ready to ship) **+ PUSH NOTIFICATIONS WIRED** end-to-end + **Google News eligible** + dynamic OG cards.
+
+## 🆕 FORTY-THIRD pass (2026-05-14 — store-deployment kit packaged)
+
+Goal: package every doc + asset the user needs so when they pay the
+$25 Play + $99/yr Apple fees the only outstanding work is "click
+submit". Nothing else in the codebase changed.
+
+### What landed
+
+- `store-deployment/README.md` — top-level overview, fee summary
+  ($124 first year, $99/yr after), pre-submit sanity checklist
+  (Lighthouse PWA, PWABuilder score, manifest validation), folder
+  map, post-approval update-flow notes.
+- `store-deployment/android/README.md` — step-by-step Play
+  submission via PWABuilder TWA: package id `com.recipecrave.app`,
+  keystore handling (back up!), Digital Asset Links domain
+  verification flow, Play Console form answers, Data Safety form
+  pointer, common rejection table.
+- `store-deployment/ios/README.md` — App Store submission via
+  PWABuilder iOS + Xcode (Mac required; cheapest path =
+  MacInCloud $1/h pay-as-you-go for ~5 h): bundle id, push
+  capability, archive upload, App Privacy declarations, the
+  exact review notes that pre-empt the "4.2 — Minimum
+  Functionality" rejection ("just a website").
+- `store-deployment/listing-copy/play-store-listing.md` — app
+  name (22/30), short desc (79/80), full desc (~2.1k/4k), what's
+  new template, contact details.
+- `store-deployment/listing-copy/app-store-listing.md` — name
+  (22/30), subtitle (29/30), promotional text (168/170),
+  description (under 4k), keywords (87/100), review notes
+  (pre-empts the "just a website" rejection), age-rating
+  questionnaire answers → 4+.
+- `store-deployment/listing-copy/shared-metadata.md` — single
+  source of truth for the privacy/data-safety/age-rating
+  answers (Apple App Privacy + Play Data Safety + IARC), keeps
+  the two stores' declarations in sync.
+- `store-deployment/assets/` — already had 8 PNGs from prior
+  pass: feature graphic 1024×500, store icons 512 + 1024, phone
+  screenshots 1080×1920 / 1242×2208 / 1242×2688 / 1284×2778,
+  iPad screenshot 2048×2732.
+
+### Commit
+
+| Commit | What |
+|---|---|
+| (local, push 403 — token perms; user can push) | Comprehensive store-deployment/ kit. 6 markdown files + 8 PNG assets staged in store-deployment/. |
+
+### Why this matters for the user
+
+The user said: *"pls hav it all ready so when am ready i will just
+pay d fee for andriod and ios and then deploy wrap it all and folder
+it different."* This folder is the literal embodiment of that.
+Submission day is now ~5 hours of clicks, not weeks of research.
+
+### Open items the user still owns
+
+1. Push the commit to GitHub (current SSH/HTTPS token lacks write).
+2. Pay Play fee ($25) when ready.
+3. Pay Apple fee ($99) when ready.
+4. Rent/borrow a Mac when iOS submission day arrives.
+5. Optionally take real phone-frame screenshots later (current ones
+   are branded placeholders at exact required dimensions — fine for
+   submission, can be swapped any time without re-review).
+
+---
 
 ## 🆕 FORTY-SECOND pass (2026-05-14 — dynamic OG + Google News + admin push-test)
 
