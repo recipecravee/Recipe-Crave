@@ -10,6 +10,7 @@ import { RecipeActions } from '@/components/recipe/RecipeActions';
 import { RecipeSaveButton } from '@/components/recipe/RecipeSaveButton';
 import { RecipeVariationForm } from '@/components/recipe/RecipeVariationForm';
 import { ApprovedVariations } from '@/components/recipe/ApprovedVariations';
+import { IngredientShopLink } from '@/components/recipe/IngredientShopLink';
 import { PinItButton } from '@/components/recipe/PinItButton';
 import { TranslateRecipeButton } from '@/components/recipe/TranslateRecipeButton';
 import { MeasurementBanner } from '@/components/recipe/MeasurementBanner';
@@ -207,6 +208,7 @@ export default async function RecipePage({ params }: { params: Promise<{ slug: s
                   <input type="checkbox" id={`ing-${i}`} className="mt-1 h-4 w-4 rounded border-ink/20 text-terracotta-400 focus:ring-terracotta-400" />
                   <label htmlFor={`ing-${i}`} className="flex-1">
                     <span className="font-medium">{ing.qty} {ing.unit}</span> {ing.name}
+                    <IngredientShopLink ingredient={ing.name} />
                     {ing.notes ? <span className="block text-xs text-ink-muted">{ing.notes}</span> : null}
                   </label>
                 </li>
