@@ -5,6 +5,7 @@ import { Header } from '@/components/site/Header';
 import { Footer } from '@/components/site/Footer';
 import { ScrollToTop } from '@/components/site/ScrollToTop';
 import { GoogleAnalytics } from '@/components/site/GoogleAnalytics';
+import { ServiceWorkerRegister } from '@/components/site/ServiceWorkerRegister';
 import { FloatingLanguageSelector } from '@/components/site/FloatingLanguageSelector';
 import { WelcomePopup } from '@/components/site/WelcomePopup';
 import { CookieBanner } from '@/components/site/CookieBanner';
@@ -180,6 +181,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <WelcomePopup />
           <CookieBanner />
           <StreakTracker />
+          <ServiceWorkerRegister />
         </I18nProvider>
 
         {umamiId && umamiSrc ? (
