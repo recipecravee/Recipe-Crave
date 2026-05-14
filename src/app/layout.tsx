@@ -69,7 +69,12 @@ export const metadata: Metadata = {
   authors: [{ name: SITE.publisher, url: SITE.url }],
   creator: SITE.publisher,
   publisher: SITE.publisher,
-  alternates: { canonical: '/' },
+  alternates: {
+    canonical: '/',
+    types: {
+      'application/rss+xml': [{ url: '/feed.xml', title: 'RecipeCrave — New recipes + editorial' }],
+    },
+  },
   // Google Search Console ownership verification — provisioned 2026-05-12
   // (URL-prefix property https://recipecrave.com). Next.js emits the
   // <meta name="google-site-verification" ...> tag in <head> automatically.
