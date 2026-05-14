@@ -199,6 +199,102 @@
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
+
+  /* ============================================================
+     Recipe-page specific print polish
+     ============================================================ */
+
+  /* Tighter base typography for paper — Lighthouse-friendly contrast. */
+  article, main {
+    font-size: 11pt !important;
+    line-height: 1.45 !important;
+  }
+  h1 {
+    font-size: 24pt !important;
+    margin: 0 0 8pt 0 !important;
+    color: #1F1B16 !important;
+  }
+  h2 {
+    font-size: 14pt !important;
+    margin: 14pt 0 6pt 0 !important;
+    color: #C75D3C !important;
+    border-bottom: 1pt solid #E8B19C !important;
+    padding-bottom: 3pt !important;
+  }
+  h3 {
+    font-size: 12pt !important;
+    margin: 10pt 0 4pt 0 !important;
+  }
+
+  /* Strip social/sharing/voice/translate/variation chrome — recipe
+     prints should be ingredients + method + notes, nothing else. */
+  [aria-label='Save recipe'],
+  [aria-label*='Print'],
+  [aria-label*='Share'],
+  [aria-label*='Pin'],
+  [aria-label*='Translate'],
+  [aria-label*='cooked this'],
+  [aria-label*='Voice Cook'],
+  [data-print-hide],
+  .print\:hidden,
+  form[aria-label*='variation'],
+  form[aria-label*='subscribe'],
+  nav[aria-label='Breadcrumb'],
+  [aria-label='Reviews section'],
+  [aria-label*='AdSense'],
+  iframe {
+    display: none !important;
+  }
+
+  /* Ingredients block: tighter list, hanging indent for quantity. */
+  [aria-label='Ingredients'] ul,
+  section h2 + p + ul {
+    columns: 2;
+    column-gap: 18pt;
+  }
+  [aria-label='Ingredients'] li,
+  section h2 + p + ul li {
+    break-inside: avoid;
+    list-style: none;
+    padding: 2pt 0;
+    border-bottom: 0.5pt dotted #ccc;
+  }
+  [aria-label='Ingredients'] input[type='checkbox'] {
+    display: inline-block !important;
+    border: 0.5pt solid #888;
+    appearance: none;
+    width: 8pt;
+    height: 8pt;
+    margin-right: 4pt;
+    vertical-align: middle;
+  }
+
+  /* Instructions: numbered, generous spacing per step, never split. */
+  ol li {
+    break-inside: avoid;
+    margin-bottom: 8pt;
+    padding-left: 4pt;
+  }
+
+  /* Nutrition table — keep colored backgrounds for legibility. */
+  dl {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Show outbound link URLs inline so a printed recipe still references
+     the live source. Skip internal anchors and skip on long URLs. */
+  a[href^='http']:not([href*='recipecrave.com'])::after {
+    content: ' (' attr(href) ')';
+    font-size: 9pt;
+    color: #888;
+  }
+
+  /* Page-break hints: instructions get a fresh page if the ingredients
+     section is already long. */
+  section + section {
+    page-break-inside: auto;
+  }
 }
 
 /* Hide print-only elements on screen */
