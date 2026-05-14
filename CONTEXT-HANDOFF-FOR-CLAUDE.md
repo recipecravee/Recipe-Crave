@@ -1,7 +1,25 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-14 — **THIRTY-EIGHTH pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+> Last updated: 2026-05-14 — **THIRTY-NINTH pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+
+## 🆕 THIRTY-NINTH pass (2026-05-14 — PWA polish + SEO breadcrumbs + print stylesheet)
+
+### Commits
+
+| Commit | What |
+|---|---|
+| `bfc5407` | Full PWA icon set: 192/512 any-purpose, 512 maskable (20% safe-area + terracotta bg), 180 apple-touch, 32 favicon. Manifest.ts gets shortcuts[] (Meal Planner, Pantry Scan, Browse) for installed-PWA long-press menu. Layout metadata adds appleWebApp + explicit icons map. |
+| `108f06f` | BreadcrumbList JSON-LD on 5 hub pages (/calculators, /herbs, /how-to, /meal-plans, /blog). Every important page on the site now ships structured breadcrumbs. |
+| `516c43c` | Recipe print stylesheet polish: print-scaled typography, 2-column ingredient layout with dotted-line checkboxes for shopping-list use, 8pt step breathing room with page-break-inside:avoid, outbound URLs printed inline, every social/ad/form/iframe set display:none. |
+
+### Effect
+
+- PWA install on iOS/Android/desktop Chrome now shows proper RecipeCrave brand on every adaptive launcher.
+- Search Console will start recognising hub-page breadcrumbs (Calculators / Herbs / How-To / Meal-Plans / Blog) within next crawl cycle.
+- Cmd+P on any recipe page produces a real recipe card with watermark, brand header/footer, two-column ingredients, clean numbered method, source URLs printed inline.
+
+---
 
 ## 🆕 THIRTY-EIGHTH pass (2026-05-14 — autonomous shipping)
 
