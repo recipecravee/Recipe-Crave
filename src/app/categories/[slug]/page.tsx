@@ -27,6 +27,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       type: 'website',
       images: cat.image ? [{ url: cat.image, width: 1200, height: 630 }] : undefined,
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${cat.name} Recipes`,
+      description: cat.blurb,
+      images: cat.image ? [cat.image] : undefined,
+    },
   };
 }
 

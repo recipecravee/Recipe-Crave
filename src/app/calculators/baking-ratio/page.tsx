@@ -25,6 +25,23 @@ export const metadata: Metadata = {
     description:
       'Scale any bread or pizza dough by target flour weight. 10 presets, custom hydration, save your own.',
     type: 'website',
+    images: [
+      {
+        url: `/api/og?eyebrow=Calculator&accent=amber&title=${encodeURIComponent("Baker's Percentage Calculator")}&subtitle=${encodeURIComponent('10 presets, hydration slider, save your own. Free bread + pizza math.')}`,
+        width: 1200,
+        height: 630,
+        alt: "Baker's Percentage Calculator",
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Baker's Percentage Calculator",
+    description:
+      'Scale any bread or pizza dough by target flour weight. 10 presets, custom hydration, save your own.',
+    images: [
+      `/api/og?eyebrow=Calculator&accent=amber&title=${encodeURIComponent("Baker's Percentage Calculator")}&subtitle=${encodeURIComponent('10 presets, hydration slider, save your own. Free bread + pizza math.')}`,
+    ],
   },
 };
 

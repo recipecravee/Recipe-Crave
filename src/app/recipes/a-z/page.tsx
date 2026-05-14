@@ -23,6 +23,22 @@ export const metadata: Metadata = {
     title: 'All Recipes A to Z',
     description: 'Every dish on RecipeCrave indexed alphabetically.',
     type: 'website',
+    images: [
+      {
+        url: `/api/og?eyebrow=Recipe%20Index&accent=terracotta&title=${encodeURIComponent('All Recipes A to Z')}&subtitle=${encodeURIComponent('Every dish on RecipeCrave indexed alphabetically.')}`,
+        width: 1200,
+        height: 630,
+        alt: 'All Recipes A to Z',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'All Recipes A to Z',
+    description: 'Every dish on RecipeCrave indexed alphabetically.',
+    images: [
+      `/api/og?eyebrow=Recipe%20Index&accent=terracotta&title=${encodeURIComponent('All Recipes A to Z')}&subtitle=${encodeURIComponent('Every dish on RecipeCrave indexed alphabetically.')}`,
+    ],
   },
 };
 

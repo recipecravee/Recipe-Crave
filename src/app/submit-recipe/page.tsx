@@ -13,6 +13,22 @@ export const metadata: Metadata = {
     title: 'Submit your recipe to RecipeCrave',
     description: 'Share a recipe you love and have it featured on RecipeCrave.',
     url: `${SITE.url}/submit-recipe`,
+    images: [
+      {
+        url: `${SITE.url}/api/og?eyebrow=Submit&accent=amber&title=${encodeURIComponent('Submit your recipe to RecipeCrave')}&subtitle=${encodeURIComponent('Reviewed by our kitchen team. Full byline credit + backlink to you.')}`,
+        width: 1200,
+        height: 630,
+        alt: 'Submit your recipe to RecipeCrave',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Submit your recipe to RecipeCrave',
+    description: 'Share a recipe you love and have it featured on RecipeCrave.',
+    images: [
+      `${SITE.url}/api/og?eyebrow=Submit&accent=amber&title=${encodeURIComponent('Submit your recipe to RecipeCrave')}&subtitle=${encodeURIComponent('Reviewed by our kitchen team. Full byline credit + backlink to you.')}`,
+    ],
   },
 };
 

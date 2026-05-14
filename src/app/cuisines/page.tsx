@@ -11,6 +11,22 @@ export const metadata: Metadata = {
     title: `All ${CUISINES.length} world cuisines on RecipeCrave`,
     description: 'Browse every cuisine RecipeCrave covers — regional landing pages with recipes, technique notes, and pairing guidance.',
     url: `${SITE.url}/cuisines`,
+    images: [
+      {
+        url: `${SITE.url}/api/og?eyebrow=Cuisines&accent=terracotta&title=${encodeURIComponent('Every world cuisine on RecipeCrave')}&subtitle=${encodeURIComponent('Regional landing pages with recipes, technique, and pairing guidance.')}`,
+        width: 1200,
+        height: 630,
+        alt: 'RecipeCrave world cuisines',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `All ${CUISINES.length} world cuisines on RecipeCrave`,
+    description: 'Browse every cuisine RecipeCrave covers — regional landing pages with recipes, technique notes, and pairing guidance.',
+    images: [
+      `${SITE.url}/api/og?eyebrow=Cuisines&accent=terracotta&title=${encodeURIComponent('Every world cuisine on RecipeCrave')}&subtitle=${encodeURIComponent('Regional landing pages with recipes, technique, and pairing guidance.')}`,
+    ],
   },
 };
 

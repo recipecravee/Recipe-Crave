@@ -11,6 +11,22 @@ export const metadata: Metadata = {
     title: `All ${DIETS.length} dietary patterns on RecipeCrave`,
     description: 'Browse every dietary pattern RecipeCrave supports. Each diet page explains the rules and shows nutrition-matched recipes.',
     url: `${SITE.url}/diets`,
+    images: [
+      {
+        url: `${SITE.url}/api/og?eyebrow=Diets&accent=forest&title=${encodeURIComponent('All dietary patterns on RecipeCrave')}&subtitle=${encodeURIComponent('Vegan, keto, paleo, low-FODMAP and more — nutrition-matched recipes.')}`,
+        width: 1200,
+        height: 630,
+        alt: 'RecipeCrave dietary patterns',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `All ${DIETS.length} dietary patterns on RecipeCrave`,
+    description: 'Browse every dietary pattern RecipeCrave supports. Each diet page explains the rules and shows nutrition-matched recipes.',
+    images: [
+      `${SITE.url}/api/og?eyebrow=Diets&accent=forest&title=${encodeURIComponent('All dietary patterns on RecipeCrave')}&subtitle=${encodeURIComponent('Vegan, keto, paleo, low-FODMAP and more — nutrition-matched recipes.')}`,
+    ],
   },
 };
 

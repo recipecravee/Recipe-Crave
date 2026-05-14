@@ -160,7 +160,27 @@ export async function generateMetadata({ params }: { params: Promise<{ combo: st
     title: `${title} — Free, Tested & Step-by-Step | ${SITE.name}`,
     description,
     alternates: { canonical: `${SITE.url}/quick/${combo}` },
-    openGraph: { title, description, url: `${SITE.url}/quick/${combo}` },
+    openGraph: {
+      title,
+      description,
+      url: `${SITE.url}/quick/${combo}`,
+      images: [
+        {
+          url: `${SITE.url}/api/og?eyebrow=Quick%20Picks&accent=terracotta&title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(description.slice(0, 110))}`,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [
+        `${SITE.url}/api/og?eyebrow=Quick%20Picks&accent=terracotta&title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(description.slice(0, 110))}`,
+      ],
+    },
   };
 }
 

@@ -52,7 +52,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       publishedTime: recipe.publishedAt,
       modifiedTime: recipe.updatedAt,
     },
-    twitter: { card: 'summary_large_image', title: recipe.title, description: recipe.description },
+    twitter: {
+      card: 'summary_large_image',
+      title: recipe.title,
+      description: recipe.description,
+      images: recipe.heroImage ? [recipe.heroImage] : undefined,
+    },
     keywords: recipe.keywords,
     // Pinterest favors vertical 2:3 pins. Expose a per-recipe pin URL so
     // crawlers and the in-page "Pin it" button reference an optimized image.

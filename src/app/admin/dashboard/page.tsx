@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { ExternalLink, Activity, BarChart3, Mail, Globe, Github, Database, Search, Cookie } from 'lucide-react';
+import { ExternalLink, Activity, BarChart3, Mail, Globe, Github, Database, Search, Cookie, Bell } from 'lucide-react';
 import { ADMIN_COOKIE_NAME, verifySession } from '@/lib/admin/auth';
 import { getAllRecipes, getAllCollections } from '@/lib/data/recipes';
 import { HERBS } from '@/content/herbs';
@@ -10,6 +10,46 @@ import { HOW_TO_GUIDES } from '@/content/how-to-guides';
 import { MEAL_PLANS } from '@/content/meal-plans';
 import { SITE, CUISINES, DIETS } from '@/lib/constants';
 import { AdminLogoutButton } from './AdminLogoutButton';
+import { PushTestButton } from './PushTestButton';
+
+/**
+ * Push subscription stats — pulled with the service-role key so RLS
+ * does not need a special policy. Returns null when the env or table
+ * is missing so the dashboard renders cleanly before VAPID is wired.
+ */
+async function getPushStats(): Promise<
+  | { active: number; unsubscribed: number; total: number; configured: boolean }
+  | null
+> {
+  const supaUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const vapidPublic = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+  const vapidPrivate = process.env.VAPID_PRIVATE_KEY;
+  const configured = Boolean(vapidPublic && vapidPrivate);
+  if (!supaUrl || !serviceKey) return null;
+  try {
+    const { createClient } = await import('@supabase/supabase-js');
+    const supabase = createClient(supaUrl, serviceKey, {
+      auth: { persistSession: false },
+    });
+    const [activeRes, unsubRes] = await Promise.all([
+      supabase
+        .from('push_subscriptions')
+        .select('id', { count: 'exact', head: true })
+        .is('unsubscribed_at', null),
+      supabase
+        .from('push_subscriptions')
+        .select('id', { count: 'exact', head: true })
+        .not('unsubscribed_at', 'is', null),
+    ]);
+    if (activeRes.error || unsubRes.error) return null;
+    const active = activeRes.count ?? 0;
+    const unsubscribed = unsubRes.count ?? 0;
+    return { active, unsubscribed, total: active + unsubscribed, configured };
+  } catch {
+    return null;
+  }
+}
 
 export const dynamic = 'force-dynamic';
 // Re-render every 30s so live KPI numbers stay current without a refresh.
@@ -21,7 +61,11 @@ export default async function AdminDashboardPage() {
   const session = verifySession(c.get(ADMIN_COOKIE_NAME)?.value);
   if (!session.ok) redirect('/admin/login');
 
-  const [recipes, collections] = await Promise.all([getAllRecipes(), getAllCollections()]);
+  const [recipes, collections, pushStats] = await Promise.all([
+    getAllRecipes(),
+    getAllCollections(),
+    getPushStats(),
+  ]);
   const featured = recipes.filter((r) => r.viewCount > 0 || r.saveCount > 0).length;
   const totalViews = recipes.reduce((acc, r) => acc + (r.viewCount ?? 0), 0);
   const totalSaves = recipes.reduce((acc, r) => acc + (r.saveCount ?? 0), 0);
@@ -76,6 +120,55 @@ export default async function AdminDashboardPage() {
         Engagement counts are in-app today (view/save/cook events stored on the recipe rows). For
         true visitor-level metrics use the GA4 Realtime panel linked below.
       </p>
+
+      {/* Push notifications — subscriber tiles + test-push button */}
+      <h2 className="mb-4 mt-12 flex items-center gap-2 font-serif text-2xl">
+        <Bell className="h-5 w-5 text-terracotta-500" aria-hidden />
+        Push notifications
+      </h2>
+      {pushStats === null ? (
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+          Push backend not reachable yet — `SUPABASE_SERVICE_ROLE_KEY` or the{' '}
+          <code>push_subscriptions</code> table is missing. Apply{' '}
+          <code>drizzle/0002_push_subscriptions.sql</code> and set VAPID env vars to
+          enable.
+        </div>
+      ) : (
+        <>
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            <Kpi
+              label="Active subscriptions"
+              value={pushStats.active.toLocaleString()}
+              accent
+            />
+            <Kpi
+              label="Unsubscribed"
+              value={pushStats.unsubscribed.toLocaleString()}
+            />
+            <Kpi
+              label="Total signups"
+              value={pushStats.total.toLocaleString()}
+            />
+            <Kpi
+              label="VAPID configured"
+              value={pushStats.configured ? 'Yes' : 'No'}
+            />
+          </div>
+          <div className="mt-4">
+            {pushStats.configured ? (
+              <PushTestButton />
+            ) : (
+              <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+                Set <code>NEXT_PUBLIC_VAPID_PUBLIC_KEY</code> +{' '}
+                <code>VAPID_PRIVATE_KEY</code> in Vercel env to enable the
+                test-push button. See{' '}
+                <code>drizzle/0002_push_subscriptions.sql</code> header for
+                generation steps.
+              </div>
+            )}
+          </div>
+        </>
+      )}
 
       {/* Live external dashboards */}
       <h2 className="mb-4 mt-12 font-serif text-2xl">Live external dashboards</h2>

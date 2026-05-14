@@ -37,6 +37,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         },
       ],
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: guide.title,
+      description: guide.description,
+      images: [
+        absoluteUrl(
+          `/api/og?eyebrow=How-To&accent=amber&title=${encodeURIComponent(guide.title)}&subtitle=${encodeURIComponent(guide.description.slice(0, 110))}`,
+        ),
+      ],
+    },
   };
 }
 
