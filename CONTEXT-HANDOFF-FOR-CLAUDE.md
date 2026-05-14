@@ -1,7 +1,35 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-14 — **FORTY-FIRST pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com. **STORE-DEPLOYMENT READY** (Google Play + Apple App Store) **+ PUSH NOTIFICATIONS WIRED** end-to-end (inert until VAPID keys provisioned).
+> Last updated: 2026-05-14 — **FORTY-SECOND pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com. **STORE-DEPLOYMENT READY** (Google Play + Apple App Store) **+ PUSH NOTIFICATIONS WIRED** end-to-end + **Google News eligible** + dynamic OG cards.
+
+## 🆕 FORTY-SECOND pass (2026-05-14 — dynamic OG + Google News + admin push-test)
+
+### Commits
+
+| Commit | What |
+|---|---|
+| `7735025` | /api/og dynamic OG image endpoint. Query params: title, subtitle, eyebrow, accent (terracotta/forest/amber). Edge runtime, 24h cache. Wired into /blog/[slug] (Editorial/forest) and /how-to/[slug] (How-To/amber). Branded social card on every shared post. |
+| `db0d89c` | /news-sitemap.xml — Google News + Top Stories carousel eligibility. Conforms to Google's news extension spec. Surfaces blog posts <48h old with publication name, language, RFC 3339 dates, keywords. Listed in /sitemap.xml. |
+| `a342739` | /api/admin/push-test — owner-gated POST that fan-outs a test push to every active subscription. 503s with actionable errors when VAPID/Supabase/web-push missing. Lets owner verify push works without waiting for 09:00 UTC cron. |
+
+### Distribution endpoints summary
+
+| URL | Purpose |
+|---|---|
+| `/sitemap.xml` | Main sitemap (recipes + cuisines + diets + collections + how-to + blog + meal-plans + calculators + herbs + /quick programmatic + /feed.xml + /news-sitemap.xml + admin allowlist) |
+| `/news-sitemap.xml` | Google News + Top Stories eligibility |
+| `/feed.xml` | RSS 2.0 — Feedly/Inoreader/IFTTT auto-discoverable |
+| `/api/og` | Dynamic OG card for arbitrary pages |
+| `/recipes/[slug]/opengraph-image.png` | Per-recipe OG card (recipe + hero photo) |
+| `/manifest.webmanifest` | PWA install metadata |
+| `/sw.js` | Service worker (cache-first static, network-first HTML, stale-while-revalidate images, push handler) |
+| `/offline.html` | Offline fallback page |
+| `/robots.txt` | Crawler rules (AI bots allowed, scrapers slowed, abusers blocked) |
+| `/humans.txt` | Team + credits |
+| `/.well-known/security.txt` | RFC 9116 security disclosure |
+
+---
 
 ## 🆕 FORTY-FIRST pass (2026-05-14 — push notifications end-to-end)
 
