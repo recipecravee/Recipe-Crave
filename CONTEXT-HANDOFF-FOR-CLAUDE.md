@@ -1,7 +1,68 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-14 — **FORTY-THIRD pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com. **STORE-DEPLOYMENT KIT FULLY PACKAGED** at `/store-deployment/` (Google Play + Apple App Store ready to ship) **+ PUSH NOTIFICATIONS WIRED** end-to-end + **Google News eligible** + dynamic OG cards.
+> Last updated: 2026-05-14 — **FORTY-FOURTH pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com. **STORE-DEPLOYMENT KIT FULLY PACKAGED** at `/store-deployment/` (Google Play + Apple App Store ready to ship) **+ TWITTER CARDS** on every dynamic page **+ ADMIN PUSH DASHBOARD** with live sub counts + one-click test fire **+ PUSH NOTIFICATIONS WIRED** end-to-end + **Google News eligible** + dynamic OG cards.
+
+## 🆕 FORTY-FOURTH pass (2026-05-14 — Twitter card audit + admin push dashboard)
+
+### Commits
+
+| Commit | What |
+|---|---|
+| `8123f04` | Twitter card audit on 10 dynamic pages + admin dashboard push section |
+
+### Twitter audit — what was wrong, what's fixed
+
+Every dynamic page that overrode openGraph was inheriting the
+layout-level twitter card with the *site* hero image instead of
+its own page-specific one. Now every page sets an explicit
+`twitter` block with `card: summary_large_image` + per-page title,
+description, and image:
+
+| Page | Twitter image source |
+|---|---|
+| `/blog/[slug]` | `/api/og?eyebrow=Editorial&accent=forest&…` |
+| `/how-to/[slug]` | `/api/og?eyebrow=How-To&accent=amber&…` |
+| `/quick/[combo]` | `/api/og?eyebrow=Quick%20Picks&accent=terracotta&…` (was missing entirely from og too — now both set) |
+| `/pillars/[slug]` | `/api/og?eyebrow=Pillar&accent=forest&…` |
+| `/categories/[slug]` | `cat.image` |
+| `/diets` | `/api/og?eyebrow=Diets&accent=forest&…` |
+| `/cuisines` | `/api/og?eyebrow=Cuisines&accent=terracotta&…` |
+| `/submit-recipe` | `/api/og?eyebrow=Submit&accent=amber&…` |
+| `/recipes/a-z` | `/api/og?eyebrow=Recipe%20Index&accent=terracotta&…` |
+| `/calculators/baking-ratio` | `/api/og?eyebrow=Calculator&accent=amber&…` |
+| `/recipes/[slug]` | `recipe.heroImage` (fixed: previously had twitter title+desc but no images array, so X fell back to site default) |
+
+Recipe detail + collection detail were already on the per-page OG
+chain via openGraph; twitter just inherited from layout. Now they
+all bring their own branded cards to X / Twitter / LinkedIn /
+iMessage / Slack / Discord.
+
+### Admin dashboard — push notifications section
+
+Inserted between the engagement KPIs and the external dashboards:
+
+- **`getPushStats()`** server helper at top of
+  `src/app/admin/dashboard/page.tsx`. Lazy-imports
+  `@supabase/supabase-js` + uses service-role key so RLS does not
+  need a special policy. Two parallel `count: 'exact', head: true`
+  queries return active and unsubscribed counts. Returns `null`
+  cleanly when env or table missing — dashboard renders an inline
+  setup notice instead of 500ing.
+- **4 KPI tiles:** Active subscriptions, Unsubscribed, Total
+  signups, VAPID configured (Yes/No). Numbers auto-refresh every
+  30s (dashboard's existing `revalidate = 30`).
+- **`PushTestButton.tsx`** client island — POSTs
+  `/api/admin/push-test`, renders sent / failed / total inline,
+  shows red banner on error, disables while in-flight. Renders
+  only when VAPID configured; otherwise shows env-setup notice
+  pointing to `drizzle/0002_push_subscriptions.sql`.
+
+Owner now sees pulse of the push channel + can verify VAPID end-
+to-end in one click — no more waiting for the 09:00 UTC cron to
+know whether subscriptions actually fire.
+
+---
 
 ## 🆕 FORTY-THIRD pass (2026-05-14 — store-deployment kit packaged)
 
