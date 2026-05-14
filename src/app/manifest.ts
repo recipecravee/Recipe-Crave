@@ -35,6 +35,20 @@ export default function manifest(): MetadataRoute.Manifest {
       { src: '/icon-maskable-1024.png', sizes: '1024x1024', type: 'image/png', purpose: 'maskable' },
       { src: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png', purpose: 'any' },
     ],
+    // Screenshots — Android Chrome and Play Store install dialogs
+    // surface these. Two narrow (mobile) + two wide (desktop) per the
+    // PWA install-rich-install spec. Generated at /screenshots/ when
+    // owner ships them; for now points at the OG image as fallback so
+    // the manifest stays valid.
+    screenshots: [
+      {
+        src: '/opengraph-image',
+        sizes: '1200x630',
+        type: 'image/png',
+        form_factor: 'wide',
+        label: 'RecipeCrave home page',
+      },
+    ],
     shortcuts: [
       {
         name: 'AI Meal Planner',

@@ -1,0 +1,12 @@
+Contact: mailto:security@recipecrave.com
+Contact: mailto:hello@recipecrave.com
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: en
+Canonical: https://recipecrave.com/.well-known/security.txt
+Policy: https://recipecrave.com/privacy
+Acknowledgments: https://recipecrave.com/about
+
+# RFC 9116 compliant security disclosure file.
+# We welcome responsible disclosure of security vulnerabilities.
+# Please email the contact addresses above before public disclosure
+# and allow up to 30 days for a fix to be deployed.

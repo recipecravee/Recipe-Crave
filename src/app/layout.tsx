@@ -6,6 +6,7 @@ import { Footer } from '@/components/site/Footer';
 import { ScrollToTop } from '@/components/site/ScrollToTop';
 import { GoogleAnalytics } from '@/components/site/GoogleAnalytics';
 import { ServiceWorkerRegister } from '@/components/site/ServiceWorkerRegister';
+import { IosSplashLinks } from '@/components/site/IosSplashLinks';
 import { FloatingLanguageSelector } from '@/components/site/FloatingLanguageSelector';
 import { WelcomePopup } from '@/components/site/WelcomePopup';
 import { CookieBanner } from '@/components/site/CookieBanner';
@@ -141,6 +142,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <IosSplashLinks />
       </head>
       <body className="min-h-screen bg-cream-100 font-sans text-ink antialiased">
         <a

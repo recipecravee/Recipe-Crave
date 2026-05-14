@@ -1,0 +1,21 @@
+/* TEAM */
+Site: RecipeCrave
+URL: https://recipecrave.com
+Contact: hello [at] recipecrave [dot] com
+Location: Internet
+Stack: Next.js 16 · React Server Components · TypeScript · Tailwind CSS v3 · Supabase · Resend · Vercel · Cloudflare DNS · Google Analytics 4
+Repository: https://github.com/recipecravee/Recipe-Crave
+
+/* CREDITS */
+Photography: Unsplash contributors (per CC0 license)
+Recipe library: RecipeCrave editorial team + community submissions
+Cooking science references: Modernist Cuisine, Serious Eats, America's Test Kitchen
+Herbal references: NIH NCCIH, Memorial Sloan Kettering About Herbs, WHO Monographs
+
+/* THANKS */
+Free tier providers powering this site: Vercel · Supabase · Resend · Cloudflare · Google Analytics · Lingva Translate
+
+/* SITE */
+Language: English (with translations to 29 additional locales)
+Standards: HTML5 · Schema.org · WCAG 2.1 AA · WAI-ARIA · GDPR · CCPA / CPRA
+Last updated: 2026-05-14
