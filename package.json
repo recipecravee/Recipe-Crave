@@ -2,7 +2,7 @@
   "name": "recipecrave",
   "version": "0.1.0",
   "private": true,
-  "description": "RecipeCrave \u00e2\u20ac\u201d AI-powered recipe discovery, meal planning, and cooking coach.",
+  "description": "RecipeCrave â€” AI-powered recipe discovery, meal planning, and cooking coach.",
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
@@ -31,6 +31,7 @@
     "@sentry/nextjs": "^10.52.0",
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.46.0",
+    "@types/web-push": "^3.6.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.36.0",
@@ -47,6 +48,7 @@
     "resend": "^4.0.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
+    "web-push": "^3.6.7",
     "zod": "^3.23.8"
   },
   "devDependencies": {

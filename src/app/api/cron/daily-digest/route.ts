@@ -132,13 +132,96 @@ export async function GET(req: Request) {
     }
   }
 
+  // ============================================================
+  // Push notifications side — fire alongside email when VAPID
+  // configured + push_subscriptions table populated. Failure here is
+  // never fatal; emails already went out.
+  // ============================================================
+  const pushResult = await sendDigestPushes(a, b, c);
+
   return NextResponse.json({
     ok: failed.length === 0,
     sentCount: sent.length,
     failedCount: failed.length,
+    pushSent: pushResult.sent,
+    pushFailed: pushResult.failed,
     picks: picks.map((p) => p.slug),
     failures: failed.slice(0, 5),
   });
+}
+
+/**
+ * Send a Web Push notification per subscription. No-ops when VAPID
+ * keys missing or the push_subscriptions table doesn't exist yet —
+ * lets the cron route ship before owner has wired the push side.
+ */
+async function sendDigestPushes(
+  a: RecipePick,
+  b: RecipePick,
+  c: RecipePick,
+): Promise<{ sent: number; failed: number }> {
+  const vapidPublic = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+  const vapidPrivate = process.env.VAPID_PRIVATE_KEY;
+  const subject = process.env.VAPID_SUBJECT ?? 'mailto:hello@recipecrave.com';
+  const supaUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!vapidPublic || !vapidPrivate || !supaUrl || !serviceKey) {
+    return { sent: 0, failed: 0 };
+  }
+
+  let webpush: typeof import('web-push');
+  try {
+    webpush = await import('web-push');
+  } catch {
+    // web-push not installed yet — silently skip.
+    return { sent: 0, failed: 0 };
+  }
+  webpush.setVapidDetails(subject, vapidPublic, vapidPrivate);
+
+  const { createClient } = await import('@supabase/supabase-js');
+  const supabase = createClient(supaUrl, serviceKey, { auth: { persistSession: false } });
+  const { data, error } = await supabase
+    .from('push_subscriptions')
+    .select('id, endpoint, p256dh, auth')
+    .is('unsubscribed_at', null);
+  if (error || !data || data.length === 0) return { sent: 0, failed: 0 };
+
+  const payload = JSON.stringify({
+    title: 'Three recipes for today',
+    body: `${a.title} · ${b.title} · ${c.title}`,
+    url: `https://recipecrave.com/recipes/${a.slug}`,
+  });
+
+  let sent = 0;
+  let failed = 0;
+  const expired: string[] = [];
+  for (const sub of data as Array<{ id: string; endpoint: string; p256dh: string; auth: string }>) {
+    try {
+      await webpush.sendNotification(
+        { endpoint: sub.endpoint, keys: { p256dh: sub.p256dh, auth: sub.auth } },
+        payload,
+        { TTL: 60 * 60 * 12 },
+      );
+      sent++;
+    } catch (err) {
+      failed++;
+      const statusCode = (err as { statusCode?: number }).statusCode;
+      if (statusCode === 404 || statusCode === 410) {
+        // Subscription gone — mark for cleanup.
+        expired.push(sub.id);
+      }
+    }
+  }
+
+  // Mark dead subs unsubscribed so the next cron skips them.
+  if (expired.length > 0) {
+    await supabase
+      .from('push_subscriptions')
+      .update({ unsubscribed_at: new Date().toISOString() })
+      .in('id', expired);
+  }
+
+  return { sent, failed };
 }
 
 type RecipePick = {
