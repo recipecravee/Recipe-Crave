@@ -1,7 +1,50 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-14 — **FORTIETH pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com. **STORE-DEPLOYMENT READY** (Google Play + Apple App Store).
+> Last updated: 2026-05-14 — **FORTY-FIRST pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com. **STORE-DEPLOYMENT READY** (Google Play + Apple App Store) **+ PUSH NOTIFICATIONS WIRED** end-to-end (inert until VAPID keys provisioned).
+
+## 🆕 FORTY-FIRST pass (2026-05-14 — push notifications end-to-end)
+
+### Commits
+
+| Commit | What |
+|---|---|
+| `72b3086` | Push notification client scaffold: src/lib/push.ts (urlBase64ToUint8Array, pushSupported feature-detect, subscribeToPush flow). PushNotificationPrompt banner — appears after 3 page views per session, only when VAPID configured. /api/push/subscribe endpoint with zod validation + rate limit + Supabase upsert. drizzle/0002_push_subscriptions.sql migration. |
+| `18ab958` | Daily-digest cron now fans out Web Push alongside emails. Lazy-imports web-push to stay safe when uninstalled. Handles dead subscriptions (404/410) by marking unsubscribed_at. Returns pushSent + pushFailed in response. |
+
+### Owner activation (when ready to ship pushes)
+
+```bash
+# 1. Generate VAPID keys
+npx web-push generate-vapid-keys
+
+# 2. Drop in Vercel env:
+NEXT_PUBLIC_VAPID_PUBLIC_KEY=<public>
+VAPID_PRIVATE_KEY=<private>
+VAPID_SUBJECT=mailto:hello@recipecrave.com
+
+# 3. Apply migration in Supabase SQL editor:
+#    paste drizzle/0002_push_subscriptions.sql, run
+```
+
+Next cron run (09:00 UTC) picks subscriptions up automatically. No code change needed.
+
+### End-to-end flow
+
+```
+Visitor lands → service worker registers → reads ≥3 pages →
+PushNotificationPrompt banner appears → "Enable" tap →
+permission granted → subscribeToPush() →
+POST /api/push/subscribe → row stored in push_subscriptions →
+daily-digest cron at 09:00 UTC →
+sendDigestPushes() iterates subs → web-push send →
+service worker push event → showNotification →
+user taps → notificationclick opens recipe URL.
+```
+
+Every link in that chain is shipped. Stays inert until VAPID keys exist.
+
+---
 
 ## 🆕 FORTIETH pass (2026-05-14 — full store-deployment readiness)
 
