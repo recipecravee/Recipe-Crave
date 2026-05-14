@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { breadcrumbJsonLd } from '@/lib/seo/structured-data';
 
 export const metadata: Metadata = {
   title: 'Free Cooking Calculators & Converters',
@@ -32,6 +34,12 @@ const TOOLS: Tool[] = [
 export default function CalculatorsIndex() {
   return (
     <div className="container py-10 lg:py-14">
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Home', url: '/' },
+          { name: 'Free Cooking Calculators', url: '/calculators' },
+        ])}
+      />
       <header className="mb-10 max-w-2xl">
         <h1 className="font-serif text-4xl text-ink sm:text-5xl">Free Cooking Calculators</h1>
         <p className="mt-3 text-ink-muted">

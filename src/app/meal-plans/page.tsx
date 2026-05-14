@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Calendar, Sparkles } from 'lucide-react';
 import { MEAL_PLANS } from '@/content/meal-plans';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { breadcrumbJsonLd } from '@/lib/seo/structured-data';
 
 export const metadata: Metadata = {
   title: '30-Day Condition-Specific Meal Plans — Anti-Inflammation, Diabetes, Gut Health, Sleep',
@@ -21,6 +23,12 @@ export const metadata: Metadata = {
 export default function MealPlansLanding() {
   return (
     <div className="container py-10 lg:py-14">
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Home', url: '/' },
+          { name: '30-Day Meal Plans', url: '/meal-plans' },
+        ])}
+      />
       <header className="mb-12 max-w-3xl">
         <p className="inline-flex items-center gap-1.5 rounded-full bg-forest-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-forest-700">
           <Calendar className="h-3.5 w-3.5" aria-hidden /> 30-Day Protocols

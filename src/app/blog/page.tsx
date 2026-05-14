@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Clock, BookOpen } from 'lucide-react';
 import { BLOG_POSTS } from '@/content/blog-posts';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { breadcrumbJsonLd } from '@/lib/seo/structured-data';
 
 export const metadata: Metadata = {
   title: 'RecipeCrave Blog — Evidence-Backed Cooking & Health',
@@ -28,6 +30,12 @@ export default function BlogLanding() {
 
   return (
     <div className="container py-10 lg:py-14">
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Home', url: '/' },
+          { name: 'Blog', url: '/blog' },
+        ])}
+      />
       <header className="mb-12 max-w-3xl">
         <p className="inline-flex items-center gap-1.5 rounded-full bg-forest-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-forest-700">
           <BookOpen className="h-3.5 w-3.5" aria-hidden /> The RecipeCrave Blog

@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { Leaf, Heart, Brain, Activity, Coffee } from 'lucide-react';
 import { HERBS, CONDITIONS, SYNERGIES } from '@/content/herbs';
 import { SeasonalHerbs } from '@/components/site/SeasonalHerbs';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { breadcrumbJsonLd } from '@/lib/seo/structured-data';
 
 export const metadata: Metadata = {
   title: 'Therapeutic Herbs & Functional Ingredients — Food as Preventive Health',
@@ -26,6 +28,12 @@ export const metadata: Metadata = {
 export default function HerbsLanding() {
   return (
     <div className="container py-10 lg:py-14">
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Home', url: '/' },
+          { name: 'Therapeutic Herbs', url: '/herbs' },
+        ])}
+      />
       <header className="mb-12 max-w-3xl">
         <p className="inline-flex items-center gap-1.5 rounded-full bg-forest-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-forest-700">
           <Leaf className="h-3.5 w-3.5" aria-hidden /> Food as medicine
