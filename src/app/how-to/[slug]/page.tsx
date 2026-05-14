@@ -26,6 +26,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: guide.description,
       type: 'article',
       url: absoluteUrl(`/how-to/${slug}`),
+      images: [
+        {
+          url: absoluteUrl(
+            `/api/og?eyebrow=How-To&accent=amber&title=${encodeURIComponent(guide.title)}&subtitle=${encodeURIComponent(guide.description.slice(0, 110))}`,
+          ),
+          width: 1200,
+          height: 630,
+          alt: guide.title,
+        },
+      ],
     },
   };
 }

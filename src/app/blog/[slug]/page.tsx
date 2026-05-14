@@ -31,6 +31,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       modifiedTime: post.updatedAt,
       authors: [post.author.name],
       tags: post.tags,
+      images: [
+        {
+          url: absoluteUrl(
+            `/api/og?eyebrow=Editorial&accent=forest&title=${encodeURIComponent(post.title)}&subtitle=${encodeURIComponent(post.description.slice(0, 110))}`,
+          ),
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
     },
   };
 }
