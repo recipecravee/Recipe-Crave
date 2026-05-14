@@ -1,7 +1,50 @@
 # RecipeCrave — Context Handoff for Next Claude
 
 > Drop this in front of any new Claude session. Everything that happened on `recipecrave.com` is captured here.
-> Last updated: 2026-05-14 — **THIRTY-NINTH pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com.
+> Last updated: 2026-05-14 — **FORTIETH pass** by Claude Opus 4.7 (caveman mode). PRODUCTION IS LIVE at https://www.recipecrave.com. **STORE-DEPLOYMENT READY** (Google Play + Apple App Store).
+
+## 🆕 FORTIETH pass (2026-05-14 — full store-deployment readiness)
+
+### Commits
+
+| Commit | What |
+|---|---|
+| `30deb5e` | Service worker (/sw.js) with three caching strategies + offline.html fallback + 1024 icons. PWA + store-eligibility unlocked. |
+| `1f7d38f` | 24 iOS splash screens for 12 device families × 2 orientations + IosSplashLinks server component. /humans.txt + RFC 9116 /.well-known/security.txt. Manifest screenshots[]. Robots tightened (friendly AI bots allowed, SEO crawlers slowed, abusive scrapers blocked). |
+
+### Store deployment ready
+
+Site now meets all technical criteria for:
+
+**Google Play Store** — Trusted Web Activity submission via PWABuilder.com:
+- ✅ Service worker registered
+- ✅ Web App Manifest with name, short_name, icons (any + maskable), display, theme_color, background_color, start_url, shortcuts, screenshots
+- ✅ HTTPS-only (recipecrave.com)
+- ✅ Responsive
+- ✅ Maskable icons at 512 + 1024
+- ✅ Offline page
+
+**Apple App Store** — PWABuilder iOS or Capacitor wrapper:
+- ✅ apple-touch-icon (180×180)
+- ✅ apple-mobile-web-app-capable + standalone display
+- ✅ 24 apple-touch-startup-image splash screens covering every iPhone/iPad device family
+- ✅ Offline page (Apple specifically wants offline value)
+- ✅ 1024×1024 listing image
+- ✅ Privacy policy + CCPA + state-level rights
+
+**Web-only "Add to Home Screen"** — already works today on every iOS/Android browser.
+
+### Owner's path to actual submission
+
+When ready to ship to stores:
+
+1. **Google Play** — visit https://www.pwabuilder.com, enter recipecrave.com, click "Package for Android", download .aab. Pay $25 to Google Play Console, upload .aab + 4 screenshots + 1024 feature graphic. Submit. 2-7 day review.
+
+2. **Apple App Store** — same PWABuilder flow, click "Package for iOS", download Xcode project. $99/yr Apple Developer account. Open in Xcode on a Mac, sign with team certificate, archive, upload via Xcode. Fill App Store Connect listing. 1-7 day review.
+
+I (next Claude) can drive PWABuilder.com via browser MCP whenever owner says go.
+
+---
 
 ## 🆕 THIRTY-NINTH pass (2026-05-14 — PWA polish + SEO breadcrumbs + print stylesheet)
 
