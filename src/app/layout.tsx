@@ -7,6 +7,7 @@ import { ScrollToTop } from '@/components/site/ScrollToTop';
 import { GoogleAnalytics } from '@/components/site/GoogleAnalytics';
 import { ServiceWorkerRegister } from '@/components/site/ServiceWorkerRegister';
 import { IosSplashLinks } from '@/components/site/IosSplashLinks';
+import { PushNotificationPrompt } from '@/components/site/PushNotificationPrompt';
 import { FloatingLanguageSelector } from '@/components/site/FloatingLanguageSelector';
 import { WelcomePopup } from '@/components/site/WelcomePopup';
 import { CookieBanner } from '@/components/site/CookieBanner';
@@ -184,6 +185,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <CookieBanner />
           <StreakTracker />
           <ServiceWorkerRegister />
+          <PushNotificationPrompt />
         </I18nProvider>
 
         {umamiId && umamiSrc ? (
