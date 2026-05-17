@@ -279,7 +279,7 @@ export const IMG = {
   lemonade: `https://images.unsplash.com/photo-1556881286-fc6915169721?${W}`,
   watermelonCooler: `https://images.unsplash.com/photo-1502741224143-90386d7f8c82?${W}`,
   coconutWater: `https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?${W}`,
-  hotChocolate: `https://images.unsplash.com/photo-1499636136210-6f4ee915583e?${W}`,
+  hotChocolate: `https://images.unsplash.com/photo-1542990253-a781e04c0082?${W}`,
   gingerBeer: `https://images.unsplash.com/photo-1497302347632-904729bc24aa?${W}`,
   hibiscusTea: `https://images.unsplash.com/photo-1497534446932-c925b458314e?${W}`,
   pineappleJuice: `https://images.unsplash.com/photo-1622543925917-763c34d1a86e?${W}`,
