@@ -5,7 +5,7 @@ import { ArrowLeft, BookOpen } from 'lucide-react';
 import { getAllRecipes } from '@/lib/data/recipes';
 
 export const metadata: Metadata = {
-  title: 'All Recipes A to Z — RecipeCrave Index',
+  title: 'All Recipes A to Z — Recipe Index',
   description:
     'Every recipe on RecipeCrave, sorted alphabetically. Browse 200+ dishes by first letter — snacks, pasta, rice, soups, stews, desserts, drinks, cocktails, and more.',
   alternates: { canonical: '/recipes/a-z' },

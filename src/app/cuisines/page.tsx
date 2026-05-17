@@ -4,7 +4,7 @@ import { CUISINES, SITE } from '@/lib/constants';
 import { getAllRecipes } from '@/lib/data/recipes';
 
 export const metadata: Metadata = {
-  title: `All ${CUISINES.length} World Cuisines — RecipeCrave`,
+  title: `All ${CUISINES.length} World Cuisines`,
   description: `Browse recipes from ${CUISINES.length} regional cuisines, from West African jollof to Persian saffron pilaf to Soul Food classics. Filter by region and dive into authentic technique.`,
   alternates: { canonical: `${SITE.url}/cuisines` },
   openGraph: {

@@ -4,7 +4,7 @@ import { DIETS, SITE } from '@/lib/constants';
 import { getAllRecipes } from '@/lib/data/recipes';
 
 export const metadata: Metadata = {
-  title: `All ${DIETS.length} Dietary Patterns — RecipeCrave`,
+  title: `All ${DIETS.length} Dietary Patterns`,
   description: `Browse recipes filtered by dietary pattern — vegan, keto, gluten-free, Mediterranean, low-FODMAP, Whole30, and ${DIETS.length - 6} more. Each diet has a dedicated landing page with rules and recipes.`,
   alternates: { canonical: `${SITE.url}/diets` },
   openGraph: {

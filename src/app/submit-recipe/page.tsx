@@ -5,7 +5,7 @@ import { SITE } from '@/lib/constants';
 import { SubmitRecipeForm } from './SubmitRecipeForm';
 
 export const metadata: Metadata = {
-  title: 'Submit your recipe — RecipeCrave',
+  title: 'Submit your recipe',
   description:
     'Share a recipe you love and have it featured on RecipeCrave. Every submission is reviewed by our kitchen team before publishing — full credit to you with a byline and a backlink.',
   alternates: { canonical: `${SITE.url}/submit-recipe` },

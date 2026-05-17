@@ -5,7 +5,7 @@ import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { PantryManager } from './PantryManager';
 
 export const metadata: Metadata = {
-  title: 'My pantry — RecipeCrave',
+  title: 'My pantry',
   robots: { index: false, follow: false },
 };
 

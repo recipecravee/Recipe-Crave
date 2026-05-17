@@ -20,7 +20,7 @@ export async function generateMetadata({
   const data = COURSES_NAV.find((c) => c.slug === course);
   if (!data) return { title: 'Not found' };
   return {
-    title: `${data.name} Recipes — Free, Tested & Step-by-Step | RecipeCrave`,
+    title: `${data.name} Recipes — Free, Tested & Step-by-Step`,
     description: `Browse our ${data.name.toLowerCase()} recipe collection — every dish tested in our kitchen with per-serving calories, cost, and step-by-step instructions.`,
     alternates: { canonical: `${SITE.url}/category/${course}` },
   };

@@ -6,7 +6,7 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { breadcrumbJsonLd } from '@/lib/seo/structured-data';
 
 export const metadata: Metadata = {
-  title: 'RecipeCrave Blog — Evidence-Backed Cooking & Health',
+  title: 'Blog — Evidence-Backed Cooking & Health',
   description:
     'Deep-dive articles on therapeutic herbs, blood-sugar management, anti-inflammatory eating, and the science behind cooking. Cited sources, real research, no wellness pseudoscience.',
   alternates: { canonical: '/blog' },

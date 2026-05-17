@@ -6,7 +6,7 @@ import { ADMIN_COOKIE_NAME, verifySession } from '@/lib/admin/auth';
 import { ModerationQueue } from './ModerationQueue';
 
 export const metadata: Metadata = {
-  title: 'Variation moderation — Admin · RecipeCrave',
+  title: 'Variation moderation — Admin',
   robots: { index: false, follow: false, nocache: true },
 };
 

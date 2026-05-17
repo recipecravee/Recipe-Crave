@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { SITE } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: `Contact ${SITE.name}`,
+  title: 'Contact us',
   description: `Get in touch with the ${SITE.name} team. Questions, feedback, partnerships, press inquiries — we read every message.`,
   alternates: { canonical: '/contact' },
 };
@@ -30,7 +30,9 @@ export default function ContactPage() {
 
         <h2>Press</h2>
         <p>
-          For press inquiries, please email <a href={`mailto:${SITE.email}`}>{SITE.email}</a> with &ldquo;Press&rdquo; in the subject line. We aim to respond within two business days.
+          For press inquiries, please email{' '}
+          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+          {' '}with &ldquo;Press&rdquo; in the subject line. We aim to respond within two business days.
         </p>
 
         <h2>Mailing address</h2>

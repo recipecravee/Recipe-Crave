@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   // Belt-and-braces — never index any /admin URL even if the rest of
   // the site somehow links to one.
   robots: { index: false, follow: false, nocache: true },
-  title: 'Admin · RecipeCrave',
+  title: 'Admin',
 };
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
