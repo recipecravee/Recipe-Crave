@@ -3,7 +3,10 @@ export const SITE = {
   tagline: 'AI cooking coach that turns what you have into what you crave.',
   description:
     'Free AI-powered recipe discovery, meal planning, and step-by-step cooking with calories, costs, and pantry-aware suggestions. The smartest free cooking app on the web.',
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://recipecrave.com',
+  // Canonical site URL — must match the actual served host (www, not apex)
+  // since apex redirects 307 -> www. If you ever move off Vercel/Cloudflare,
+  // update both this constant AND the env var on the new host.
+  url: 'https://www.recipecrave.com',
   ogImage: '/opengraph-image',
   twitter: '@recipecrave',
   email: 'recipecravee@gmail.com',
