@@ -203,7 +203,23 @@ export const IMG = {
   goulash: `https://images.unsplash.com/photo-1748309280994-bb23a2f600cc?${W}`,
   grilledCheese: `https://images.unsplash.com/photo-1528736235302-52922df5c122?${W}`,
   iceCream: `https://images.unsplash.com/photo-1657225953401-5f95007fc8e0?${W}`,
-  isiEwu: `https://images.unsplash.com/photo-1726276262267-ebb01cfa0982?${W}`,
+  // Isi Ewu — Nigerian peppered goat-head dish (replaced original which
+  // showed people, not the dish)
+  isiEwu: `https://images.unsplash.com/photo-1565299507177-b0ac66763828?${W}`,
+  // Nkwobi — Nigerian peppered cow-foot dish, distinct from isiEwu
+  nkwobi: `https://images.unsplash.com/photo-1572448862527-d3c904757de6?${W}`,
+  // Mangu — Dominican mashed-plantain breakfast plate
+  mangu: `https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?${W}`,
+  // Shakshuka — eggs poached in red tomato-pepper sauce
+  shakshuka: `https://images.unsplash.com/photo-1576506295286-5cda18df43e7?${W}`,
+  // Mohinga — Burmese fish-noodle soup
+  mohinga: `https://images.unsplash.com/photo-1556679343-c7306c1976bc?${W}`,
+  // Popsicle / frozen berry treat — distinct from iceCream
+  popsicle: `https://images.unsplash.com/photo-1488900128323-21503983a07e?${W}`,
+  // Chocolate-chip ice cream — distinct from generic iceCream
+  chocolateChipIceCream: `https://images.unsplash.com/photo-1437418747212-8d9709afab22?${W}`,
+  // Oreo milkshake — distinct from generic milkshake
+  oreoMilkshake: `https://images.unsplash.com/photo-1473093226795-af9932fe5856?${W}`,
   jambalaya: `https://images.unsplash.com/photo-1655070180522-9e54cbb6e763?${W}`,
   longIsland: `https://images.unsplash.com/photo-1722624072828-d31140ebdd86?${W}`,
   margarita: `https://images.unsplash.com/photo-1642715269428-1d0da19098ba?${W}`,
@@ -254,4 +270,22 @@ export const IMG = {
   subwaySandwich: `https://images.unsplash.com/photo-1554433607-66b5efe9d304?${W}`,
   // Tiger nut milk — distinct from mimosa
   tigerNut: `https://images.unsplash.com/photo-1572490122747-3968b75cc699?${W}`,
+
+  // === Non-alcoholic drinks (populate /categories/drinks) ===
+  // mangoSmoothie, greenSmoothie, berrySmoothie already defined above
+  mangoLassi: `https://images.unsplash.com/photo-1543007630-9710e4a00a20?${W}`,
+  matchaLatte: `https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?${W}`,
+  icedCoffee: `https://images.unsplash.com/photo-1463740839922-2d3b7e426a56?${W}`,
+  lemonade: `https://images.unsplash.com/photo-1556881286-fc6915169721?${W}`,
+  watermelonCooler: `https://images.unsplash.com/photo-1502741224143-90386d7f8c82?${W}`,
+  coconutWater: `https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?${W}`,
+  hotChocolate: `https://images.unsplash.com/photo-1499636136210-6f4ee915583e?${W}`,
+  gingerBeer: `https://images.unsplash.com/photo-1497302347632-904729bc24aa?${W}`,
+  hibiscusTea: `https://images.unsplash.com/photo-1497534446932-c925b458314e?${W}`,
+  pineappleJuice: `https://images.unsplash.com/photo-1622543925917-763c34d1a86e?${W}`,
+  strawberryShake: `https://images.unsplash.com/photo-1551024601-bec78aea704b?${W}`,
+  bananaSmoothie: `https://images.unsplash.com/photo-1561758033-d89a9ad46330?${W}`,
+  frozenLemonade: `https://images.unsplash.com/photo-1546173159-315724a31696?${W}`,
+  icedTea: `https://images.unsplash.com/photo-1576092768241-dec231879fc3?${W}`,
+  coldBrew: `https://images.unsplash.com/photo-1543353071-873f17a7a088?${W}`,
 } as const;
