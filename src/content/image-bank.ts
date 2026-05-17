@@ -7,18 +7,18 @@ const W = 'auto=format&fit=crop&w=1600&q=80';
 export const IMG = {
   // === Italian ===
   pasta: `https://images.unsplash.com/photo-1683824870303-ae378f721084?${W}`,
-  shrimpPasta: `https://images.unsplash.com/photo-1683824870303-ae378f721084?${W}`,
+  shrimpPasta: `https://images.unsplash.com/photo-1551183053-bf91a1d81141?${W}`,
   tomatoSoup: `https://images.unsplash.com/photo-1692776407523-8f3c4678ad36?${W}`,
   pizza: `https://images.unsplash.com/photo-1513104890138-7c749659a591?${W}`,
 
   // === Chicken / poultry ===
   roastChicken: `https://images.unsplash.com/photo-1642338320882-d966ad8587f2?${W}`,
-  chickenThighs: `https://images.unsplash.com/photo-1642338320882-d966ad8587f2?${W}`,
+  chickenThighs: `https://images.unsplash.com/photo-1547573854-74d2a71d0826?${W}`,
   jerkChicken: `https://images.unsplash.com/photo-1658833608786-22c4b4a621de?${W}`,
   buffaloWings: `https://images.unsplash.com/photo-1608039755401-742074f0548d?${W}`,
   thaiBasil: `https://images.unsplash.com/photo-1707897634981-39bcfe435268?${W}`,
-  // Suya search returned nothing free; reuse jerk chicken (visually similar skewered/spiced meat)
-  suya: `https://images.unsplash.com/photo-1658833608786-22c4b4a621de?${W}`,
+  // Suya — Nigerian skewered spiced meat. Distinct skewers shot, not the jerk chicken dupe.
+  suya: `https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?${W}`,
 
   // === Beef / meats ===
   burger: `https://images.unsplash.com/photo-1568901346375-23c9450c58cd?${W}`,
@@ -130,7 +130,7 @@ export const IMG = {
   caipirinha: `https://images.unsplash.com/photo-1644809818228-e29aa5aa8151?${W}`,
 
   // === Greek ===
-  greekSalad: `https://images.unsplash.com/photo-1636654931290-418d20865e03?${W}`,
+  greekSalad: `https://images.unsplash.com/photo-1521305916504-4a1121188589?${W}`,
   gyros: `https://images.unsplash.com/photo-1683463170487-c9723825b23f?${W}`,
 
   // === Vietnamese ===
@@ -143,7 +143,7 @@ export const IMG = {
   bunnyChow: `https://images.unsplash.com/photo-1694643666478-87660ba357a4?${W}`,
 
   // === Lebanese / Middle Eastern ===
-  lebaneseHummus: `https://images.unsplash.com/photo-1687244433510-747e3fd97afe?${W}`,
+  lebaneseHummus: `https://images.unsplash.com/photo-1606755456206-b25206cde27e?${W}`,
   tabbouleh: `https://images.unsplash.com/photo-1702650657375-934239d8b472?${W}`,
   shawarma: `https://images.unsplash.com/photo-1530469912745-a215c6b256ea?${W}`,
 
@@ -199,7 +199,7 @@ export const IMG = {
   crispyFriedChicken: `https://images.unsplash.com/photo-1672856399624-61b47d70d339?${W}`,
   curryGoat: `https://images.unsplash.com/photo-1708782344137-21c48d98dfcc?${W}`,
   daiquiri: `https://images.unsplash.com/photo-1695406092591-c6de34ad1485?${W}`,
-  efoRiro: `https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?${W}`,
+  efoRiro: `https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?${W}`,
   goulash: `https://images.unsplash.com/photo-1748309280994-bb23a2f600cc?${W}`,
   grilledCheese: `https://images.unsplash.com/photo-1528736235302-52922df5c122?${W}`,
   iceCream: `https://images.unsplash.com/photo-1657225953401-5f95007fc8e0?${W}`,
@@ -211,7 +211,7 @@ export const IMG = {
   milkBread: `https://images.unsplash.com/photo-1620921568790-c1cf8984624c?${W}`,
   milkshake: `https://images.unsplash.com/photo-1662192511709-e75d67367638?${W}`,
   // Orange-juice mimosa in flute — distinct from tigerNut milk
-  mimosa: `https://images.unsplash.com/photo-1604908815803-0395cf3f7c4e?${W}`,
+  mimosa: `https://images.unsplash.com/photo-1565958011703-44f9829ba187?${W}`,
   mojito: `https://images.unsplash.com/photo-1696957024712-f478b2aa53a9?${W}`,
   moscowMule: `https://images.unsplash.com/photo-1655917080507-dc3ee47580a3?${W}`,
   naan: `https://images.unsplash.com/photo-1697155406014-04dc649b0953?${W}`,
@@ -247,10 +247,10 @@ export const IMG = {
   chineseFriedRice: `https://images.unsplash.com/photo-1612755637313-9517f17d84b5?${W}`,
 
   // Fallbacks for keys not found in Unsplash search — point to closest dish
-  alfredo: `https://images.unsplash.com/photo-1608894289162-37f52487f62a?${W}`,
+  alfredo: `https://images.unsplash.com/photo-1633237308525-cd587cf71926?${W}`,
   mashedPotatoes: `https://images.unsplash.com/photo-1577906096429-f73c2c312435?${W}`,
   // Ofada — distinct local-rice stew image, not the coconutJollof dupe
-  ofada: `https://images.unsplash.com/photo-1633945274309-2c16c96e7e75?${W}`,
+  ofada: `https://images.unsplash.com/photo-1559339352-11d035aa65de?${W}`,
   subwaySandwich: `https://images.unsplash.com/photo-1554433607-66b5efe9d304?${W}`,
   // Tiger nut milk — distinct from mimosa
   tigerNut: `https://images.unsplash.com/photo-1572490122747-3968b75cc699?${W}`,
