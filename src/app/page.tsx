@@ -113,7 +113,7 @@ export default async function HomePage() {
             { icon: Calendar, title: 'Cost + Calories on every recipe', body: 'No more guessing. Every recipe shows per-serving cost and full nutrition.', href: '/recipes', cta: 'Browse recipes' },
             { icon: Mic, title: 'Voice Cook Mode', body: '"Next." "Repeat." "Set timer 8 minutes." Hands-free cooking from start to finish.', href: '/recipes', cta: 'Pick a recipe to cook' },
             { icon: ShoppingCart, title: 'Smart Grocery Lists', body: 'Combine multiple recipes into one shopping list. Export to your favorite store.', href: '/meal-planner', cta: 'Build my list' },
-            { icon: Wallet, title: '100% Free. No paywall.', body: 'Every feature, free. AdSense supports the lights. You get cooking.', href: '/recipes', cta: 'Start cooking' },
+            { icon: Wallet, title: '100% Free. No paywall.', body: 'Every feature, free. A few affiliate links keep the lights on. You get cooking.', href: '/recipes', cta: 'Start cooking' },
           ].map((feature) => (
             <Link
               key={feature.title}
