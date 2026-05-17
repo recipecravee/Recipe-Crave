@@ -63,11 +63,11 @@ const PANEL_RECIPES: MegaPanel = {
     {
       heading: 'Popular right now',
       items: [
-        { href: '/recipes/nigerian-jollof-rice', label: 'Nigerian Jollof Rice' },
+        { href: '/recipes/jollof-rice', label: 'Nigerian Jollof Rice' },
         { href: '/recipes/bolognese-sauce', label: 'Bolognese Sauce' },
-        { href: '/recipes/mac-cheese', label: 'Mac & Cheese' },
+        { href: '/recipes/mac-and-cheese', label: 'Mac & Cheese' },
         { href: '/recipes/butter-chicken-curry', label: 'Butter Chicken Curry' },
-        { href: '/recipes/lasagne', label: 'Lasagne' },
+        { href: '/recipes/spaghetti-and-meat-balls', label: 'Spaghetti & Meatballs' },
         { href: '/recipes/banana-bread', label: 'Banana Bread' },
       ],
     },
