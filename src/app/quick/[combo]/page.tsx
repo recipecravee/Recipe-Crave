@@ -157,7 +157,7 @@ export async function generateMetadata({ params }: { params: Promise<{ combo: st
   const title = comboTitle(c);
   const description = comboDescription(c);
   return {
-    title: `${title} — Free, Tested & Step-by-Step | ${SITE.name}`,
+    title: `${title} — Free, Tested & Step-by-Step`,
     description,
     alternates: { canonical: `${SITE.url}/quick/${combo}` },
     openGraph: {

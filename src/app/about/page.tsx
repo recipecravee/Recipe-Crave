@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { SITE } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: `About ${SITE.name}`,
+  title: 'About us',
   description: 'Most recipe apps are built around saving. We built RecipeCrave around cooking.',
   alternates: { canonical: '/about' },
 };
@@ -30,7 +30,7 @@ export default function AboutPage() {
             That means recipes with real nutrition data, honest cost-per-serving breakdowns, an AI meal planner that works around your pantry and your budget, and a voice cook mode so your phone stays clean while you cook.
           </p>
           <p className="text-base leading-relaxed text-ink-muted">
-            All of it free. No paywalls, no gated features. Ads keep the lights on so everything stays free for everyone.
+            All of it free. No paywalls, no gated features, no display ads cluttering the recipe. A small number of clearly-marked affiliate links on ingredient pages keep the lights on so everything stays free for everyone.
           </p>
         </section>
 
