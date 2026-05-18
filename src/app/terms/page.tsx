@@ -3,7 +3,7 @@ import { SITE } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
-  description: `Read the ${SITE.name} terms of service.`,
+  description: `Read the ${SITE.name} terms of service — your rights and responsibilities when using our free recipes, meal planner, pantry matcher, and herbal cooking tools.`,
   alternates: { canonical: '/terms' },
 };
 

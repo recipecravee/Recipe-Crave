@@ -8,7 +8,7 @@ import { breadcrumbJsonLd } from '@/lib/seo/structured-data';
 export const metadata: Metadata = {
   title: 'Blog — Evidence-Backed Cooking & Health',
   description:
-    'Deep-dive articles on therapeutic herbs, blood-sugar management, anti-inflammatory eating, and the science behind cooking. Cited sources, real research, no wellness pseudoscience.',
+    'Deep-dive articles on therapeutic herbs, blood-sugar, anti-inflammatory eating, and the science of cooking. Cited sources, no pseudoscience.',
   alternates: { canonical: '/blog' },
   keywords: [
     'food blog',

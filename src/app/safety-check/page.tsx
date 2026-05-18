@@ -6,7 +6,7 @@ import { SafetyCheckClient } from './SafetyCheckClient';
 export const metadata: Metadata = {
   title: 'Therapeutic Herb Safety Checker — Drug Interactions & Contraindications',
   description:
-    'Free safety checker for therapeutic herbs. Select your medications and health conditions to flag known interactions across 30+ herbs. Sourced from NIH, Memorial Sloan Kettering, and WHO Monograph databases.',
+    'Free safety checker. Pick your meds and conditions to flag interactions with 30+ therapeutic herbs. Sourced from NIH, MSK, and WHO databases.',
   alternates: { canonical: '/safety-check' },
   keywords: [
     'herb drug interaction checker',

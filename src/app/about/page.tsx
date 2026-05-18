@@ -3,7 +3,7 @@ import { SITE } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: 'About us',
-  description: 'Most recipe apps are built around saving. We built RecipeCrave around cooking.',
+  description: 'Most recipe apps are built around saving recipes. We built RecipeCrave around actually cooking them — AI meal planning, pantry-aware suggestions, voice cook mode, and food-as-medicine guidance, all free.',
   alternates: { canonical: '/about' },
 };
 

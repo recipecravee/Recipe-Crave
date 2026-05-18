@@ -9,7 +9,7 @@ import { breadcrumbJsonLd } from '@/lib/seo/structured-data';
 export const metadata: Metadata = {
   title: 'Therapeutic Herbs & Functional Ingredients — Food as Preventive Health',
   description:
-    'Evidence-backed reference on 30+ medicinal herbs and functional foods. Active compounds, daily intake, cooking methods that preserve potency, contraindications. Built for home cooks managing real health goals through diet.',
+    'Evidence-backed reference on 30+ medicinal herbs. Active compounds, daily intake, preserving-potency methods, contraindications. For home cooks managing health through diet.',
   alternates: { canonical: '/herbs' },
   keywords: [
     'medicinal herbs',

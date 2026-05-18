@@ -37,7 +37,16 @@ const nextConfig = {
     ];
   },
   async redirects() {
-    return [];
+    // 301 redirects for slug renames. Preserves any inbound links and prevents
+    // SEO duplicate-content penalties when canonical paths change.
+    return [
+      // Typo fixes — old misspelled slugs to the canonical spelling
+      { source: '/recipes/carribean-rice-and-peas', destination: '/recipes/caribbean-rice-and-peas', permanent: true },
+      { source: '/recipes/yam-and-sweet-ptatoes', destination: '/recipes/yam-and-sweet-potatoes', permanent: true },
+      // Duplicate-recipe merges — old slug folds into canonical
+      { source: '/recipes/zobo', destination: '/recipes/zobo-hibiscus-drink', permanent: true },
+      { source: '/recipes/akara', destination: '/recipes/akara-bean-fritters', permanent: true },
+    ];
   },
 };
 

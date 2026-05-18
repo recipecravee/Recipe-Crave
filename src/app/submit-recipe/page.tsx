@@ -7,7 +7,7 @@ import { SubmitRecipeForm } from './SubmitRecipeForm';
 export const metadata: Metadata = {
   title: 'Submit your recipe',
   description:
-    'Share a recipe you love and have it featured on RecipeCrave. Every submission is reviewed by our kitchen team before publishing — full credit to you with a byline and a backlink.',
+    'Share a recipe you love and get it featured. Our kitchen team reviews every submission. Full credit to you — byline and backlink.',
   alternates: { canonical: `${SITE.url}/submit-recipe` },
   openGraph: {
     title: 'Submit your recipe to RecipeCrave',

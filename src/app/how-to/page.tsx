@@ -8,7 +8,7 @@ import { breadcrumbJsonLd } from '@/lib/seo/structured-data';
 export const metadata: Metadata = {
   title: 'How-To Guides — Cooking Techniques Explained',
   description:
-    'Master kitchen fundamentals with clear, beginner-friendly technique guides. From poaching eggs to tempering chocolate, our how-to library teaches the skills professional cooks rely on.',
+    'Master kitchen fundamentals with beginner-friendly technique guides — from poaching eggs to tempering chocolate. The skills pro cooks rely on.',
   alternates: { canonical: '/how-to' },
 };
 

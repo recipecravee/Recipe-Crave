@@ -11,7 +11,7 @@ import { SeasonalHerbs } from '@/components/site/SeasonalHerbs';
 export const metadata: Metadata = {
   title: 'Herbal Cooking Hub — Cook Your Way to Better Health',
   description:
-    'Friendly beginner guide to cooking with medicinal herbs. Match herbs to common ailments, find the right meal for the right moment, and try our 5 demo recipes. No mystery, no jargon, just food that helps.',
+    'Beginner-friendly guide to cooking with medicinal herbs. Match herbs to common ailments and find recipes that pair them with real meals. No jargon — just food that helps.',
   alternates: { canonical: '/herbal-cooking' },
   keywords: [
     'cooking with herbs for health',
